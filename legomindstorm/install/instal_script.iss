@@ -7,8 +7,8 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{3F9057C7-52AA-4849-9AA1-815D692136AC}
 AppName=Lego Mindstorm Remote Control
-VersionInfoVersion=0.1.104.1
-AppVerName=Lego Mindstorm Remote Control 0.1.104.1
+VersionInfoVersion=0.2.0.0
+AppVerName=Lego Mindstorm Remote Control 0.2.0.0
 AppPublisher=Frednet
 AppPublisherURL=http://wiki.xprize.frednet.org/index.php/Portal:Lego_Mindstorms
 AppSupportURL=http://wiki.xprize.frednet.org/index.php/Portal:Lego_Mindstorms
@@ -28,9 +28,16 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\Users\marc\Documents\frednet\google code source\legomindstorm\C api\Lego MindStorm Control Api\Lego MindStorm Control Api\bin\Release\Lego MindStorm Control Api.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\marc\Documents\frednet\google code source\legomindstorm\C api\Lego MindStorm Control Api\Lego MindStorm Control Api\bin\Release\*"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\marc\Documents\frednet\google code source\legomindstorm\web\rover_v_2_0\*"; DestDir: "c:\wamp\www\rover"; Flags: ignoreversion
+Source: "C:\Users\marc\Documents\frednet\google TFN-lego\legomindstorm\C api\Lego MindStorm Control Api\Lego MindStorm Control Api\bin\Release\Lego MindStorm Control Api.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\marc\Documents\frednet\google TFN-lego\legomindstorm\C api\Lego MindStorm Control Api\Lego MindStorm Control Api\bin\Release\*"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\marc\Documents\frednet\google TFN-lego\legomindstorm\web\rover_v_3_0\*"; DestDir: "c:\wamp\www\rover"; Flags: ignoreversion
+;Source: "C:\Users\marc\Documents\frednet\google TFN-lego\legomindstorm\web\rover_v_3_0\template\*"; DestDir: "c:\wamp\www\rover\template"; Flags: ignoreversion
+Source: "C:\Users\marc\Documents\frednet\google TFN-lego\legomindstorm\web\rover_v_3_0\template\default\*"; DestDir: "c:\wamp\www\rover\template\default"; Flags: ignoreversion
+Source: "C:\Users\marc\Documents\frednet\google TFN-lego\legomindstorm\web\rover_v_3_0\template\default\img\*"; DestDir: "c:\wamp\www\rover\template\default\img"; Flags: ignoreversion
+Source: "C:\Users\marc\Documents\frednet\google TFN-lego\legomindstorm\web\rover_v_3_0\template\default\script\*"; DestDir: "c:\wamp\www\rover\template\default\script"; Flags: ignoreversion
+Source: "C:\Users\marc\Documents\frednet\google TFN-lego\legomindstorm\web\rover_v_3_0\template\default\style\*"; DestDir: "c:\wamp\www\rover\template\default\style"; Flags: ignoreversion
+Source: "C:\Users\marc\Documents\frednet\google TFN-lego\legomindstorm\web\rover_v_3_0\cache\*"; DestDir: "c:\wamp\www\rover\cache"; Flags: ignoreversion
+Source: "C:\Users\marc\Documents\frednet\google TFN-lego\legomindstorm\web\rover_v_3_0\img\*"; DestDir: "c:\wamp\www\rover\img"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
