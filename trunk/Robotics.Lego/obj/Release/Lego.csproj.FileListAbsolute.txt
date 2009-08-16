@@ -1,0 +1,12 @@
+C:\Users\marc\Documents\frednet\aforce\Release\AForge.Robotics.Lego.dll
+C:\Users\marc\Documents\frednet\aforce\Release\AForge.Robotics.Lego.pdb
+C:\Users\marc\Documents\frednet\aforce\Release\AForge.Robotics.Lego.xml
+C:\Users\marc\Documents\frednet\aforce\Sources\Robotics.Lego\obj\Release\ResolveAssemblyReference.cache
+C:\Users\marc\Documents\frednet\aforce\Sources\Robotics.Lego\obj\Release\AForge.Robotics.Lego.dll
+C:\Users\marc\Documents\frednet\aforce\Sources\Robotics.Lego\obj\Release\AForge.Robotics.Lego.pdb
+C:\Users\marc\Documents\frednet\google code source\Release\AForge.Robotics.Lego.dll
+C:\Users\marc\Documents\frednet\google code source\Release\AForge.Robotics.Lego.pdb
+C:\Users\marc\Documents\frednet\google code source\Release\AForge.Robotics.Lego.xml
+C:\Users\marc\Documents\frednet\google code source\legomindstorm\Robotics.Lego\obj\Release\ResolveAssemblyReference.cache
+C:\Users\marc\Documents\frednet\google code source\legomindstorm\Robotics.Lego\obj\Release\AForge.Robotics.Lego.dll
+C:\Users\marc\Documents\frednet\google code source\legomindstorm\Robotics.Lego\obj\Release\AForge.Robotics.Lego.pdb
