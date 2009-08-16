@@ -17,6 +17,11 @@ $mysql['password'] = "";
  * Mysql server 
  */
 $mysql['server'] = "localhost";
+/**
+ * Version
+ * @var string
+ */
+$version = "0.2";
 if(!isset($not_connect)){
 	//contect to database
 	mysql_connect($mysql['server'], $mysql['user'], $mysql['password']) or die(mysql_error());

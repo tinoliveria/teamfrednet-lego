@@ -1,0 +1,114 @@
+-- phpMyAdmin SQL Dump
+-- version 3.2.0.1
+-- http://www.phpmyadmin.net
+--
+-- Machine: localhost
+-- Genereertijd: 16 Aug 2009 om 15:29
+-- Serverversie: 5.1.36
+-- PHP-Versie: 5.3.0
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+
+--
+-- Database: `rover`
+--
+DROP DATABASE IF EXISTS `rover`;
+CREATE DATABASE `rover` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `rover`;
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `database_version`
+--
+
+DROP TABLE IF EXISTS `database_version`;
+CREATE TABLE IF NOT EXISTS `database_version` (
+  `ID` int(11) NOT NULL,
+  `version` varchar(250) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Gegevens worden uitgevoerd voor tabel `database_version`
+--
+
+INSERT INTO `database_version` (`ID`, `version`) VALUES
+(1, '0.2');
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `log_current_session`
+--
+
+DROP TABLE IF EXISTS `log_current_session`;
+CREATE TABLE IF NOT EXISTS `log_current_session` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `type` varchar(5) NOT NULL,
+  `message` varchar(250) NOT NULL,
+  `who_ID` int(11) NOT NULL,
+  `status` varchar(250) NOT NULL,
+  `when` double NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=201 ;
+
+
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `pre_program`
+--
+
+DROP TABLE IF EXISTS `pre_program`;
+CREATE TABLE IF NOT EXISTS `pre_program` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `delay` int(11) NOT NULL,
+  `cmd` varchar(250) NOT NULL,
+  `masterID` int(11) NOT NULL,
+  `innerID` int(11) NOT NULL,
+  `who` int(11) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `sensors`
+--
+
+DROP TABLE IF EXISTS `sensors`;
+CREATE TABLE IF NOT EXISTS `sensors` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `when` double NOT NULL,
+  `result` text NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+
+
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE IF NOT EXISTS `users` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `nickname` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `last` int(11) NOT NULL,
+  `start_control` int(11) NOT NULL,
+  `end_control` int(11) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Gegevens worden uitgevoerd voor tabel `users`
+--
+
+INSERT INTO `users` (`ID`, `nickname`, `password`, `last`, `start_control`, `end_control`) VALUES
+(0, 'Guest', '', 1250199734, 1250199993, 1250200293);
