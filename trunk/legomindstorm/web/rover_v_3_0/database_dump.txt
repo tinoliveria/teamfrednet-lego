@@ -32,10 +32,21 @@ CREATE TABLE IF NOT EXISTS `database_version` (
 --
 
 INSERT INTO `database_version` (`ID`, `version`) VALUES
-(1, '0.2');
+(1, '0.2.1');
 
 -- --------------------------------------------------------
+--
+-- Tabelstructuur voor tabel `result`
+--
 
+CREATE TABLE IF NOT EXISTS `result` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `ID_user` int(11) NOT NULL,
+  `nickname` varchar(250) NOT NULL,
+  `point` int(11) NOT NULL,
+  `time` int(11) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 --
 -- Tabelstructuur voor tabel `log_current_session`
 --
