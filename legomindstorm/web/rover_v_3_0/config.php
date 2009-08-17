@@ -21,7 +21,7 @@ $mysql['server'] = "localhost";
  * Version
  * @var string
  */
-$version = "0.2";
+$version = "0.2.1";
 if(!isset($not_connect)){
 	//contect to database
 	mysql_connect($mysql['server'], $mysql['user'], $mysql['password']) or die(mysql_error());
