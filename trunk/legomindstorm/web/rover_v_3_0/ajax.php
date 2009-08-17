@@ -134,10 +134,58 @@ if(isset($_GET['nickname'])){
 	mysql_query($sql);
 	$_SESSION['user_ID'] = mysql_insert_id();
 	$user_info['name'] = $_GET['nickname'];
+	$_SESSION['nickname'] = $user_info['name'];
 	?>
 Hello
 	<?php echo $user_info['name']; ?>
 	<?php
+}
+if(isset($_GET['rank'])){
+$sql = "SELECT * FROM `result` ORDER BY `result`.`point` DESC LIMIT 0, 5 ";
+$result = mysql_query($sql) or die(mysql_error() . "SQL: $sql");
+while($row = mysql_fetch_array( $result )){
+	echo "<li>{$row['nickname']} {$row['point']}</li>\n";
+}
+}
+if(isset($_GET['rank_day'])){
+$sql = "SELECT * FROM `result` ORDER BY `result`.`point` DESC LIMIT 0, 5 ";
+$result = mysql_query($sql) or die(mysql_error() . "SQL: $sql");
+while($row = mysql_fetch_array( $result )){
+	echo "<li>{$row['nickname']} {$row['point']}</li>\n";
+}
+}
+if(isset($_GET['score'])){
+	$sql2 = "INSERT `result` SET
+	`nickname`='{$_SESSION['nickname']}', 
+	`point`={$_GET['score']}, 
+	`ID_user`={$_SESSION['user_ID']},
+	`time`=" . time();
+	
+
+	$time = time();
+	$message = "{$_SESSION['nickname']} has made a score of {$_GET['score']}.";
+	$who_ID = "{$_SESSION['user_ID']}";
+	// TODO check high score
+	// check over all
+	$sql = "SELECT * FROM `result` ORDER BY `result`.`point` DESC LIMIT 0, 1 ";
+	$result = mysql_query($sql) or die(mysql_error() . "SQL: $sql");
+	$row = mysql_fetch_array( $result );
+	if($row['point'] < $_GET['score']){
+		$message .= ' This is new high score!';
+	}else{
+		$sql = "SELECT * FROM `result` WHERE time > ".(time()-3600*24)." ORDER BY `result`.`point` DESC LIMIT 0, 1 ";
+		$result = mysql_query($sql) or die(mysql_error() . "SQL: $sql");
+		$row = mysql_fetch_array( $result );
+		if($row['point'] < $_GET['score']){
+			$message .= ' This is new high score for today!';
+		}
+
+	}
+	//dump it
+	mysql_query($sql2) or die(mysql_error() . "SQL: $sql");
+	$sql = "INSERT `log_current_session` SET `type`='chat', `when`='$time', `message`='".htmlentities(substr($message,0,150), ENT_QUOTES)."', `who_ID`='$who_ID'";
+	mysql_query($sql) or die(mysql_error() . "SQL: $sql");
+
 }
 // TODO this!
 if(isset($_GET['logout'])){
@@ -173,7 +221,7 @@ if(isset($_GET['sensor'])){
 	$sql = "SELECT * FROM `sensors` WHERE 1 ORDER BY `when` DESC LIMIT 0,1";
 	$result = mysql_query($sql);
 	$row = mysql_fetch_array( $result );
-	echo nl2br($row['result']);
+	echo nl2br($row['result']) . "<br />\n";
 	echo "Random: " . rand();
 }
 if(isset($_GET['pre_program'])){

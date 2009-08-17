@@ -14,7 +14,8 @@ include("content.php");
 	src="template/default/script/ajax.js"></script>
 <script type="text/javascript" language="javascript" src="script.js"></script>
 </head>
-<body onload="initButtons();watch_page();check_url();who_is_online();">
+<body
+	onload="initButtons();watch_page();check_url();who_is_online();rank();">
 
 <div id="heading"><a href="http://www.teamfrednet.org/"> <img
 	alt="teamFREDNET logo" src="img/teamfred_simple_logo.png"
@@ -30,24 +31,41 @@ build_content();
 <div id="logbook"><!-- testing --></div>
 <div id="right_col">
 <div class="rankBox">
-<h4 style="padding: 0; margin: 0;">My Ranking</h4>
+<h4 style="padding: 0; margin: 0;">Today top 5</h4>
 <ul
 	style="list-style-type: none; background-color: #BC99FF; padding: 0; font-size: 10pt">
-	<li>Worldwide: 134 (17%)</li>
-	<li>Regional: 20 (23%)</li>
+	<div id="top5_day">Please wait</div>
+
 </ul>
 </div>
+<div class="rankBox">
+<h4 style="padding: 0; margin: 0;">Overall top 5</h4>
+<ul
+	style="list-style-type: none; background-color: #BC99FF; padding: 0; font-size: 10pt">
+	<div id="top5">Please wait</div>
+
+</ul>
+</div>
+<!-- 
 <div class="rankBox">
 <h4 style="padding: 0; margin: 0;">Regional Rankings</h4>
 <img alt="World Map" title="World Map" id="RegionMap"
 	style="width: 100%;" src="img/regional_map.gif" /></div>
-<div class="rankBox" id="login">Set Your nick Name:<br />
+	-->
+<div class="rankBox" id="login">
+<?php 
+if(isset($_SESSION['nickname'])){
+	echo "Hello " . $_SESSION['nickname'];
+}else{
+?>
+Set Your nick Name:<br />
 nickname:<input type="text" id="nickname"
 	value="<?php
             if(isset($_SESSION['nickname'])){echo $_SESSION['nickname']; } ?>" /><br />
 
 <input type="button" value="Login" id="nickname_button"
-	onclick="set_nickname();" /></div>
+	onclick="set_nickname();" /><?php } ?></div>
+
 <div class="rankBox">
 <div id="who_online" class="who_is_online"></div>
 </div>

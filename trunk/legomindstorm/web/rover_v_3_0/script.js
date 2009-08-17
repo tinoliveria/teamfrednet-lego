@@ -16,19 +16,21 @@ setTimeout("chat_update();",1000);//500 ms
 function set_nickname(){
 ajax_donwload("ajax.php?nickname="+document.getElementById("nickname").value,"login");
 document.getElementById('login').innerHTML = "<img src=\"template/default/img/ajax-loader.gif\" alt=\"Loading\" />";
-setTimeout("who_is_online()",800);//800ms
 }
 function clipToMain(id){
 ajax_donwload("ajax.php?clip="+id,"mainPlayer");
 }
+
 function who_is_online(){
 //online
 ajax_donwload("ajax.php?online","who_online");
-if(document.getElementById("nickname_button").value != 'Wait..'){
 setTimeout("who_is_online()",5045);//5 secondes
 }
-document.getElementById("nickname_button").value = 'Set';
-}
+function rank(){
+	ajax_donwload("ajax.php?rank_day","top5_day");
+	ajax_donwload("ajax.php?rank","top5");
+	setTimeout("rank()",10000);//10 secondes
+	}
 var sensor_enable = false;
 function sensors(){
 if(sensor_enable == true){
@@ -74,4 +76,38 @@ if(namespace != "file_pre_program" && pre_program_enable == true){
 pre_program_enable = false;
 }
 setTimeout("watch_page();",1850);//2 seconds
+}
+var point = 0;
+function start_point(){
+	if(point == 0){
+	point = 10000+15;
+	update_point_enable = true;
+	document.getElementById("timing").value = 'stop';
+	
+	update_point();
+	}else{
+		if(point < 9500){
+			document.getElementById('score').innerHTML = 'Your last score is: ' + point;
+			update_point_enable = false;
+			ajax_donwload_add("ajax.php?score="+point,"logbook");
+			point = 0;
+			document.getElementById("timing").value = 'start';
+			
+		}else{
+			alert("No way!!!Your are cheating!!!");
+		}
+	}
+}
+update_point_enable = false;
+function update_point(){
+	if(update_point_enable == true){
+		point -= 50;
+		if(point > 0){
+			setTimeout("update_point();",1000);//1 seconds
+			
+		}else{
+			update_point_enable = false;
+		}
+		
+	}
 }

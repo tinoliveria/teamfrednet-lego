@@ -23,7 +23,7 @@ function build_menu(){
 	$menu_data[2]['submenu'][3]['name'] = "Rover Program";
 	$menu_data[2]['submenu'][3]['page_namespace'] = "file_rover_program";
 	$menu_data[2]['submenu'][4]['name'] = "FAQ";
-	$menu_data[2]['submenu'][4]['page_namespace'] = "faq";
+	$menu_data[2]['submenu'][4]['page_namespace'] = "static_faq";
 	$upper = 1;
 	while(isset($menu_data[$upper])){
 		//open menu

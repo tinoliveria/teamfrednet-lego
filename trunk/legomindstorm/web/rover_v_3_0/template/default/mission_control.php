@@ -43,6 +43,13 @@ function create_player_small($id,$clip_id){
 		</td>
 	</tr>
 	<tr>
+		<td colspan="3">Start time: <input type="button" value="start"
+			id="timing" onclick="start_point();" />
+		<div id="score"></div>
+		</td>
+	</tr>
+
+	<tr>
 		<td colspan="3" bgcolor="#CCCCCC" style="border: thin;">
 		<div style="overflow: auto; height: 200px; color: #FFFFFF;"
 			id="logbook"></div>
