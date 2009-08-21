@@ -7,8 +7,8 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{3F9057C7-52AA-4849-9AA1-815D692136AC}
 AppName=Lego Mindstorm Remote Control
-VersionInfoVersion=0.2.1.0
-AppVerName=Lego Mindstorm Remote Control 0.2.1.0
+VersionInfoVersion=0.2.2.1
+AppVerName=Lego Mindstorm Remote Control 0.2.2.1
 AppPublisher=Frednet
 AppPublisherURL=http://wiki.xprize.frednet.org/index.php/Portal:Lego_Mindstorms
 AppSupportURL=http://wiki.xprize.frednet.org/index.php/Portal:Lego_Mindstorms
@@ -39,7 +39,8 @@ Source: "C:\Users\marc\Documents\frednet\google TFN-lego\legomindstorm\web\rover
 Source: "C:\Users\marc\Documents\frednet\google TFN-lego\legomindstorm\web\rover_v_3_0\cache\*"; DestDir: "c:\wamp\www\rover\cache"; Flags: ignoreversion
 Source: "C:\Users\marc\Documents\frednet\google TFN-lego\legomindstorm\web\rover_v_3_0\img\*"; DestDir: "c:\wamp\www\rover\img"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
-
+;patch wamp(add shmop)
+Source: "C:\wamp\bin\apache\Apache2.2.11\bin\php.ini"; DestDir: "C:\wamp\bin\apache\Apache2.2.11\bin"; Flags: ignoreversion
 [Icons]
 Name: "{group}\Lego Mindstorm Remote Control"; Filename: "{app}\Lego MindStorm Control Api.exe"; WorkingDir: "{app}"
 Name: "{group}\edit settings.xml"; Filename: "{app}\settings.xml"
