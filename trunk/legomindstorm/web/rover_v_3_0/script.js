@@ -10,7 +10,7 @@ var chat_update_enable = false;
 function chat_update(){
 if(chat_update_enable == true){
 ajax_donwload_add("ajax.php?update","logbook");
-setTimeout("chat_update();",1000);//500 ms
+setTimeout("chat_update();",500);//500 ms
 }
 }
 function set_nickname(){

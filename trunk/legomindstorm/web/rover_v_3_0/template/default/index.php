@@ -28,7 +28,7 @@ build_menu();
 <div id="center_col"><?php
 build_content();
 ?></div>
-<div id="logbook"><!-- testing --></div>
+
 <div id="right_col">
 <div class="rankBox">
 <h4 style="padding: 0; margin: 0;">Today top 5</h4>

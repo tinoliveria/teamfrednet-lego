@@ -2,6 +2,14 @@
 //config.php
 //mysql
 /**
+ * Ram size in bytes
+ */
+$ram_size = 10000;
+/**
+ * Database Ram key
+ */
+$ram_key = 0xff9;
+/**
  * Mysql database 
  */
 $mysql['database'] = "rover";

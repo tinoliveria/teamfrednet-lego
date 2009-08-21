@@ -133,3 +133,8 @@ xmlHttp.send(null);
 			//alert("ajax_donwload('"+url+"', '"+divId+"')");
 }
 }
+
+
+ 
+  
+ 
