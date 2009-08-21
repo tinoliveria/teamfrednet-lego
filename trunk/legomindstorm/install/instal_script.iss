@@ -7,8 +7,8 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{3F9057C7-52AA-4849-9AA1-815D692136AC}
 AppName=Lego Mindstorm Remote Control
-VersionInfoVersion=0.2.2.1
-AppVerName=Lego Mindstorm Remote Control 0.2.2.1
+VersionInfoVersion=0.2.2.2
+AppVerName=Lego Mindstorm Remote Control 0.2.2.2
 AppPublisher=Frednet
 AppPublisherURL=http://wiki.xprize.frednet.org/index.php/Portal:Lego_Mindstorms
 AppSupportURL=http://wiki.xprize.frednet.org/index.php/Portal:Lego_Mindstorms
@@ -28,8 +28,8 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\Users\marc\Documents\frednet\google TFN-lego\legomindstorm\C api\Lego MindStorm Control Api\Lego MindStorm Control Api\bin\Release\Lego MindStorm Control Api.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\marc\Documents\frednet\google TFN-lego\legomindstorm\C api\Lego MindStorm Control Api\Lego MindStorm Control Api\bin\Release\*"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\marc\Documents\frednet\google TFN-lego\legomindstorm\C api2\C api\Lego MindStorm Control Api\Lego MindStorm Control Api\bin\Release\Lego MindStorm Control Api.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\marc\Documents\frednet\google TFN-lego\legomindstorm\C api2\C api\Lego MindStorm Control Api\Lego MindStorm Control Api\bin\Release\*"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\marc\Documents\frednet\google TFN-lego\legomindstorm\web\rover_v_3_0\*"; DestDir: "c:\wamp\www\rover"; Flags: ignoreversion
 ;Source: "C:\Users\marc\Documents\frednet\google TFN-lego\legomindstorm\web\rover_v_3_0\template\*"; DestDir: "c:\wamp\www\rover\template"; Flags: ignoreversion
 Source: "C:\Users\marc\Documents\frednet\google TFN-lego\legomindstorm\web\rover_v_3_0\template\default\*"; DestDir: "c:\wamp\www\rover\template\default"; Flags: ignoreversion
