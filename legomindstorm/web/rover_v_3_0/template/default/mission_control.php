@@ -26,17 +26,9 @@ function create_player_small($id,$clip_id){
 
 	<tr>
 		<td colspan="2">
-		<div id="mainPlayer"><object width="425" height="344" id="mainPlayer"
-			style="margin-left: 1em;">
-			<param name="movie"
-				value="http://www.youtube.com/v/uHLZ-HQKS1k&hl=en&fs=1&"></param>
-			<param name="allowFullScreen" value="true"></param>
-			<param name="allowscriptaccess" value="always"></param>
-			<param name="autoplay" value="true"></param>
-			<embed name="mainPlayer"
-				src="http://www.youtube.com/v/uHLZ-HQKS1k&hl=en&fs=1&"
-				type="application/x-shockwave-flash" allowscriptaccess="always"
-				allowfullscreen="true" width="425" height="344"></embed> </object></div>
+		<div id="mainPlayer">
+		<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="400" height="320" id="utv864871"><param name="flashvars" value="autoplay=false&amp;brand=embed&amp;cid=1327508"/><param name="allowfullscreen" value="true"/><param name="allowscriptaccess" value="always"/><param name="movie" value="http://www.ustream.tv/flash/live/1/1327508"/><embed flashvars="autoplay=false&amp;brand=embed&amp;cid=1327508" width="400" height="320" allowfullscreen="true" allowscriptaccess="always" id="utv864871" name="utv_n_683154" src="http://www.ustream.tv/flash/live/1/1327508" type="application/x-shockwave-flash" /></object><a href="http://www.ustream.tv/" style="padding: 2px 0px 4px; width: 400px; background: #ffffff; display: block; color: #000000; font-weight: normal; font-size: 10px; text-decoration: underline; text-align: center;" target="_blank">Free live streaming by Ustream</a>
+		</div>
 		</td>
 		<td><strong>sensor data:</strong>
 		<div id="sensors">Please wait</div>
