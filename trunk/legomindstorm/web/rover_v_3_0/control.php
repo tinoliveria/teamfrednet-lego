@@ -54,37 +54,9 @@ Lego mindstorm missions
 				<table width="100%">
 					<tr>
 						<td width="*">
-						<div align="center"><OBJECT id='mediaPlayer' width="320"
-							height="285" classid='CLSID:22d6f312-b0f6-11d0-94ab-0080c74c7e95'
-							codebase='http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab#Version=5,1,52,701'
-							standby='Loading Microsoft Windows Media Player components...'
-							type='application/x-oleobject'>
-							<param name='fileName' value="<?php echo $stream_url; ?>">
-							
-							
-							<param name='animationatStart' value='true'>
-							
-							
-							<param name='transparentatStart' value='true'>
-							
-							
-							<param name='autoStart' value="true">
-							
-							
-							<param name='showControls' value="true">
-							
-							
-							<param name='loop' value="true">
-							
-							
-							<EMBED type='application/x-mplayer2'
-								pluginspage='http://microsoft.com/windows/mediaplayer/en/download/'
-								id='mediaPlayer' name='mediaPlayer' displaysize='4'
-								autosize='-1' bgcolor='darkblue' showcontrols="true"
-								showtracker='-1' showdisplay='0' showstatusbar='-1'
-								videoborder3d='-1' width="320" height="285"
-								src="<?php echo $stream_url; ?>" autostart="true"
-								designtimesp='5311' loop="true"> </EMBED> </OBJECT></div>
+						<div align="center">
+						<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="400" height="320" id="utv864871"><param name="flashvars" value="autoplay=false&amp;brand=embed&amp;cid=1327508"/><param name="allowfullscreen" value="true"/><param name="allowscriptaccess" value="always"/><param name="movie" value="http://www.ustream.tv/flash/live/1/1327508"/><embed flashvars="autoplay=false&amp;brand=embed&amp;cid=1327508" width="400" height="320" allowfullscreen="true" allowscriptaccess="always" id="utv864871" name="utv_n_683154" src="http://www.ustream.tv/flash/live/1/1327508" type="application/x-shockwave-flash" /></object><a href="http://www.ustream.tv/" style="padding: 2px 0px 4px; width: 400px; background: #ffffff; display: block; color: #000000; font-weight: normal; font-size: 10px; text-decoration: underline; text-align: center;" target="_blank">Free live streaming by Ustream</a>
+						</div>
 						</td>
 						<td width="200" valign="top">
 						<p><strong>Sensor data</strong></p>
