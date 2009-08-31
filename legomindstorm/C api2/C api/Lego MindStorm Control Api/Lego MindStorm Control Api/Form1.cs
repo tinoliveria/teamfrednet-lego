@@ -89,7 +89,7 @@ namespace Lego_MindStorm_Control_Api
 
         private void timer2_Tick(object sender, EventArgs e)
         {
-            if (config.sensor_auto_on_off)
+            if (config.sensor_auto_on_off == true)
             {
             string temp,sql;
             
@@ -490,6 +490,7 @@ namespace Lego_MindStorm_Control_Api
         public static int[] speed_motors = {80,80,80};
         public static void setSensors()
         {
+            if(nxt.IsConnected){
             if (nxt.SetSensorMode(NXTBrick.Sensor.First,
                 config.sensorType[0],
                 config.sensorMode[0]) != true)
@@ -514,6 +515,9 @@ namespace Lego_MindStorm_Control_Api
             {
                 IrcBot.log += "Failed setting input mode(4)\n";
             }
+                }else{
+                    MessageBox.Show("NXT is not connect!");
+                }
         }
         public static void run()
         {

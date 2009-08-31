@@ -94,6 +94,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="MySql.Data.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="settings.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
