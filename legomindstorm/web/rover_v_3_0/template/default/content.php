@@ -4,7 +4,7 @@
  * @return content string
  */
 function build_content(){
-	global $template_name,$wiki_server,$wiki_prefixed,$wiki_cache_time;
+	global $template_name,$wiki_server,$wiki_prefixed,$wiki_cache_time,$stream_gid;
 	if(!isset($_GET['namespace'])){
 		//please wait
 		echo("<img src=\"template/" . $template_name . "/img/ajax-loader.gif\" alt=\"Loading\" />");
@@ -29,6 +29,7 @@ function build_content(){
 		$allowed['mission_control'] = true;
 		$allowed['rover_program'] = true;
 		$allowed['pre_program'] = true;
+		$allowed['time'] = true;
 		if(isset($allowed[substr($namespace,5)])){
 			include(substr($namespace,5) . ".php");
 		}else{

@@ -2,29 +2,29 @@
 include("config.php");
 //ajax.php
 if(isset($_GET['message'])){
-// Create 100 byte shared memory block with system id of 0xff3
-$shm_id = shmop_open($ram_key, "c", 0644, $ram_size);
-if (!$shm_id) {
-    echo "Couldn't create shared memory segment\n";
-}
-// Get shared memory block's size
-$shm_size = shmop_size($shm_id);
-// Now lets read 
-$my_string = shmop_read($shm_id, 0, $shm_size);
-if (!$my_string) {
-    echo "Couldn't read from shared memory block\n";
-}
-//contert it
-if($my_string{0}!= '\0' ){
-	
-$database = unserialize($my_string);
-//echo "From Ram:";
-//print_r($database);
-}else{
-$database = array();
-$database['lowcount'] = 1;
-$database['count'] = 1;
-}
+	// Create 100 byte shared memory block with system id of 0xff3
+	$shm_id = shmop_open($ram_key, "c", 0644, $ram_size);
+	if (!$shm_id) {
+		echo "Couldn't create shared memory segment\n";
+	}
+	// Get shared memory block's size
+	$shm_size = shmop_size($shm_id);
+	// Now lets read
+	$my_string = shmop_read($shm_id, 0, $shm_size);
+	if (!$my_string) {
+		echo "Couldn't read from shared memory block\n";
+	}
+	//contert it
+	if($my_string{0}!= '\0' ){
+
+		$database = unserialize($my_string);
+		//echo "From Ram:";
+		//print_r($database);
+	}else{
+		$database = array();
+		$database['lowcount'] = 1;
+		$database['count'] = 1;
+	}
 	//check type message
 	$message = $_GET['message'];
 	if(substr($message,0,3)=="cmd"){
@@ -44,6 +44,10 @@ $database['count'] = 1;
 		$who_ID  = 0 ;
 		$_SESSION['user_ID'] = $who_ID;
 	}
+	//update last online time
+	$sql = "UPDATE `users` SET `last`=" . date("U")." WHERE `ID`='{$_SESSION['user_ID']}'";
+	$result = mysql_query($sql);
+	//Check user
 	$sql = "SELECT * FROM `users` WHERE `ID`=$who_ID";
 	$result = mysql_query($sql);
 	$row = mysql_fetch_array( $result );
@@ -57,106 +61,104 @@ $database['count'] = 1;
 	$sql = "INSERT `log_current_session` SET `type`='$type', `when`='$time', `message`='".$mes."', `who_ID`='$who_ID'";
 	mysql_query($sql) or die(mysql_error() . "SQL: $sql");
 	//in to RAM
-	if($type == "chat"){	
-	$database[$database['count']] =  date("H:i:s") . "{$row['nickname']}: $mes<br />\n";
-	$database['count']++;
-	
-	}
-	//update last online time
-	$sql = "UPDATE `users` SET `last`=" . date("U")." WHERE `ID`='{$_SESSION['user_ID']}'";
-	$result = mysql_query($sql);
-	//save ram
-$data = serialize($database);
-//check size
-if((strlen($data)/$ram_size) > 0.80){
-	//clean out(remove 10 records)
-for($i = $database['lowcount'];($i < ($database['lowcount']+10)) && ($i < ($database['count']+10));$i++){
-		unset($database[$i]);
-	}
-	$database['lowcount'] = $i;
-}
-$data = serialize($database);
-// Lets write a test string into shared memory
-$shm_bytes_written = shmop_write($shm_id, $data, 0);
+	if($type == "chat"){
+		$database[$database['count']] =  date("H:i:s") . "{$row['nickname']}: $mes<br />\n";
+		$database['count']++;
 
-if ($shm_bytes_written != strlen($data)) {
-    echo "Couldn't write the entire length of data\n";
-}
-shmop_close($shm_id);
+	}
+
+	//save ram
+	$data = serialize($database);
+	//check size
+	if((strlen($data)/$ram_size) > 0.80){
+		//clean out(remove 10 records)
+		for($i = $database['lowcount'];($i < ($database['lowcount']+10)) && ($i < ($database['count']+10));$i++){
+			unset($database[$i]);
+		}
+		$database['lowcount'] = $i;
+	}
+	$data = serialize($database);
+	// Lets write a test string into shared memory
+	$shm_bytes_written = shmop_write($shm_id, $data, 0);
+
+	if ($shm_bytes_written != strlen($data)) {
+		echo "Couldn't write the entire length of data\n";
+	}
+	shmop_close($shm_id);
 }
 if(isset($_GET['update'])){
 	//get RAM
 	// Create 100 byte shared memory block with system id of 0xff3
-$shm_id = shmop_open($ram_key, "c", 0644, $ram_size);
-if (!$shm_id) {
-    echo "Couldn't create shared memory segment\n";
-}
-//$now = (date("U") + microtime());
-// Get shared memory block's size
-$shm_size = shmop_size($shm_id);
-// Now lets read 
-$my_string = shmop_read($shm_id, 0, $shm_size);
-if (!$my_string) {
-    echo "Couldn't read from shared memory block\n";
-}
-//contert it
-//echo ord($my_string{0});
-if(ord($my_string{0}) != 0){
-	
-$database = unserialize($my_string);
-//print_r($database);
-}else{
-$database = array();
-$database['count'] = 1;
-$database['lowcount'] = 1;
-$database['last_time_sql'] = time() + microtime();
-}
-
-if(isset($_SESSION['last_time_check'])){
-	for($i = $_SESSION['last_time_check'];$i < $database['count'];$i++){
-		echo $database[$i];
+	$shm_id = shmop_open($ram_key, "c", 0644, $ram_size);
+	if (!$shm_id) {
+		echo "Couldn't create shared memory segment\n";
 	}
-	$_SESSION['last_time_check'] = $database['count'];
-}else{
-$_SESSION['last_time_check'] = $database['count'];
-}
-//check max every 1 sec in db
-if(($database['last_time_sql'] + 1)<(time()+microtime())){
-
-	
-	//update
-	$last_id = $database['last_time_sql'];
-	$now = time()+microtime();
-	$sql = "SELECT * FROM `log_current_session`,`users` WHERE `log_current_session`.`who_ID`=`users`.`ID` AND `log_current_session`.`when`>=$last_id AND `log_current_session`.`when` < $now AND `log_current_session`.`status`!='' AND `log_current_session`.`type`='cmd' ORDER BY `log_current_session`.`when` DESC";
-	$result = mysql_query($sql);
-	while($row = mysql_fetch_array( $result )){
-		//print_r($row);
-		$database[$database['count']] =  date("H:i:s ") . $row['nickname'] . ": " . $row['message'] . " <strong>Result: " . $row['status']."</strong><br />\n";
-		$database['count']++;
-		//echo date("H:i:s ") . $row['nickname'] . ": " . $row['message'];
-		//if($row['type'] == 'cmd'){
-		//	echo  " <strong>Result: " . $row['status']."</strong>";
-		//}
-		//echo "<br />\n";
+	//$now = (date("U") + microtime());
+	// Get shared memory block's size
+	$shm_size = shmop_size($shm_id);
+	// Now lets read
+	$my_string = shmop_read($shm_id, 0, $shm_size);
+	if (!$my_string) {
+		echo "Couldn't read from shared memory block\n";
 	}
-	$database['last_time_sql'] = $now;
-	
-   
-}
-   //save ram
-$data = serialize($database);
-// Lets write a test string into shared memory
-$shm_bytes_written = shmop_write($shm_id, $data, 0);
-//echo "used: " . round(strlen($data)/$ram_size*100,2) . "%<br />\n";
-if ($shm_bytes_written != strlen($data)) {
-  echo "Couldn't write the entire length of data\n";
-}
-shmop_close($shm_id);
-//$last_id = (date("U") + microtime());
-   //echo ($now-$last_id). "s <br />\n";
+	//contert it
+	//echo ord($my_string{0});
+	if(ord($my_string{0}) != 0){
+
+		$database = unserialize($my_string);
+		//print_r($database);
+	}else{
+		$database = array();
+		$database['count'] = 1;
+		$database['lowcount'] = 1;
+		$database['last_time_sql'] = time() + microtime();
+	}
+
+	if(isset($_SESSION['last_time_check'])){
+		for($i = $_SESSION['last_time_check'];$i < $database['count'];$i++){
+			echo $database[$i];
+		}
+		$_SESSION['last_time_check'] = $database['count'];
+	}else{
+		$_SESSION['last_time_check'] = $database['count'];
+	}
+	//check max every 1 sec in db
+	if(($database['last_time_sql'] + 1)<(time()+microtime())){
+
+
+		//update
+		$last_id = $database['last_time_sql'];
+		$now = time()+microtime();
+		$sql = "SELECT * FROM `log_current_session`,`users` WHERE `log_current_session`.`who_ID`=`users`.`ID` AND `log_current_session`.`when`>=$last_id AND `log_current_session`.`when` < $now AND `log_current_session`.`status`!='' AND `log_current_session`.`type`='cmd' ORDER BY `log_current_session`.`when` DESC";
+		$result = mysql_query($sql);
+		while($row = mysql_fetch_array( $result )){
+			//print_r($row);
+			$database[$database['count']] =  date("H:i:s ") . $row['nickname'] . ": " . $row['message'] . " <strong>Result: " . $row['status']."</strong><br />\n";
+			$database['count']++;
+			//echo date("H:i:s ") . $row['nickname'] . ": " . $row['message'];
+			//if($row['type'] == 'cmd'){
+			//	echo  " <strong>Result: " . $row['status']."</strong>";
+			//}
+			//echo "<br />\n";
+		}
+		$database['last_time_sql'] = $now;
+
+		 
+	}
+	//save ram
+	$data = serialize($database);
+	// Lets write a test string into shared memory
+	$shm_bytes_written = shmop_write($shm_id, $data, 0);
+	//echo "used: " . round(strlen($data)/$ram_size*100,2) . "%<br />\n";
+	if ($shm_bytes_written != strlen($data)) {
+		echo "Couldn't write the entire length of data\n";
+	}
+	shmop_close($shm_id);
+	//$last_id = (date("U") + microtime());
+	//echo ($now-$last_id). "s <br />\n";
 }
 if(isset($_GET['online'])){
-//check if someone has acces
+	//check if someone has acces
 	//check if now else does this
 	if(!file_exists("check.txt")){
 		//write down he doning it
@@ -177,7 +179,7 @@ if(isset($_GET['online'])){
 			$wait = mysql_num_rows($result);
 			if(count($row)>1){
 			 //to do: based on the number waiting set control time
-			 $sql = "UPDATE `users` SET `start_control`=".time().", `end_control`=".(time()+60*5)." WHERE `ID`={$row['ID']}";
+			 $sql = "UPDATE `users` SET `start_control`=".time().", `end_control`=".(time()+$user_control_time)." WHERE `ID`={$row['ID']}";
 			 mysql_query($sql);
 			 echo date("H:i:s ") . "system: {$row['nickname']} is now in control.<br />\n";
 			}
@@ -212,7 +214,7 @@ if(isset($_GET['online'])){
 		}
 		if($row['start_control'] > date("U"))
 		{
-			echo "This user will be in control in ".(($row['start_control']-date("U"))/60)." minute.";
+			echo "This user will be in control in ".round(($row['start_control']-date("U"))/60)." minute.";
 		}
 		?></td>
 	</tr>
@@ -242,49 +244,75 @@ Hello
 	<?php
 }
 if(isset($_GET['rank'])){
-$sql = "SELECT * FROM `result` ORDER BY `result`.`point` DESC LIMIT 0, 5 ";
-$result = mysql_query($sql) or die(mysql_error() . "SQL: $sql");
-while($row = mysql_fetch_array( $result )){
-	echo "<li>{$row['nickname']} {$row['point']}</li>\n";
+	//update last online time
+	$sql = "UPDATE `users` SET `last`=" . date("U")." WHERE `ID`='{$_SESSION['user_ID']}'";
+	$result = mysql_query($sql);
+	$sql = "SELECT * FROM `result` ORDER BY `result`.`point` DESC LIMIT 0, 5 ";
+	$result = mysql_query($sql) or die(mysql_error() . "SQL: $sql");
+	while($row = mysql_fetch_array( $result )){
+		echo "<li>{$row['nickname']} {$row['point']}</li>\n";
+	}
 }
+if(isset($_GET['gettime'])){
+	$sql = "SELECT * FROM `users` WHERE `end_control`>".time() ." ORDER BY  `users`.`start_control` DESC LIMIT 0, 1";
+	$result = mysql_query($sql) or die(mysql_error() . "SQL: $sql");
+	$row = mysql_fetch_array( $result );
+	//print_r($row);
+	if(count($row)<2){
+		$starttime = time();
+	}else{
+		$starttime = $row['end_control'];
+	}
+	$endtime = $starttime + $user_control_time;
+	//who
+	if(isset($_SESSION['user_ID'])){
+		$who_ID = $_SESSION['user_ID'];
+	}else{
+		$who_ID  = 0 ;
+		$_SESSION['user_ID'] = $who_ID;
+	}
+	$sql = "UPDATE `users` SET `start_control`=".$starttime.", `end_control`=".$endtime." WHERE `ID`=$who_ID";
+	mysql_query($sql);
+	echo "<script>alert('You can start controling the rover from " . date("H:i:s",$starttime) . " to " . date("H:i:s",$endtime). "');window.location.href='index.php#file_time';</script>";
+
 }
 if(isset($_GET['rank_day'])){
-$sql = "SELECT * FROM `result` WHERE time > ".(time()-3600*24)." ORDER BY `result`.`point` DESC LIMIT 0, 5 ";
-$result = mysql_query($sql) or die(mysql_error() . "SQL: $sql");
-while($row = mysql_fetch_array( $result )){
-	echo "<li>{$row['nickname']} {$row['point']}</li>\n";
-}
+	$sql = "SELECT * FROM `result` WHERE time > ".(time()-3600*24)." ORDER BY `result`.`point` DESC LIMIT 0, 5 ";
+	$result = mysql_query($sql) or die(mysql_error() . "SQL: $sql");
+	while($row = mysql_fetch_array( $result )){
+		echo "<li>{$row['nickname']} {$row['point']}</li>\n";
+	}
 }
 if(isset($_GET['score'])){
-// Create 100 byte shared memory block with system id of 0xff3
-$shm_id = shmop_open($ram_key, "c", 0644, $ram_size);
-if (!$shm_id) {
-    echo "Couldn't create shared memory segment\n";
-}
-// Get shared memory block's size
-$shm_size = shmop_size($shm_id);
-// Now lets read 
-$my_string = shmop_read($shm_id, 0, $shm_size);
-if (!$my_string) {
-    echo "Couldn't read from shared memory block\n";
-}
-//contert it
-if($my_string{0}!= '\0' ){
-	
-$database = unserialize($my_string);
-//echo "From Ram:";
-//print_r($database);
-}else{
-$database = array();
-$database['lowcount'] = 1;
-$database['count'] = 1;
-}
+	// Create 100 byte shared memory block with system id of 0xff3
+	$shm_id = shmop_open($ram_key, "c", 0644, $ram_size);
+	if (!$shm_id) {
+		echo "Couldn't create shared memory segment\n";
+	}
+	// Get shared memory block's size
+	$shm_size = shmop_size($shm_id);
+	// Now lets read
+	$my_string = shmop_read($shm_id, 0, $shm_size);
+	if (!$my_string) {
+		echo "Couldn't read from shared memory block\n";
+	}
+	//contert it
+	if($my_string{0}!= '\0' ){
+
+		$database = unserialize($my_string);
+		//echo "From Ram:";
+		//print_r($database);
+	}else{
+		$database = array();
+		$database['lowcount'] = 1;
+		$database['count'] = 1;
+	}
 	$sql2 = "INSERT `result` SET
 	`nickname`='{$_SESSION['nickname']}', 
 	`point`={$_GET['score']}, 
 	`ID_user`={$_SESSION['user_ID']},
 	`time`=" . time();
-	
+
 
 	$time = time();
 	$message = "{$_SESSION['nickname']} has made a score of {$_GET['score']}.";
@@ -312,15 +340,15 @@ $database['count'] = 1;
 	mysql_query($sql) or die(mysql_error() . "SQL: $sql");
 	$database[$database['count']] =  date("H:i:s ") . "{$row['nickname']}: $mes<br />\n";
 	$database['count']++;
-//save ram
-$data = serialize($database);
-// Lets write a test string into shared memory
-$shm_bytes_written = shmop_write($shm_id, $data, 0);
-//echo "used: " . round(strlen($data)/$ram_size*100,2) . "%<br />\n";
-if ($shm_bytes_written != strlen($data)) {
-  echo "Couldn't write the entire length of data\n";
-}
-shmop_close($shm_id);
+	//save ram
+	$data = serialize($database);
+	// Lets write a test string into shared memory
+	$shm_bytes_written = shmop_write($shm_id, $data, 0);
+	//echo "used: " . round(strlen($data)/$ram_size*100,2) . "%<br />\n";
+	if ($shm_bytes_written != strlen($data)) {
+		echo "Couldn't write the entire length of data\n";
+	}
+	shmop_close($shm_id);
 }
 // TODO this!
 if(isset($_GET['logout'])){
@@ -339,18 +367,29 @@ Hello
 	}
 }
 if(isset($_GET['clip'])){
-	?>
-<div id="mainPlayer"><object width="425" height="344" id="mainPlayer"
-	style="margin-left: 1em;">
-	<param name="movie"
-		value="http://www.youtube.com/v/<?php echo $_GET['clip']; ?>&hl=en&fs=1&"></param>
-	<param name="allowFullScreen" value="true"></param>
-	<param name="allowscriptaccess" value="always"></param>
-	<param name="autoplay" value="true"></param>
-	<embed name="mainPlayer"
-		src="http://www.youtube.com/v/<?php echo $_GET['clip']; ?>&hl=en&fs=1&"
-		type="application/x-shockwave-flash" allowscriptaccess="always"
-		allowfullscreen="true" width="425" height="344"></embed> </object> <?php
+	function main_player($id){
+
+		?>
+
+<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="400"
+	height="320" id="ID_object">
+	<param name="flashvars"
+		value="autoplay=true&amp;brand=embed&amp;cid=<?php echo $id; ?>" />
+	<param name="allowfullscreen" value="true" />
+	<param name="allowscriptaccess" value="always" />
+	<param name="movie" value="http://www.ustream.tv/flash/live/1/1327508" />
+	<embed
+		flashvars="autoplay=true&amp;brand=embed&amp;cid=<?php echo $id; ?>"
+		width="400" height="320" allowfullscreen="true"
+		allowscriptaccess="always" id="utv864871" name="utv_n_683154"
+		src="http://www.ustream.tv/flash/live/1/<?php echo $id; ?>"
+		type="application/x-shockwave-flash" /></object>
+<a href="http://www.ustream.tv/"
+	style="padding: 2px 0px 4px; width: 400px; background: #ffffff; display: block; color: #000000; font-weight: normal; font-size: 10px; text-decoration: underline; text-align: center;"
+	target="_blank">Free live streaming by Ustream</a>
+		<?php
+	}
+	main_player($_GET['clip']);
 }
 if(isset($_GET['sensor'])){
 	$sql = "SELECT * FROM `sensors` WHERE 1 ORDER BY `when` DESC LIMIT 0,1";

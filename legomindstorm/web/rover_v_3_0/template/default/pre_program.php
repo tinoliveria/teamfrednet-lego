@@ -7,6 +7,5 @@ Enter ID:
 	type="button" value="Load" onclick="pre_program_id();" />
 <br />
 <div id="pre_program"></div>
-<iframe
-	id="hiddenframe" name="hiddenframe" src="about:blank" height="0"
-	width="0" frameborder="0"></iframe>
+<iframe id="hiddenframe" name="hiddenframe"
+	src="about:blank" height="0" width="0" frameborder="0"></iframe>

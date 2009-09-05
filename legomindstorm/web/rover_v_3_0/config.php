@@ -10,19 +10,19 @@ $ram_size = 10000;
  */
 $ram_key = 0xff9;
 /**
- * Mysql database 
+ * Mysql database
  */
 $mysql['database'] = "rover";
 /**
- * Mysql user 
+ * Mysql user
  */
 $mysql['user'] = "root";
 /**
- * Mysql password 
+ * Mysql password
  */
 $mysql['password'] = "";
 /**
- * Mysql server 
+ * Mysql server
  */
 $mysql['server'] = "localhost";
 /**
@@ -42,25 +42,29 @@ if(!isset($_SESSION['last_time_check'])){
 }
 //timeout
 /**
- * Time before user will be set to Offline 
+ * Time before user will be set to Offline
  */
 $user_offline_time = 300;
 /**
- * Array from stream url's
- * Max 3 streams
- * 
+ * Time before user will be set to Offline
  */
-$stream_url = array("mms://192.168.50.103:81/");
+$user_control_time = 300;
+/**
+ * Array from stream gid's
+ * Max 3 streams
+ *
+ */
+$stream_gid = array("1327508","553",520983);
 /**
  * Template name
- * 
+ *
  */
 $template_name = "default";
 //wiki setting
 /**
  * The base url with / at the end
  * Example: http://wiki.xprize.frednet.org/
- * 
+ *
  */
 $wiki_server = "http://wiki.xprize.frednet.org/";
 $wiki_prefixed = "Lego_mindstorm_webpages:";
