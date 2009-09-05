@@ -52,13 +52,11 @@ build_content();
 <img alt="World Map" title="World Map" id="RegionMap"
 	style="width: 100%;" src="img/regional_map.gif" /></div>
 	-->
-<div class="rankBox" id="login">
-<?php 
+<div class="rankBox" id="login"><?php 
 if(isset($_SESSION['nickname'])){
 	echo "Hello " . $_SESSION['nickname'];
 }else{
-?>
-Set Your nick Name:<br />
+	?> Set Your nick Name:<br />
 nickname:<input type="text" id="nickname"
 	value="<?php
             if(isset($_SESSION['nickname'])){echo $_SESSION['nickname']; } ?>" /><br />
@@ -83,6 +81,7 @@ nickname:<input type="text" id="nickname"
 		<td class="footer"><a class="hilite2"
 			onclick="update_url('static_contact');">Contact</a></td>
 		<td class="footer"><a href="http://validator.w3.org/check?uri=referer">
+
 		<img src="http://www.w3.org/Icons/valid-xhtml10-blue"
 			alt="Valid XHTML 1.0 Transitional" style="border: 0; height: 20px" />
 		</a></td>
