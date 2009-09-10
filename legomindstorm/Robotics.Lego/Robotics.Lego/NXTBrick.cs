@@ -470,7 +470,39 @@ namespace AForge.Robotics.Lego
             return SendCommand( new byte[] { (byte) NXTCommandType.DirectCommand,
                 (byte) NXTDirectCommand.KeepAlive }, new byte[7] );
         }
-
+        /// <summary>
+        /// Open write handeler.
+        /// </summary>
+        /// 
+        /// <param name="name">Filename max[15.3].</param>
+        /// 
+        /// <returns>Returns <b>true</b> if device is alive or <b>false</b> otherwise.</returns>
+        /// 
+        public bool RunProgram(string name, long size)
+        {
+            byte[] command = new byte[name.Length + 3];
+            char[] name_chat = name.ToCharArray();
+            int i;
+            // prepare command
+            command[0] = (byte)NXTCommandType.SystemCommand;
+            command[1] = (byte)NXTDirectCommand.OpenWrite;
+            //loop to send filename
+            for (i = 2; (i < 21) && (i - 2 < name.Length); i++)
+            {
+                command[i] = (byte)name_chat[i - 2];
+            }
+            command[i] = 0x00;
+            //send size
+            command[i+1] = (byte)size;
+            command[i + 2] = (byte)(size << 8);
+            command[i + 3] = (byte)(size << 16);
+            command[i + 4] = (byte)(size << 24);
+            //debug: show command
+           
+            // execute command
+            return SendCommand(command, new byte[3]);
+        }
+        
         /// <summary>
         /// Runs program.
         /// </summary>

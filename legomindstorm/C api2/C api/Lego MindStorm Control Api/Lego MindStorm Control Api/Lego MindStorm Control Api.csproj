@@ -94,6 +94,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AForge.Robotics.Lego.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="MySql.Data.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
