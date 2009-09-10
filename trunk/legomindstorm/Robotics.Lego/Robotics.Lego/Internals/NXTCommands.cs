@@ -80,6 +80,11 @@ namespace AForge.Robotics.Lego.Internals
         Program = 0x00,
 
         /// <summary>
+        /// open file write handler.
+        /// </summary>
+        OpenWrite = 0x81,
+
+        /// <summary>
         /// Stop any progam.
         /// </summary>
         StopProgram = 0x00,

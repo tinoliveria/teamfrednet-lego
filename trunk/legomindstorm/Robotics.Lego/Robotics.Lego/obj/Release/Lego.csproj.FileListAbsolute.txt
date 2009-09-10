@@ -1,0 +1,6 @@
+C:\Users\marc\Documents\frednet\google TFN-lego\legomindstorm\Release\AForge.Robotics.Lego.dll
+C:\Users\marc\Documents\frednet\google TFN-lego\legomindstorm\Release\AForge.Robotics.Lego.pdb
+C:\Users\marc\Documents\frednet\google TFN-lego\legomindstorm\Release\AForge.Robotics.Lego.xml
+C:\Users\marc\Documents\frednet\google TFN-lego\legomindstorm\Robotics.Lego\Robotics.Lego\obj\Release\ResolveAssemblyReference.cache
+C:\Users\marc\Documents\frednet\google TFN-lego\legomindstorm\Robotics.Lego\Robotics.Lego\obj\Release\AForge.Robotics.Lego.dll
+C:\Users\marc\Documents\frednet\google TFN-lego\legomindstorm\Robotics.Lego\Robotics.Lego\obj\Release\AForge.Robotics.Lego.pdb

@@ -153,6 +153,8 @@ namespace Lego_MindStorm_Control_Api
                 sensor3type.Items.Add(type.ToString());
                 sensor4type.Items.Add(type.ToString());
             }
+            //just do
+            
 
             comport.Text = config.Rover_port;
         }
@@ -522,6 +524,7 @@ namespace Lego_MindStorm_Control_Api
         public static void run()
         {
             
+            //nxt.
             if (nxt.Connect(config.Rover_port))
             {
                 IrcBot.log += "Connected successfully\n";
