@@ -31,12 +31,12 @@ function getXMLHttp()
 	  }	  
 	  return xmlHttp;
 }
-
+xmlHttp = getXMLHttp();
 
 function ajax_donwload(url, divId)
 {
 	
-	xmlHttp = getXMLHttp();
+	
 		
 //xmlHttp = getXMLHttp();
 
@@ -87,7 +87,7 @@ xmlHttp.send(null);
   function ajax_donwload_add(url, divId)
 {
 	
-	  xmlHttp = getXMLHttp();
+	 
 
 if(xmlHttp.readyState == 0  || xmlHttp.readyState == 4){
 

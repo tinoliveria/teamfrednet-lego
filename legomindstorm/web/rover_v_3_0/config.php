@@ -54,7 +54,7 @@ $user_control_time = 300;
  * Max 3 streams
  *
  */
-$stream_gid = array("1327508","553",520983);
+$stream_gid = array();
 /**
  * Template name
  *
