@@ -7,8 +7,8 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{3F9057C7-52AA-4849-9AA1-815D692136AC}
 AppName=Lego Mindstorm Remote Control
-VersionInfoVersion=0.2.3.1
-AppVerName=Lego Mindstorm Remote Control 0.2.3.1
+VersionInfoVersion=0.2.4.0
+AppVerName=Lego Mindstorm Remote Control 0.2.4.0
 AppPublisher=Frednet
 AppPublisherURL=http://wiki.xprize.frednet.org/index.php/Portal:Lego_Mindstorms
 AppSupportURL=http://wiki.xprize.frednet.org/index.php/Portal:Lego_Mindstorms

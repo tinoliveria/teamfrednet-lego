@@ -9,6 +9,7 @@ namespace AForge.Robotics.Lego
 {
     using System;
     using AForge.Robotics.Lego.Internals;
+    using System.Diagnostics;
 
     /// <summary>
     /// Manipulation of Lego Mindstorms NXT device.
@@ -755,7 +756,8 @@ namespace AForge.Robotics.Lego
             // check motor port
             if ( motor == Motor.All )
             {
-                throw new ArgumentException( "Motor state can be retrieved for one motor only" );
+                //throw new ArgumentException( "Motor state can be retrieved for one motor only" );
+                Debug.WriteLine("Motor state can be retrieved for one motor only");
             }
 
             byte[] command = new byte[3];
@@ -902,7 +904,7 @@ namespace AForge.Robotics.Lego
                 // check connection
                 if ( communicationInterface == null )
                 {
-                    throw new NullReferenceException( "Not connected to NXT brick" );
+                    Debug.WriteLine( "Not connected to NXT brick" );
                 }
 
                 // send message to NXT brick
@@ -915,12 +917,12 @@ namespace AForge.Robotics.Lego
                     {
                         // check that reply corresponds to command
                         if ( reply[1] != command[1] )
-                            throw new ApplicationException( "Reply does not correspond to command" );
+                            Debug.WriteLine("Reply does not correspond to command");
 
                         // check for errors
                         if ( reply[2] != 0 )
                         {
-                            throw new ApplicationException( "Error occured in NXT brick. Error code: " + reply[2].ToString( ) );
+                            Debug.WriteLine("Error occured in NXT brick. Error code: " + reply[2].ToString());
                         }
 
                         result = true;
