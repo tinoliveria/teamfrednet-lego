@@ -46,6 +46,7 @@ namespace Lego_MindStorm_Control_Api
             mysql_check.Abort();
             InternetRelayChat.Abort();
             Application.Exit();
+            
         }
         
 
@@ -91,6 +92,7 @@ namespace Lego_MindStorm_Control_Api
         {
             if (config.sensor_auto_on_off == true)
             {
+                NXT_ROVER_CONTROL.setSensors();
             string temp,sql;
             
             TimeSpan ts = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
@@ -117,7 +119,8 @@ namespace Lego_MindStorm_Control_Api
             {
                 cmd[3] = NXT_ROVER_CONTROL.command_translation("cmd sensor value 4");
                 temp += "Sensor 4: " + cmd[3].value + "\n";
-            }   
+            }
+            temp += "Speed{A,B,C}: {" + NXT_ROVER_CONTROL.speed_motors[0] + "," + NXT_ROVER_CONTROL.speed_motors[1] + "," + NXT_ROVER_CONTROL.speed_motors[2] + "}" + "\n";
                 
                 
                 
@@ -161,31 +164,50 @@ namespace Lego_MindStorm_Control_Api
 
         private void sensor1type_SelectedIndexChanged(object sender, EventArgs e)
         {
-            config.sensorType[0] = NXT_ROVER_CONTROL.sensorTypes[sensor1type.SelectedIndex];
-            
-            //update
-            NXT_ROVER_CONTROL.setSensors();
+            if (sensor1type.SelectedIndex != -1)
+            {
+                config.sensorType[0] = NXT_ROVER_CONTROL.sensorTypes[sensor1type.SelectedIndex];
+                config.sensorMode[0] = NXT_ROVER_CONTROL.sensorModes_based_on_sensorTypes[sensor1type.SelectedIndex];
+
+                //update
+                NXT_ROVER_CONTROL.setSensors();
+            }
         }
 
         private void sensor2type_SelectedIndexChanged(object sender, EventArgs e)
         {
-            config.sensorType[1] = NXT_ROVER_CONTROL.sensorTypes[sensor2type.SelectedIndex];
-            //update
-            NXT_ROVER_CONTROL.setSensors();
+
+            if (sensor2type.SelectedIndex != -1)
+            {
+                config.sensorType[1] = NXT_ROVER_CONTROL.sensorTypes[sensor2type.SelectedIndex];
+                config.sensorMode[1] = NXT_ROVER_CONTROL.sensorModes_based_on_sensorTypes[sensor2type.SelectedIndex];
+                //update
+                NXT_ROVER_CONTROL.setSensors();
+            }
         }
 
         private void sensor3type_SelectedIndexChanged(object sender, EventArgs e)
         {
-            config.sensorType[2] = NXT_ROVER_CONTROL.sensorTypes[sensor3type.SelectedIndex];
-            //update
-            NXT_ROVER_CONTROL.setSensors();
+
+            if (sensor3type.SelectedIndex != -1)
+            {
+                config.sensorType[2] = NXT_ROVER_CONTROL.sensorTypes[sensor3type.SelectedIndex];
+                config.sensorMode[2] = NXT_ROVER_CONTROL.sensorModes_based_on_sensorTypes[sensor3type.SelectedIndex];
+                //update
+                NXT_ROVER_CONTROL.setSensors();
+            }
         }
 
         private void sensor4type_SelectedIndexChanged(object sender, EventArgs e)
         {
-            config.sensorType[3] = NXT_ROVER_CONTROL.sensorTypes[sensor4type.SelectedIndex];
-            //update
-            NXT_ROVER_CONTROL.setSensors();
+
+            if (sensor3type.SelectedIndex != -1)
+            {
+                config.sensorType[3] = NXT_ROVER_CONTROL.sensorTypes[sensor4type.SelectedIndex];
+                config.sensorMode[3] = NXT_ROVER_CONTROL.sensorModes_based_on_sensorTypes[sensor4type.SelectedIndex];
+                //update
+                NXT_ROVER_CONTROL.setSensors();
+            }
         }
 
         private void values_CheckedChanged(object sender, EventArgs e)
@@ -196,12 +218,18 @@ namespace Lego_MindStorm_Control_Api
         private void button1_Click(object sender, EventArgs e)
         {
             config.Rover_port = comport.Text;
+            button1.Enabled = false;
             rover.Start();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             rover.Abort();
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            timer2.Interval = (int)((int)numericUpDown1.Value * (int)100);
         }
 
         
@@ -271,6 +299,10 @@ namespace Lego_MindStorm_Control_Api
                           IrcBot.log += "faild\n";
 
                       }
+                  }
+                  else
+                  {
+                      //IrcBot.log += "noting to do\n";
                   }
               }
               else
@@ -345,21 +377,34 @@ namespace Lego_MindStorm_Control_Api
         {
             cmd.CommandText = sql;
             cmd.CommandType = CommandType.Text;
-
-            MySqlDataReader reader = cmd.ExecuteReader();
+            cmd.CommandTimeout = 1;
             mysql_results res = new mysql_results();
-            res.result = false;
-            while (reader.Read())
+            try
             {
-                res.ID = reader.GetInt32(0);
-                res.msg = reader.GetString(1);
-                res.when = reader.GetDouble(2);
-                res.result = true;
+                MySqlDataReader reader = cmd.ExecuteReader();
                 
+                res.result = false;
+                while (reader.Read())
+                {
+                    res.ID = reader.GetInt32(0);
+                    res.msg = reader.GetString(1);
+                    res.when = reader.GetDouble(2);
+                    res.result = true;
 
+
+                }
+
+                reader.Close();
             }
+            catch
+            {
+                res.ID = 0;
+                res.msg = "";
+                res.when = 0.0;
+                res.result = false;
 
-            reader.Close();
+                return res;
+            }
             return res;
         }
         
@@ -434,6 +479,14 @@ namespace Lego_MindStorm_Control_Api
       {
           sensor_auto_on_off = false;
       }
+      sensorMode[0] = NXTBrick.SensorMode.Raw;
+      sensorMode[1] = NXTBrick.SensorMode.Raw;
+      sensorMode[2] = NXTBrick.SensorMode.Raw;
+      sensorMode[3] = NXTBrick.SensorMode.Raw;
+      sensorType[0] = NXTBrick.SensorType.NoSensor;
+      sensorType[1] = NXTBrick.SensorType.NoSensor;
+      sensorType[2] = NXTBrick.SensorType.NoSensor;
+      sensorType[3] = NXTBrick.SensorType.NoSensor;
         }
     }
     class nxt_result
@@ -474,11 +527,20 @@ namespace Lego_MindStorm_Control_Api
         // relative sensormode
         public static NXTBrick.SensorMode[] sensorModes_based_on_sensorTypes = new NXTBrick.SensorMode[] {
             NXTBrick.SensorMode.Raw, NXTBrick.SensorMode.Boolean, 
-            NXTBrick.SensorMode.Celsius, NXTBrick.SensorMode.PeriodicCounter,
-            NXTBrick.SensorMode.AngleSteps, NXTBrick.SensorMode.Raw,
-            NXTBrick.SensorMode.Raw, NXTBrick.SensorMode.Raw,
-            NXTBrick.SensorMode.Raw, NXTBrick.SensorMode.Raw,
+            NXTBrick.SensorMode.Celsius, NXTBrick.SensorMode.Raw,
+            NXTBrick.SensorMode.AngleSteps, NXTBrick.SensorMode.PCTFullScale,
+            NXTBrick.SensorMode.PCTFullScale, NXTBrick.SensorMode.PCTFullScale,
+            NXTBrick.SensorMode.PCTFullScale, NXTBrick.SensorMode.Raw,
             NXTBrick.SensorMode.Raw, NXTBrick.SensorMode.Raw
+        };
+        // unit
+        public static string[] unit = new string[] {
+            "","",
+            " C","",
+            " Degrees"," %",
+            "%","%",
+            "%","",
+            "",""
         };
         // sensor modes
         public static NXTBrick.SensorMode[] sensorModes = new NXTBrick.SensorMode[] {
@@ -569,9 +631,10 @@ namespace Lego_MindStorm_Control_Api
 
             if (nxt.GetDeviceInformation(out deviceName, out btAddress, out btSignalStrength, out freeUserFlesh))
             {
-                IrcBot.log += "deviceName: " + deviceName;
-
-                IrcBot.log += string.Format("{0} {1} {2} {3} {4} {5} {6}\n",
+                deviceName = deviceName.Replace((char)0x00, ' ');
+                IrcBot.log += "deviceName: " + deviceName + "\n";
+                
+                IrcBot.log += string.Format("MAC: {0} {1} {2} {3} {4} {5} {6}\n",
                     btAddress[0].ToString("X2"),
                     btAddress[1].ToString("X2"),
                     btAddress[2].ToString("X2"),
@@ -581,8 +644,8 @@ namespace Lego_MindStorm_Control_Api
                     btAddress[6].ToString("X2")
                 );
 
-                IrcBot.log += btSignalStrength.ToString() + "\n";
-                IrcBot.log += freeUserFlesh.ToString() + "\n";
+                IrcBot.log += "btSignalStrength: " + btSignalStrength.ToString() + "\n";
+                IrcBot.log += "freeUserFlesh: " + freeUserFlesh.ToString() + "\n";
             }
             else
             {
@@ -596,7 +659,7 @@ namespace Lego_MindStorm_Control_Api
 
             if (nxt.GetBatteryPower(out batteryLevel))
             {
-                IrcBot.log += batteryLevel.ToString() + "\n";
+                IrcBot.log += "batteryLevel: " + batteryLevel.ToString() + "\n";
             }
             else
             {
@@ -681,12 +744,22 @@ namespace Lego_MindStorm_Control_Api
             result.result = false;
             result.type = "sensor";
             result.value = "0";
+            int key;
+            
             // get input values
             if (nxt.GetSensorValue(sensors[sensor-1], out sensorValues))
             {
                 result.result = sensorValues.IsValid;
-
-                result.value = "Raw: " + sensorValues.Raw.ToString() + " normalized: " + sensorValues.Normalized.ToString();
+                key = 0;
+                foreach(NXTBrick.SensorType sensorType_sp in sensorTypes){
+                    if (sensorValues.SensorType == sensorType_sp)
+                    {
+                    break;
+                }else{
+                    key++;
+                }
+                }
+                result.value = sensorValues.Scaled.ToString() + unit[key];
                 
                
                 
@@ -749,10 +822,17 @@ namespace Lego_MindStorm_Control_Api
         public static nxt_result motor_on(string motors)
         {
             string[] motors_array;
+            
             nxt_result motor_result = new nxt_result();
             motor_result.result = false;
             motor_result.value = "Motor not found.";
-            motors_array = motors.ToLower().Split('v');
+            motors = motors.ToLower();
+            if (motors == "all")
+            {
+                motors = "avbvc";
+            }
+            motors_array = motors.Split('v');
+            
             foreach (string motor in motors_array)
             {
                 if (motor.ToUpper() == "A")
@@ -812,7 +892,7 @@ namespace Lego_MindStorm_Control_Api
             motorState.RunState = NXTBrick.MotorRunState.Running;
             // tacho limit
             // TODO edit this: number of dregree
-            motorState.TachoLimit = 0;
+            motorState.TachoLimit = 90;
             
             // set motor's state
             if (nxt.SetMotorState(motor, motorState) != true)
@@ -860,6 +940,7 @@ namespace Lego_MindStorm_Control_Api
         }
         public static nxt_result motor_degree(NXTBrick.Motor motor, int degree)
         {
+            int degrees2 = degree;
             nxt_result result = new nxt_result();
             NXTBrick.MotorState motorState = new NXTBrick.MotorState();
             if (motor == NXTBrick.Motor.A)
@@ -892,8 +973,8 @@ namespace Lego_MindStorm_Control_Api
             motorState.RunState = NXTBrick.MotorRunState.Running;
             // tacho limit
            
-            motorState.TachoLimit = degree;
-
+            motorState.TachoLimit = degrees2;
+            IrcBot.log += "degree"+degrees2.ToString()+"\n";
             // set motor's state
             if (nxt.SetMotorState(motor, motorState) != true)
             {
