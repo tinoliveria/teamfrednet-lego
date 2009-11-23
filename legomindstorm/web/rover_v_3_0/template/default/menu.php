@@ -24,7 +24,7 @@ function build_menu(){
 	$menu_data[2]['submenu'][3]['page_namespace'] = "file_rover_program";
 	$menu_data[2]['submenu'][4]['name'] = "FAQ";
 	$menu_data[2]['submenu'][4]['page_namespace'] = "static_faq";
-	$menu_data[2]['submenu'][5]['name'] = "Clain your time";
+	$menu_data[2]['submenu'][5]['name'] = "Claim your time";
 	$menu_data[2]['submenu'][5]['page_namespace'] = "file_time";
 	$upper = 1;
 	while(isset($menu_data[$upper])){

@@ -4,7 +4,7 @@
  * @return content string
  */
 function build_content(){
-	global $template_name,$wiki_server,$wiki_prefixed,$wiki_cache_time,$stream_gid;
+	global $template_name,$wiki_server,$wiki_prefixed,$wiki_cache_time,$stream_gid,$user_offline_time,$user_control_time;
 	if(!isset($_GET['namespace'])){
 		//please wait
 		echo("<img src=\"template/" . $template_name . "/img/ajax-loader.gif\" alt=\"Loading\" />");
