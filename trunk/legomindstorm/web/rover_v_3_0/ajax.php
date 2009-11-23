@@ -2,29 +2,7 @@
 include("config.php");
 //ajax.php
 if(isset($_GET['message'])){
-	// Create 100 byte shared memory block with system id of 0xff3
-	$shm_id = shmop_open($ram_key, "c", 0644, $ram_size);
-	if (!$shm_id) {
-		echo "Couldn't create shared memory segment\n";
-	}
-	// Get shared memory block's size
-	$shm_size = shmop_size($shm_id);
-	// Now lets read
-	$my_string = shmop_read($shm_id, 0, $shm_size);
-	if (!$my_string) {
-		echo "Couldn't read from shared memory block\n";
-	}
-	//contert it
-	if($my_string{0}!= '\0' ){
-
-		$database = unserialize($my_string);
-		//echo "From Ram:";
-		//print_r($database);
-	}else{
-		$database = array();
-		$database['lowcount'] = 1;
-		$database['count'] = 1;
-	}
+	
 	//check type message
 	$message = $_GET['message'];
 	if(substr($message,0,3)=="cmd"){
@@ -51,142 +29,89 @@ if(isset($_GET['message'])){
 	$sql = "SELECT * FROM `users` WHERE `ID`=$who_ID";
 	$result = mysql_query($sql);
 	$row = mysql_fetch_array( $result );
-	if(!($row['start_control'] < date("U") && $row['end_control'] > date("U")) && $type == "cmd")
+	if(!($row['start_control'] > (time()-$user_offline_time) && $row['start_control'] < time()) && $type == "cmd")
 	{
-		echo "Your aren't allow to summit commands.<br />\n";
+		echo "Your aren't allow to summit commands.<br />To get control time goto: <a href=\"#file_time\">Claim your time</a><br />\n";
 		die();
+		//echo "Work around, you are allow to summit commands<br />\n";
 	}
 	//make sql
 	$mes = htmlentities(substr($message,0,150), ENT_QUOTES);
 	$sql = "INSERT `log_current_session` SET `type`='$type', `when`='$time', `message`='".$mes."', `who_ID`='$who_ID'";
 	mysql_query($sql) or die(mysql_error() . "SQL: $sql");
 	//in to RAM
-	if($type == "chat"){
-		$database[$database['count']] =  date("H:i:s") . "{$row['nickname']}: $mes<br />\n";
-		$database['count']++;
-
 	}
-
-	//save ram
-	$data = serialize($database);
-	//check size
-	if((strlen($data)/$ram_size) > 0.80){
-		//clean out(remove 10 records)
-		for($i = $database['lowcount'];($i < ($database['lowcount']+10)) && ($i < ($database['count']+10));$i++){
-			unset($database[$i]);
-		}
-		$database['lowcount'] = $i;
-	}
-	$data = serialize($database);
-	// Lets write a test string into shared memory
-	$shm_bytes_written = shmop_write($shm_id, $data, 0);
-
-	if ($shm_bytes_written != strlen($data)) {
-		echo "Couldn't write the entire length of data\n";
-	}
-	shmop_close($shm_id);
-}
 if(isset($_GET['update'])){
-	//get RAM
-	// Create 100 byte shared memory block with system id of 0xff3
-	$shm_id = shmop_open($ram_key, "c", 0644, $ram_size);
-	if (!$shm_id) {
-		echo "Couldn't create shared memory segment\n";
-	}
-	//$now = (date("U") + microtime());
-	// Get shared memory block's size
-	$shm_size = shmop_size($shm_id);
-	// Now lets read
-	$my_string = shmop_read($shm_id, 0, $shm_size);
-	if (!$my_string) {
-		echo "Couldn't read from shared memory block\n";
-	}
-	//contert it
-	//echo ord($my_string{0});
-	if(ord($my_string{0}) != 0){
+	
+	
 
-		$database = unserialize($my_string);
-		//print_r($database);
-	}else{
-		$database = array();
-		$database['count'] = 1;
-		$database['lowcount'] = 1;
-		$database['last_time_sql'] = time() + microtime();
-	}
-
-	if(isset($_SESSION['last_time_check'])){
-		for($i = $_SESSION['last_time_check'];$i < $database['count'];$i++){
-			echo $database[$i];
-		}
-		$_SESSION['last_time_check'] = $database['count'];
-	}else{
-		$_SESSION['last_time_check'] = $database['count'];
-	}
+	
 	//check max every 1 sec in db
-	if(($database['last_time_sql'] + 1)<(time()+microtime())){
+	
 
 
 		//update
-		$last_id = $database['last_time_sql'];
+		if(isset($_SESSION['last_time_check'])){
+		$last_id = $_SESSION['last_time_check'];
+		}else{
+			$sql = "SELECT * FROM `log_current_session`,`users` WHERE `log_current_session`.`who_ID`=`users`.`ID` AND `log_current_session`.`when` < $now AND (`log_current_session`.`status`!='' OR `log_current_session`.`type`!='cmd') ORDER BY `log_current_session`.`ID` DESC";
+			$result = mysql_query($sql);
+		$row = mysql_fetch_array( $result );
+		$last_id = $row['ID'];
+		
+		}
 		$now = time()+microtime();
-		$sql = "SELECT * FROM `log_current_session`,`users` WHERE `log_current_session`.`who_ID`=`users`.`ID` AND `log_current_session`.`when`>=$last_id AND `log_current_session`.`when` < $now AND `log_current_session`.`status`!='' AND `log_current_session`.`type`='cmd' ORDER BY `log_current_session`.`when` DESC";
+		$sql = "SELECT * FROM `log_current_session`,`users` WHERE `log_current_session`.`who_ID`=`users`.`ID` AND `log_current_session`.`when`>=$last_id AND `log_current_session`.`when` < $now AND (`log_current_session`.`status`!='' OR `log_current_session`.`type`!='cmd') ORDER BY `log_current_session`.`when` DESC";
+		//echo $sql;
+		//die();
 		$result = mysql_query($sql);
 		while($row = mysql_fetch_array( $result )){
 			//print_r($row);
-			$database[$database['count']] =  date("H:i:s ") . $row['nickname'] . ": " . $row['message'] . " <strong>Result: " . $row['status']."</strong><br />\n";
-			$database['count']++;
-			//echo date("H:i:s ") . $row['nickname'] . ": " . $row['message'];
-			//if($row['type'] == 'cmd'){
-			//	echo  " <strong>Result: " . $row['status']."</strong>";
-			//}
-			//echo "<br />\n";
+			//$database[$database['count']] =  date("H:i:s ") . $row['nickname'] . ": " . $row['message'] . " <strong>Result: " . $row['status']."</strong><br />\n";
+			//$database['count']++;
+			echo date("H:i:s ") . $row['nickname'] . ": " . $row['message'];
+			if($row['type'] == 'cmd'){
+				echo  " <strong>Result: " . $row['status']."</strong>";
+			}
+			$_SESSION['last_time_check'] =  $row['when']+1;
+			echo "<br />\n";
 		}
-		$database['last_time_sql'] = $now;
+		
 
 		 
 	}
-	//save ram
-	$data = serialize($database);
-	// Lets write a test string into shared memory
-	$shm_bytes_written = shmop_write($shm_id, $data, 0);
-	//echo "used: " . round(strlen($data)/$ram_size*100,2) . "%<br />\n";
-	if ($shm_bytes_written != strlen($data)) {
-		echo "Couldn't write the entire length of data\n";
-	}
-	shmop_close($shm_id);
-	//$last_id = (date("U") + microtime());
-	//echo ($now-$last_id). "s <br />\n";
-}
 if(isset($_GET['online'])){
 	//check if someone has acces
-	//check if now else does this
-	if(!file_exists("check.txt")){
+	
+	
 		//write down he doning it
-		$data = rand();
-		$fh = fopen("check.txt", 'w') or die("can't open file");
-
-		fwrite($fh, $data);
-
-		fclose($fh);
-		$sql = "SELECT * FROM `users` WHERE `last`>".(time()-$user_offline_time) . " AND `start_control` < ".time()." AND `end_control` > ".time()."";
+		
+		$sql = "SELECT * FROM `users` WHERE `last`>".(time()-$user_offline_time) . " AND `start_control` > ". (time()-$user_control_time) ."";
+		//echo $sql;
 		$result = mysql_query($sql);
+			
 		if(mysql_num_rows($result)==0){
-			//select new controler(
+		
+			//select new controler
+			//get id
+			
 			//to do: add check for online
-			$sql = "SELECT * FROM `users` WHERE `last`>".(time()-$user_offline_time) . " ORDER BY `end_control` ASC LIMIT 0,15";
-			$result = mysql_query($sql);
+			//$sql = "SELECT * FROM `users` WHERE `last`>".(time()-$user_offline_time) . " AND `end_control` != 0 ORDER BY `end_control` ASC LIMIT 0,15";
+			$sql = "SELECT * FROM `users` WHERE `last`>".(time()-$user_offline_time) . " AND `start_control` = 0 ORDER BY `end_control` ASC LIMIT 0,1";
+			//echo $sql;
+			//die();
+			$result = mysql_query($sql) or die($sql ."<br />\n". mysql_error());
 			$row = mysql_fetch_array( $result );
 			$wait = mysql_num_rows($result);
-			if(count($row)>1){
+			//print_r($row);
+			if(count($row)>0){
 			 //to do: based on the number waiting set control time
-			 $sql = "UPDATE `users` SET `start_control`=".time().", `end_control`=".(time()+$user_control_time)." WHERE `ID`={$row['ID']}";
+			 $sql = "UPDATE `users` SET `start_control`=".time()." WHERE `ID`={$row['ID']}";
 			 mysql_query($sql);
-			 echo date("H:i:s ") . "system: {$row['nickname']} is now in control.<br />\n";
+			 //echo date("H:i:s ") . "system: {$row['nickname']} is now in control.<br />\n";
 			}
 		}
-		//give it free
-		unlink("check.txt");
-	}
+		
 
 	?>
 <table>
@@ -194,7 +119,22 @@ if(isset($_GET['online'])){
 		<td colspan="2"><strong>Who is online?</strong></td>
 	</tr>
 	<?php
-	$sql = "SELECT * FROM `users` WHERE `last`>".(time()-$user_offline_time) . " ORDER BY `last` DESC";
+	//build wait list
+$sql = "SELECT * FROM `users` WHERE `last`>".(time()-$user_offline_time) . " AND `start_control` > ".(time()-$user_control_time)." AND `start_control` < ".time()." ORDER BY `last` DESC";
+	$result = mysql_query($sql) or die(mysql_error() . "SQL: $sql");;
+	$count = 0;
+	$row = mysql_fetch_array( $result );
+	//print_r($row);	
+	if(count($row)>2){
+$sql = "SELECT * FROM `users` WHERE `last`>".(time()-$user_offline_time) . " AND `end_control` > {$row['end_control']} ORDER BY `end_control` ASC";
+$result = mysql_query($sql) or die(mysql_error() . "SQL: $sql");
+$count = 0;
+while($row = mysql_fetch_array( $result )){
+	$count++;
+	$wait[$row['ID']]=$count;
+}
+	}
+	$sql = "SELECT * FROM `users` WHERE `last`>".(time()-$user_offline_time) . " ORDER BY `ID` DESC";
 	$result = mysql_query($sql);
 	$count = 0;
 	while($row = mysql_fetch_array( $result )){
@@ -202,20 +142,21 @@ if(isset($_GET['online'])){
 		?>
 	<tr>
 		<td><img src="200px-User_icon_2.svg.png" width="50" height="50" /></td>
-		<td><span class="style1"><?php echo $row['nickname']; ?></span><br />
+		<td><span class="style1"><strong><?php echo $row['nickname']; ?></strong></span><br />
 		<?php
-		if($row['start_control'] < date("U") && $row['end_control'] > date("U"))
+		if($row['start_control'] > (time()-$user_control_time) && $row['start_control'] < time())
 		{
-			echo "This user is in control.";
+			$seconds = ($row['start_control']-time()+$user_control_time);
+		$mins = floor ($seconds / 60);
+        $secs = $seconds % 60;
+       
+        
+			echo "This user is in control(remaing: $mins:$secs)";
 		}
-		if((date("U") - $row['end_control']) < 1000 && (date("U") - $row['end_control']) > 0)
-		{
-			echo "This user was in control.";
+		if(isset($wait[$row['ID']])){
+			echo "Wait for {$wait[$row['ID']]} persone before control.";
 		}
-		if($row['start_control'] > date("U"))
-		{
-			echo "This user will be in control in ".round(($row['start_control']-date("U"))/60)." minute.";
-		}
+		
 		?></td>
 	</tr>
 	<?php
@@ -245,8 +186,10 @@ Hello
 }
 if(isset($_GET['rank'])){
 	//update last online time
+	if(isset($_SESSION['user_ID'])){
 	$sql = "UPDATE `users` SET `last`=" . date("U")." WHERE `ID`='{$_SESSION['user_ID']}'";
 	$result = mysql_query($sql);
+	}
 	$sql = "SELECT * FROM `result` ORDER BY `result`.`point` DESC LIMIT 0, 5 ";
 	$result = mysql_query($sql) or die(mysql_error() . "SQL: $sql");
 	while($row = mysql_fetch_array( $result )){
@@ -254,16 +197,17 @@ if(isset($_GET['rank'])){
 	}
 }
 if(isset($_GET['gettime'])){
-	$sql = "SELECT * FROM `users` WHERE `end_control`>".time() ." ORDER BY  `users`.`start_control` DESC LIMIT 0, 1";
+	$sql = "SELECT * FROM `users` ORDER BY  `users`.`end_control` DESC LIMIT 0, 1";
 	$result = mysql_query($sql) or die(mysql_error() . "SQL: $sql");
 	$row = mysql_fetch_array( $result );
 	//print_r($row);
-	if(count($row)<2){
-		$starttime = time();
-	}else{
-		$starttime = $row['end_control'];
-	}
-	$endtime = $starttime + $user_control_time;
+	
+	//if(count($row)<2){
+		$end_control = $row['end_control']+1;
+	//}else{
+		//$end_control = 10;
+	//}
+	
 	//who
 	if(isset($_SESSION['user_ID'])){
 		$who_ID = $_SESSION['user_ID'];
@@ -271,9 +215,23 @@ if(isset($_GET['gettime'])){
 		$who_ID  = 0 ;
 		$_SESSION['user_ID'] = $who_ID;
 	}
-	$sql = "UPDATE `users` SET `start_control`=".$starttime.", `end_control`=".$endtime." WHERE `ID`=$who_ID";
+	$sql = "UPDATE `users` SET `start_control`=0, `end_control`=$end_control WHERE `ID`=$who_ID";
 	mysql_query($sql);
-	echo "<script>alert('You can start controling the rover from " . date("H:i:s",$starttime) . " to " . date("H:i:s",$endtime). "');window.location.href='index.php#file_time';</script>";
+	echo "<script>alert('Your reqeust is add to queqe.');window.location.href='index.php#file_time';</script>";
+
+}
+if(isset($_GET['givetime'])){
+	
+	//who
+	if(isset($_SESSION['user_ID'])){
+		$who_ID = $_SESSION['user_ID'];
+	}else{
+		$who_ID  = 0 ;
+		$_SESSION['user_ID'] = $who_ID;
+	}
+	$sql = "UPDATE `users` SET `start_control`=10, `end_control`=0 WHERE `ID`=$who_ID";
+	mysql_query($sql);
+	echo "<script>alert('Your reqeust is remove from queqe.');window.location.href='index.php#file_mission_control';</script>";
 
 }
 if(isset($_GET['rank_day'])){
@@ -381,7 +339,7 @@ if(isset($_GET['sensor'])){
 	$result = mysql_query($sql);
 	$row = mysql_fetch_array( $result );
 	echo nl2br($row['result']) . "<br />\n";
-	echo "Random: " . rand();
+	echo "Server time: " . date("H:i:s");
 }
 if(isset($_GET['pre_program'])){
 	if($_GET['pre_program'] == "new"){

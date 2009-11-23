@@ -8,8 +8,37 @@ ajax_donwload_add("ajax.php?message="+escape(document.getElementById("input_chat
 }
 var chat_update_enable = false;
 function chat_update(){
-if(chat_update_enable == true){
+
 ajax_donwload_add("ajax.php?update","logbook");
+if(img1on = true){
+var temp = document['img1'].src;
+if(temp.length < 100){
+	n = temp.length;
+}else{
+	n = 100;
+}
+document['img1'].src = temp.substring(0,n) + '?' + (new Date()).getTime();
+
+
+temp = document['img2'].src;
+if(temp.length < 100){
+	n = temp.length;
+}else{
+	n = 100;
+}
+document['img2'].src = temp.substring(0,n) + '?' + (new Date()).getTime();
+
+/*
+
+temp = document['img3'].src;
+if(temp.length < 100){
+	n = temp.length;
+}else{
+	n = 100;
+}
+document['img3'].src = temp.substring(0,n) + '?' + (new Date()).getTime();
+
+*/
 setTimeout("chat_update();",500);//500 ms
 }
 }

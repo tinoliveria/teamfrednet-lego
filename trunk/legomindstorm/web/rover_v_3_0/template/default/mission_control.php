@@ -16,15 +16,17 @@ function create_player_small($id,$clip_id){
 		type="application/x-shockwave-flash" /></object>
 		*/
 	?>
-
-<div id="vidSel2" class="vidButton"
-	onclick="clipToMain('<?php echo $clip_id; ?>');">Send to Main</div>
+	<div onclick="clipToMain('<?php echo $clip_id; ?>');">
+<img name="img<?php echo $id; ?>" src="http://thumbnail.api.livestream.com/thumbnail?name=<?php echo $clip_id; ?>" width="120"/>
+<div id="vidSel2" class="vidButton">Send to Main</div>
+	</div>
+	
 	<?php
 }
 function main_player($id){
 	?>
 
-<object id="Player" width="400" height="400" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"><param name="movie" value="http://static.livestream.com/grid/PlayerV2.swf?channel=<?php echo $id; ?>&layout=playerEmbedDefault&backgroundColor=0xffffff&backgroundAlpha=1&backgroundGradientStrength=0&chromeColor=0x000000&headerBarGlossEnabled=true&controlBarGlossEnabled=true&chatInputGlossEnabled=false&uiWhite=true&uiAlpha=0.5&uiSelectedAlpha=1&dropShadowEnabled=true&dropShadowHorizontalDistance=10&dropShadowVerticalDistance=10&paddingLeft=10&paddingRight=10&paddingTop=10&paddingBottom=10&cornerRadius=3&backToDirectoryURL=null&bannerURL=null&bannerText=null&bannerWidth=320&bannerHeight=50&showViewers=true&embedEnabled=true&chatEnabled=true&onDemandEnabled=true&programGuideEnabled=false&fullScreenEnabled=true&reportAbuseEnabled=false&gridEnabled=false&initialIsOn=true&initialIsMute=false&initialVolume=10&contentId=null&initThumbUrl=null&playeraspectwidth=4&playeraspectheight=3&mogulusLogoEnabled=true"/><param name="allowFullScreen" value="true"/><param name="bgcolor" value="#ffffff"/><param name="wmode" value="window"/> <embed name="Player" src="http://static.livestream.com/grid/PlayerV2.swf?channel=<?php echo $id; ?>&layout=playerEmbedDefault&backgroundColor=0xffffff&backgroundAlpha=1&backgroundGradientStrength=0&chromeColor=0x000000&headerBarGlossEnabled=true&controlBarGlossEnabled=true&chatInputGlossEnabled=false&uiWhite=true&uiAlpha=0.5&uiSelectedAlpha=1&dropShadowEnabled=true&dropShadowHorizontalDistance=10&dropShadowVerticalDistance=10&paddingLeft=10&paddingRight=10&paddingTop=10&paddingBottom=10&cornerRadius=3&backToDirectoryURL=null&bannerURL=null&bannerText=null&bannerWidth=320&bannerHeight=50&showViewers=true&embedEnabled=true&chatEnabled=true&onDemandEnabled=true&programGuideEnabled=false&fullScreenEnabled=true&reportAbuseEnabled=false&gridEnabled=false&initialIsOn=true&initialIsMute=false&initialVolume=10&contentId=null&initThumbUrl=null&playeraspectwidth=4&playeraspectheight=3&mogulusLogoEnabled=true" allowFullScreen="true" type="application/x-shockwave-flash" bgcolor="#ffffff" width="400" height="400" wmode="window" ></embed></object>
+<object id="Player" width="400" height="400" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"><param name="movie" value="http://static.livestream.com/grid/PlayerV2.swf?channel=<?php echo $id; ?>&layout=playerEmbedDefault&backgroundColor=0x000000&backgroundAlpha=1&backgroundGradientStrength=0&chromeColor=0x000000&headerBarGlossEnabled=true&controlBarGlossEnabled=true&chatInputGlossEnabled=false&uiWhite=true&uiAlpha=0.5&uiSelectedAlpha=1&dropShadowEnabled=true&dropShadowHorizontalDistance=10&dropShadowVerticalDistance=10&paddingLeft=10&paddingRight=10&paddingTop=10&paddingBottom=10&cornerRadius=3&backToDirectoryURL=null&bannerURL=null&bannerText=null&bannerWidth=320&bannerHeight=50&showViewers=true&embedEnabled=true&chatEnabled=true&onDemandEnabled=true&programGuideEnabled=false&fullScreenEnabled=true&reportAbuseEnabled=false&gridEnabled=false&initialIsOn=true&initialIsMute=false&initialVolume=10&contentId=null&initThumbUrl=null&playeraspectwidth=4&playeraspectheight=3&mogulusLogoEnabled=true"/><param name="allowFullScreen" value="true"/><param name="bgcolor" value="#ffffff"/><param name="wmode" value="window"/> <embed name="Player" src="http://static.livestream.com/grid/PlayerV2.swf?channel=<?php echo $id; ?>&layout=playerEmbedDefault&backgroundColor=0xffffff&backgroundAlpha=1&backgroundGradientStrength=0&chromeColor=0x000000&headerBarGlossEnabled=true&controlBarGlossEnabled=true&chatInputGlossEnabled=false&uiWhite=true&uiAlpha=0.5&uiSelectedAlpha=1&dropShadowEnabled=true&dropShadowHorizontalDistance=10&dropShadowVerticalDistance=10&paddingLeft=10&paddingRight=10&paddingTop=10&paddingBottom=10&cornerRadius=3&backToDirectoryURL=null&bannerURL=null&bannerText=null&bannerWidth=320&bannerHeight=50&showViewers=true&embedEnabled=true&chatEnabled=true&onDemandEnabled=true&programGuideEnabled=false&fullScreenEnabled=true&reportAbuseEnabled=false&gridEnabled=false&initialIsOn=true&initialIsMute=false&initialVolume=10&contentId=null&initThumbUrl=null&playeraspectwidth=4&playeraspectheight=3&mogulusLogoEnabled=true" allowFullScreen="true" type="application/x-shockwave-flash" bgcolor="#ffffff" width="400" height="400" wmode="window" ></embed></object>
 <?php 
 /*
 <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="400"
@@ -100,7 +102,11 @@ function main_player($id){
 						<td><img
 							onclick="document.getElementById('input_chat').value='cmd run rover program back_3_sec';post_chat();"
 							src="template/<?php echo $template_name; ?>/img/directdrive_back.gif" />
-				
+				</td>
+				</tr>
+				<tr>
+				<td colspan="3"><input type="button" id="give" onclick="window.location.href='ajax.php?givetime';" value="Give up my control time" /></td>
+				</tr>
 				</table>
 				</div>
 				</td>

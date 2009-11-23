@@ -54,7 +54,7 @@ $user_control_time = 300;
  * Max 3 streams
  *
  */
-$stream_gid = array();
+$stream_gid = array("channel3fish","fish2channel");
 /**
  * Template name
  *
