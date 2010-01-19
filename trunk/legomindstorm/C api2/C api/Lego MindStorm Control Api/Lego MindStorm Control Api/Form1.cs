@@ -1,8 +1,15 @@
-﻿/**
- * \file Form1.cs
- * This document is main file of control api.
+﻿/*! Documetion of Lego Mindstorm Control Api
+ * \mainpage Documetion of Lego Mindstorm Control Api
+ * \author Frednet
+ * \version Beta/alfa
+ * \date    2010-01
+ * \bug still a lot of bugs in the software
+ * \warning This documetion is still in progress
+ * 
+ * This document give you info about function in the program.
  * This documetion is still in progress
  */
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -1188,7 +1195,7 @@ namespace Lego_MindStorm_Control_Api
         }
         /**
          * This will kill any program
-         * NOTE: This function doesn't work 100% well
+         * \bug This function doesn't work 100% well
          * @return nxt_result
          */
         public static nxt_result stop_program()
