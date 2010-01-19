@@ -1,4 +1,9 @@
-﻿using System;
+﻿/**
+ * \file Form1.cs
+ * This document is main file of control api.
+ * This documetion is still in progress
+ */
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,7 +18,11 @@ using System.Threading;
 using MySql.Data.MySqlClient;
 using System.Xml;
 using AForge.Robotics.Lego;
-
+/**
+ * \namespace Lego_MindStorm_Control_Api
+ * This main namespace of Lego MindStorm Control Api
+ * 
+*/
 namespace Lego_MindStorm_Control_Api
 {
     public partial class Form1 : Form
@@ -22,7 +31,10 @@ namespace Lego_MindStorm_Control_Api
         private Thread InternetRelayChat;
         private Thread mysql_check;
         private Thread rover;
-            
+         /**
+          * Inittialize Form1
+          */
+          
         public Form1()
         {
             InitializeComponent();
@@ -39,16 +51,25 @@ namespace Lego_MindStorm_Control_Api
             }
             timer2.Enabled = true;
         }
-       
+        /**
+         * To help to program quit correcly
+         */
         private void Form1_unLoad(object sender, EventArgs e)
         {
+            //Kill rover control Threat
             rover.Abort();
+            //Kill mysql control Threat
             mysql_check.Abort();
+            //Kill IRC Threat
             InternetRelayChat.Abort();
+            //Kill app
             Application.Exit();
             
         }
-        
+        /**
+         * This function is use to update the output field.
+         * The reasion to no do this directly is because it has update to may times a second
+         */
 
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -60,12 +81,17 @@ namespace Lego_MindStorm_Control_Api
             double unixTime = ts.TotalSeconds;
             toolStripStatusLabel1.Text = "Unix time span: " + unixTime.ToString();
         }
-
+        /**
+         * Emypt the output field
+         */
         private void clearLogToolStripMenuItem_Click(object sender, EventArgs e)
         {
             IrcBot.log = "";
         }
-
+        /**
+         * Exit app
+         * To help to program quit correcly
+         */
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             
@@ -77,7 +103,9 @@ namespace Lego_MindStorm_Control_Api
                 Application.Exit();
             }
         }
-
+        /**
+         * Start IRC threath
+         */
         private void recontIRCToolStripMenuItem_Click(object sender, EventArgs e)
         {
             InternetRelayChat.Start();
@@ -87,7 +115,10 @@ namespace Lego_MindStorm_Control_Api
         {
 
         }
-
+        /**
+         * Check the sensors every X ms
+         * Default every 2000 ms
+         */
         private void timer2_Tick(object sender, EventArgs e)
         {
             if (config.sensor_auto_on_off == true)
@@ -409,9 +440,18 @@ namespace Lego_MindStorm_Control_Api
         }
         
     }
+    /**
+     * This class is use to store and load the config
+     */
     class config
     {
+        /**
+         * IRC server adres
+         */
         public static string IRC_server;
+        /**
+         * IRC server port
+         */
         public static int IRC_port;
         public static string IRC_channel;
         public static string IRC_nickname;
@@ -430,13 +470,17 @@ namespace Lego_MindStorm_Control_Api
         public static string Rover_port;
         public static NXTBrick.SensorType[] sensorType = new NXTBrick.SensorType[4];
         public static NXTBrick.SensorMode[] sensorMode = new NXTBrick.SensorMode[4];
+        /**
+         * This will load the config file from setting.xml
+         * @return none
+         */
         public static void run()
         {
 
-                  XmlDocument doc = new XmlDocument();
+                  XmlDocument doc = new XmlDocument();//create a new xml handeler
 
-      doc.Load("settings.xml");
-
+      doc.Load("settings.xml");//load the XML
+            //progres xml
       XmlNodeList userNodes = doc.SelectNodes("/settings/IRC");
       XmlNode userNode = userNodes[0];
       IRC_channel = userNode.SelectSingleNode("channel").InnerText;
@@ -489,12 +533,18 @@ namespace Lego_MindStorm_Control_Api
       sensorType[3] = NXTBrick.SensorType.NoSensor;
         }
     }
+    /**
+     * This class is use to store the result of a NXT command
+     */
     class nxt_result
     {
         public string type="set";
         public string value;
         public bool result=false;
     }
+    /**
+     * This Class control the NXT rover by use of NXTbrick of the AfroceFramework.net
+     */
     class NXT_ROVER_CONTROL
     {
         public static string[] arg_command;
@@ -552,6 +602,9 @@ namespace Lego_MindStorm_Control_Api
             NXTBrick.Sensor.First,NXTBrick.Sensor.Second,NXTBrick.Sensor.Third,NXTBrick.Sensor.Fourth};
         // TODO Set defeult speed
         public static int[] speed_motors = {80,80,80};
+        /**
+         * This function is use to set the type of sensor are connect to the rover
+         */
         public static void setSensors()
         {
             if(nxt.IsConnected){
@@ -583,6 +636,9 @@ namespace Lego_MindStorm_Control_Api
                     MessageBox.Show("NXT is not connect!");
                 }
         }
+        /**
+         * This function will connect to the NXT rover
+         */
         public static void run()
         {
             
@@ -603,6 +659,9 @@ namespace Lego_MindStorm_Control_Api
                 run();
             }
         }
+        /**
+         * This function will get some genarel information
+         */
         public static void CollectInformation()
         {
             
@@ -667,6 +726,10 @@ namespace Lego_MindStorm_Control_Api
             }
              
         }
+        /**
+         * This function will translate a text command to the proper function
+         * @return nxt_result
+         */
         public static nxt_result command_translation(string text_command)
         {
             nxt_result result = new nxt_result();
@@ -733,10 +796,20 @@ namespace Lego_MindStorm_Control_Api
             }
             return result;
         }
+        /**
+         * This function will read out a sensor
+         * @param sensor sensor number
+         * @return nxt_result
+         */
         public static nxt_result get_sensor(string sensor)
         {
             return get_sensor(Convert.ToInt32(sensor));
         }
+        /**
+         * This function will read out a sensor
+         * @param sensor sensor number
+         * @return nxt_result
+         */
         public static nxt_result get_sensor(int sensor)
         {
             nxt_result result = new nxt_result();
@@ -773,10 +846,22 @@ namespace Lego_MindStorm_Control_Api
             
             return result;
         }
+        /**
+         * This will set the motor speed
+         * @param motors name of the motor(s) effected
+         * @param speed speedvalue
+         * @return nxt_result
+         */
         public static nxt_result set_speed(string motors, string speed)
         {
             return set_speed(motors, Convert.ToInt32(speed));
         }
+        /**
+         * This will set the motor speed
+         * @param motors name of the motor(s) effected
+         * @param speed speedvalue
+         * @return nxt_result
+         */
         public static nxt_result set_speed(string motors,int speed)
         {
             string[] motors_array;
@@ -819,6 +904,11 @@ namespace Lego_MindStorm_Control_Api
             }
             return motor_result;
         }
+        /**
+         * This will set the motor on
+         * @param motors name of the motor(s) effected
+         * @return nxt_result
+         */
         public static nxt_result motor_on(string motors)
         {
             string[] motors_array;
@@ -858,6 +948,11 @@ namespace Lego_MindStorm_Control_Api
             }
             return motor_result;
         }
+        /**
+         * This will set the motor on
+         * @param motor type NXTBrick.Motor
+         * @return nxt_result
+         */
         public static nxt_result motor_on(NXTBrick.Motor motor)
         {
             nxt_result result = new nxt_result();
@@ -906,6 +1001,12 @@ namespace Lego_MindStorm_Control_Api
             result.value = "succed";
             return result;
         }
+        /**
+         * This will rototed for set amount of degrees
+         * @param motors name of the motor(s) effected
+         * @param degree number of degree to rototed
+         * @return nxt_result
+         */
         public static nxt_result motor_degree(string motors, string degree)
         {
             string[] motors_array;
@@ -938,6 +1039,12 @@ namespace Lego_MindStorm_Control_Api
             }
             return motor_result;
         }
+        /**
+         * This will rototed for set amount of degrees
+         * @param motor NXTBrick.Motor name
+         * @param degree number of degree to rototed
+         * @return nxt_result
+         */
         public static nxt_result motor_degree(NXTBrick.Motor motor, int degree)
         {
             int degrees2 = degree;
@@ -987,6 +1094,11 @@ namespace Lego_MindStorm_Control_Api
             result.value = "succed";
             return result;
         }
+        /**
+         * This will set the motor off
+         * @param motors name of the motor(s) effected
+         * @return nxt_result
+         */
         public static nxt_result motor_off(string motors)
         {
             string[] motors_array;
@@ -1019,6 +1131,11 @@ namespace Lego_MindStorm_Control_Api
             }
             return motor_result;
         }
+        /**
+         * This will set the motor off
+         * @param motor NXTBrick.Motor name
+         * @return nxt_result
+         */
         public static nxt_result motor_off(NXTBrick.Motor motor)
         {
             nxt_result result = new nxt_result();
@@ -1047,6 +1164,11 @@ namespace Lego_MindStorm_Control_Api
             
             return result;
         }
+        /**
+         * This will run a rover program
+         * @param name Name of program without .RXE
+         * @return nxt_result
+         */
         public static nxt_result run_program(string name)
         {
             nxt_result result = new nxt_result();
@@ -1064,6 +1186,11 @@ namespace Lego_MindStorm_Control_Api
             return result;
 
         }
+        /**
+         * This will kill any program
+         * NOTE: This function doesn't work 100% well
+         * @return nxt_result
+         */
         public static nxt_result stop_program()
         {
             nxt_result result = new nxt_result();
