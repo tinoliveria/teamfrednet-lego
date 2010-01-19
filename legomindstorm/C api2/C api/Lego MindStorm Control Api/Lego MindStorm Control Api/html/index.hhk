@@ -4,6 +4,186 @@
 <param name="FrameName" value="right">
 </OBJECT>
 <UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#e8225002695087e1cecd365fb0f9fc5f"><param name="Name" value="arg_command"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1mysql.html#48930a61ffdb57b9e5ba34fc29a1fc22"><param name="Name" value="check"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1mysql.html#53a31022a07e21cd9e1ad455e01a439a"><param name="Name" value="close"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1mysql.html#a2124fd011640d936da7a15e53555631"><param name="Name" value="cmd"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#c71368da8b4e439aab6361545965351b"><param name="Name" value="CollectInformation"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#d8b5801d615a2dabd071ee02caf8ed6e"><param name="Name" value="command_translation"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1mysql.html#7c7eb340070f9417e77b9af32e53675c"><param name="Name" value="connBuilder"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1mysql.html#3c343387706ee3f7ec8db6dfd9196110"><param name="Name" value="connect"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1mysql.html#393d84f733bc7a198f83e9ad89f1750f"><param name="Name" value="connection"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_form1_8_designer_8cs.html"><param name="Name" value="Form1.Designer.cs"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_form1.html#8028840d3a992ab2afcba92be20b36c7"><param name="Name" value="Form1"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#68c516f2106a906831c743c8e4b56bce"><param name="Name" value="get_sensor"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1mysql__results.html#61e1d56d6b5e375b618f57d2a4e3fff1"><param name="Name" value="ID"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_irc_bot.html#7912b2c339474dfc99f956a15af8e7b3"><param name="Name" value="ident"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#7d1a39abfc742515113caa917dc0f4e8"><param name="Name" value="IRC_channel"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#53cda71499ce9c28c29a23e459a48b73"><param name="Name" value="IRC_nickname"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#e82a190bf6379ccae8d233af69084f6c"><param name="Name" value="IRC_on_off"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#81dd500e6de85465e8bb1ddfcd8023c9"><param name="Name" value="IRC_password"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#7d2e70bd11465490eb14c5f4f1e427a7"><param name="Name" value="IRC_port"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#1cbc2bf835f00afc2e68464802f31424"><param name="Name" value="IRC_server"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#b37e696cc4928c7832cb139d31721dc0"><param name="Name" value="IRC_user"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html"><param name="Name" value="Lego_MindStorm_Control_Api::config"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#7d1a39abfc742515113caa917dc0f4e8"><param name="Name" value="IRC_channel"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#53cda71499ce9c28c29a23e459a48b73"><param name="Name" value="IRC_nickname"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#e82a190bf6379ccae8d233af69084f6c"><param name="Name" value="IRC_on_off"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#81dd500e6de85465e8bb1ddfcd8023c9"><param name="Name" value="IRC_password"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#7d2e70bd11465490eb14c5f4f1e427a7"><param name="Name" value="IRC_port"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#1cbc2bf835f00afc2e68464802f31424"><param name="Name" value="IRC_server"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#b37e696cc4928c7832cb139d31721dc0"><param name="Name" value="IRC_user"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#b35c841c403846ba1fc8aef0f5a79a5b"><param name="Name" value="Mysql_database"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#1bfdd86f8a9b69602e37f1a05e0e36f8"><param name="Name" value="Mysql_password"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#99eb31da9705a41654b078517cc4725f"><param name="Name" value="Mysql_server"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#5f83c9f44fbe13dc65eb372a43604208"><param name="Name" value="Mysql_user"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#efde26f7e5e6ac6862494084f61e351a"><param name="Name" value="Rover_distance"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#832a5cb7cd17333c6ea18f44f00772d9"><param name="Name" value="Rover_light"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#36b49d2f0e0c760c57f89a9598237f1b"><param name="Name" value="Rover_port"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#816ac7c408ef6c3b2ccc758f419f5bfe"><param name="Name" value="Rover_sound"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#f1ea39c75f9717ac9c593d1b81a8c416"><param name="Name" value="Rover_touch"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#9735dce128cb06c8f7b3631e8825982d"><param name="Name" value="run"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#89504143ea79fcd5d3a913519b92f96e"><param name="Name" value="sensor_auto_on_off"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#756c882a39eb0e6027bb98a664687d5e"><param name="Name" value="sensorMode"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#6daa8eaf42ab4988953e81d87289462f"><param name="Name" value="sensorType"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_form1.html"><param name="Name" value="Lego_MindStorm_Control_Api::Form1"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_irc_bot.html"><param name="Name" value="Lego_MindStorm_Control_Api::IrcBot"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_irc_bot.html#7912b2c339474dfc99f956a15af8e7b3"><param name="Name" value="ident"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_irc_bot.html#4d8fc1c5a2603aeeb37e613e32243e3b"><param name="Name" value="log"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_irc_bot.html#75d0a79244adc24239d7df85c52e79c2"><param name="Name" value="run_irc"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_irc_bot.html#70530f08e20f0a07dcbe0f876c43afdb"><param name="Name" value="SERVER"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_irc_bot.html#6d3a44e92a051fa977ea7245565db5ea"><param name="Name" value="timesleep"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_irc_bot.html#c08de4347f0dbfd3611b833176210892"><param name="Name" value="writer"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1mysql.html"><param name="Name" value="Lego_MindStorm_Control_Api::mysql"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1mysql.html#48930a61ffdb57b9e5ba34fc29a1fc22"><param name="Name" value="check"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1mysql.html#53a31022a07e21cd9e1ad455e01a439a"><param name="Name" value="close"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1mysql.html#a2124fd011640d936da7a15e53555631"><param name="Name" value="cmd"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1mysql.html#7c7eb340070f9417e77b9af32e53675c"><param name="Name" value="connBuilder"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1mysql.html#3c343387706ee3f7ec8db6dfd9196110"><param name="Name" value="connect"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1mysql.html#393d84f733bc7a198f83e9ad89f1750f"><param name="Name" value="connection"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1mysql.html#3c71da7f914a959c6985b24efb73b771"><param name="Name" value="pre_program"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1mysql.html#d4fe26e3899910904634de9ed727bf3a"><param name="Name" value="QueryCommand"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1mysql.html#02340aa374cba4d4a02ff6f839ce3515"><param name="Name" value="run"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1mysql__results.html"><param name="Name" value="Lego_MindStorm_Control_Api::mysql_results"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1mysql__results.html#61e1d56d6b5e375b618f57d2a4e3fff1"><param name="Name" value="ID"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1mysql__results.html#6c3281c398f853ad9d1425973962aeed"><param name="Name" value="msg"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1mysql__results.html#424ec3af7c366b0153b25142e5f495a4"><param name="Name" value="result"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1mysql__results.html#2f4b5da67998a8c83ced92d1eee5b8fc"><param name="Name" value="when"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1mysql__todo.html"><param name="Name" value="Lego_MindStorm_Control_Api::mysql_todo"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1nxt__result.html"><param name="Name" value="Lego_MindStorm_Control_Api::nxt_result"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1nxt__result.html#c5ca3fd760c3be904f7539881871bb8d"><param name="Name" value="result"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1nxt__result.html#5e1d9b95240202f1ee7d433b310daf14"><param name="Name" value="type"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1nxt__result.html#22c05fbbf12e64a0642a2228bc0b3b0b"><param name="Name" value="value"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html"><param name="Name" value="Lego_MindStorm_Control_Api::NXT_ROVER_CONTROL"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#e8225002695087e1cecd365fb0f9fc5f"><param name="Name" value="arg_command"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#c71368da8b4e439aab6361545965351b"><param name="Name" value="CollectInformation"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#d8b5801d615a2dabd071ee02caf8ed6e"><param name="Name" value="command_translation"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#68c516f2106a906831c743c8e4b56bce"><param name="Name" value="get_sensor"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#0440745a6479ecacdf618f62d46f78f6"><param name="Name" value="motor_degree"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#37a072b958c3ff790545616af70cf9be"><param name="Name" value="motor_off"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#d825bbc55b10f9e1fed4afa5be312170"><param name="Name" value="motor_on"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#6fec6ceeadf303f8a08b8d9493edba78"><param name="Name" value="nxt"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#fda1adb19efb4f4e061117de2aef4448"><param name="Name" value="regulationModes"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#202eb377028f00a84936a7d178b1b22b"><param name="Name" value="Rover_distance"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#3f7a59580ec9566d9e0b2d296fdc9389"><param name="Name" value="Rover_light"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#70a140feabefc44333cc3031df709ce9"><param name="Name" value="Rover_sound"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#5db6a1a0e1d9044b8691357aab59c0cb"><param name="Name" value="Rover_touch"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#faf14a51dd55ae9cdf24fed046126ff4"><param name="Name" value="run"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#1a5f6479486e0b910f70ac5c826c6f9a"><param name="Name" value="run_program"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#d0770a43e8219a7010008fca349eedc2"><param name="Name" value="run_program_mysql"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#e273cf16e53695364d5eb59325e4c3cc"><param name="Name" value="runStates"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#b46a4dd8c5c5d2654541967b048c060a"><param name="Name" value="sensorModes"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#490c4e3baa5fa51504aebf282c4562b3"><param name="Name" value="sensorModes_based_on_sensorTypes"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#87eb5f65de795ffb5b995c9e0ff01f10"><param name="Name" value="sensors"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#f8cb24e865f85e65ad69f19e7c939879"><param name="Name" value="sensorTypes"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#65dd9f5d6a093e33321af83793188de5"><param name="Name" value="set_speed"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#22e36ab957028fccb222aa4522e88cf4"><param name="Name" value="setSensors"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#d4c771beb96189a1aef2fc3fd3897b1f"><param name="Name" value="speed_motors"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#cadd1bba5cad91d2d8fa3a416130854a"><param name="Name" value="stop_program"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#f8ad8d587921187ff8d2955e398b089e"><param name="Name" value="unit"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_form1_8_designer_8cs.html#ef012196cf14b7a1ca5040517b1c8045"><param name="Name" value="Lego_MindStorm_Control_Api"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_irc_bot.html#4d8fc1c5a2603aeeb37e613e32243e3b"><param name="Name" value="log"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#0440745a6479ecacdf618f62d46f78f6"><param name="Name" value="motor_degree"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#37a072b958c3ff790545616af70cf9be"><param name="Name" value="motor_off"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#d825bbc55b10f9e1fed4afa5be312170"><param name="Name" value="motor_on"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1mysql__results.html#6c3281c398f853ad9d1425973962aeed"><param name="Name" value="msg"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#b35c841c403846ba1fc8aef0f5a79a5b"><param name="Name" value="Mysql_database"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#1bfdd86f8a9b69602e37f1a05e0e36f8"><param name="Name" value="Mysql_password"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#99eb31da9705a41654b078517cc4725f"><param name="Name" value="Mysql_server"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#5f83c9f44fbe13dc65eb372a43604208"><param name="Name" value="Mysql_user"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#6fec6ceeadf303f8a08b8d9493edba78"><param name="Name" value="nxt"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1mysql.html#3c71da7f914a959c6985b24efb73b771"><param name="Name" value="pre_program"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_program_8cs.html"><param name="Name" value="Program.cs"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1mysql.html#d4fe26e3899910904634de9ed727bf3a"><param name="Name" value="QueryCommand"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#fda1adb19efb4f4e061117de2aef4448"><param name="Name" value="regulationModes"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1mysql__results.html#424ec3af7c366b0153b25142e5f495a4"><param name="Name" value="result"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1mysql__results.html#424ec3af7c366b0153b25142e5f495a4"><param name="Name" value="Lego_MindStorm_Control_Api::mysql_results"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1nxt__result.html#c5ca3fd760c3be904f7539881871bb8d"><param name="Name" value="Lego_MindStorm_Control_Api::nxt_result"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#efde26f7e5e6ac6862494084f61e351a"><param name="Name" value="Rover_distance"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#efde26f7e5e6ac6862494084f61e351a"><param name="Name" value="Lego_MindStorm_Control_Api::config"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#202eb377028f00a84936a7d178b1b22b"><param name="Name" value="Lego_MindStorm_Control_Api::NXT_ROVER_CONTROL"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#832a5cb7cd17333c6ea18f44f00772d9"><param name="Name" value="Rover_light"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#832a5cb7cd17333c6ea18f44f00772d9"><param name="Name" value="Lego_MindStorm_Control_Api::config"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#3f7a59580ec9566d9e0b2d296fdc9389"><param name="Name" value="Lego_MindStorm_Control_Api::NXT_ROVER_CONTROL"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#36b49d2f0e0c760c57f89a9598237f1b"><param name="Name" value="Rover_port"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#816ac7c408ef6c3b2ccc758f419f5bfe"><param name="Name" value="Rover_sound"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#816ac7c408ef6c3b2ccc758f419f5bfe"><param name="Name" value="Lego_MindStorm_Control_Api::config"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#70a140feabefc44333cc3031df709ce9"><param name="Name" value="Lego_MindStorm_Control_Api::NXT_ROVER_CONTROL"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#f1ea39c75f9717ac9c593d1b81a8c416"><param name="Name" value="Rover_touch"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#f1ea39c75f9717ac9c593d1b81a8c416"><param name="Name" value="Lego_MindStorm_Control_Api::config"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#5db6a1a0e1d9044b8691357aab59c0cb"><param name="Name" value="Lego_MindStorm_Control_Api::NXT_ROVER_CONTROL"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#9735dce128cb06c8f7b3631e8825982d"><param name="Name" value="run"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#9735dce128cb06c8f7b3631e8825982d"><param name="Name" value="Lego_MindStorm_Control_Api::config"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1mysql.html#02340aa374cba4d4a02ff6f839ce3515"><param name="Name" value="Lego_MindStorm_Control_Api::mysql"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#faf14a51dd55ae9cdf24fed046126ff4"><param name="Name" value="Lego_MindStorm_Control_Api::NXT_ROVER_CONTROL"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_irc_bot.html#75d0a79244adc24239d7df85c52e79c2"><param name="Name" value="run_irc"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#1a5f6479486e0b910f70ac5c826c6f9a"><param name="Name" value="run_program"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#d0770a43e8219a7010008fca349eedc2"><param name="Name" value="run_program_mysql"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#e273cf16e53695364d5eb59325e4c3cc"><param name="Name" value="runStates"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#89504143ea79fcd5d3a913519b92f96e"><param name="Name" value="sensor_auto_on_off"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#756c882a39eb0e6027bb98a664687d5e"><param name="Name" value="sensorMode"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#b46a4dd8c5c5d2654541967b048c060a"><param name="Name" value="sensorModes"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#490c4e3baa5fa51504aebf282c4562b3"><param name="Name" value="sensorModes_based_on_sensorTypes"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#87eb5f65de795ffb5b995c9e0ff01f10"><param name="Name" value="sensors"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html#6daa8eaf42ab4988953e81d87289462f"><param name="Name" value="sensorType"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#f8cb24e865f85e65ad69f19e7c939879"><param name="Name" value="sensorTypes"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_irc_bot.html#70530f08e20f0a07dcbe0f876c43afdb"><param name="Name" value="SERVER"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#65dd9f5d6a093e33321af83793188de5"><param name="Name" value="set_speed"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#22e36ab957028fccb222aa4522e88cf4"><param name="Name" value="setSensors"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#d4c771beb96189a1aef2fc3fd3897b1f"><param name="Name" value="speed_motors"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1mysql__todo.html#d1fce088717436a26fa134017ba085f7"><param name="Name" value="sql"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#cadd1bba5cad91d2d8fa3a416130854a"><param name="Name" value="stop_program"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_program_8cs.html#81a223a02c34d82b47199f08308847f2"><param name="Name" value="System"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_irc_bot.html#6d3a44e92a051fa977ea7245565db5ea"><param name="Name" value="timesleep"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1nxt__result.html#5e1d9b95240202f1ee7d433b310daf14"><param name="Name" value="type"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html#f8ad8d587921187ff8d2955e398b089e"><param name="Name" value="unit"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1nxt__result.html#22c05fbbf12e64a0642a2228bc0b3b0b"><param name="Name" value="value"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1mysql__results.html#2f4b5da67998a8c83ced92d1eee5b8fc"><param name="Name" value="when"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_lego___mind_storm___control___api_1_1_irc_bot.html#c08de4347f0dbfd3611b833176210892"><param name="Name" value="writer"></OBJECT>
 </UL>
 </BODY>
 </HTML>

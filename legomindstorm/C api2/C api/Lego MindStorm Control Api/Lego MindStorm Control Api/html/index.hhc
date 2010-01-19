@@ -4,6 +4,33 @@
 <param name="FrameName" value="right">
 </OBJECT>
 <UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Documetion of Lego Mindstorm Control Api"><param name="Local" value="index.html"><param name="ImageNumber" value="11"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Bug List"><param name="Local" value="bug.html"><param name="ImageNumber" value="11"></OBJECT>
+  <UL>
+  </UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Data Structures"><param name="Local" value="annotated.html"><param name="ImageNumber" value="1"></OBJECT>
+  <UL>
+  <LI><OBJECT type="text/sitemap"><param name="Name" value="Lego_MindStorm_Control_Api::config"><param name="Local" value="class_lego___mind_storm___control___api_1_1config.html"><param name="ImageNumber" value="11"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Name" value="Lego_MindStorm_Control_Api::Form1"><param name="Local" value="class_lego___mind_storm___control___api_1_1_form1.html"><param name="ImageNumber" value="11"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Name" value="Lego_MindStorm_Control_Api::IrcBot"><param name="Local" value="class_lego___mind_storm___control___api_1_1_irc_bot.html"><param name="ImageNumber" value="11"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Name" value="Lego_MindStorm_Control_Api::mysql"><param name="Local" value="class_lego___mind_storm___control___api_1_1mysql.html"><param name="ImageNumber" value="11"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Name" value="Lego_MindStorm_Control_Api::mysql_results"><param name="Local" value="class_lego___mind_storm___control___api_1_1mysql__results.html"><param name="ImageNumber" value="11"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Name" value="Lego_MindStorm_Control_Api::mysql_todo"><param name="Local" value="class_lego___mind_storm___control___api_1_1mysql__todo.html"><param name="ImageNumber" value="11"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Name" value="Lego_MindStorm_Control_Api::nxt_result"><param name="Local" value="class_lego___mind_storm___control___api_1_1nxt__result.html"><param name="ImageNumber" value="11"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Name" value="Lego_MindStorm_Control_Api::NXT_ROVER_CONTROL"><param name="Local" value="class_lego___mind_storm___control___api_1_1_n_x_t___r_o_v_e_r___c_o_n_t_r_o_l.html"><param name="ImageNumber" value="11"></OBJECT>
+  </UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Data Fields"><param name="Local" value="functions.html"><param name="ImageNumber" value="11"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Namespace List"><param name="Local" value="namespaces.html"><param name="ImageNumber" value="1"></OBJECT>
+  <UL>
+  <LI><OBJECT type="text/sitemap"><param name="Name" value="Lego_MindStorm_Control_Api"><param name="Local" value="namespace_lego___mind_storm___control___api.html"><param name="ImageNumber" value="11"></OBJECT>
+  </UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="File List"><param name="Local" value="files.html"><param name="ImageNumber" value="1"></OBJECT>
+  <UL>
+  <LI><OBJECT type="text/sitemap"><param name="Name" value="C:/Users/marc/Documents/frednet/google TFN-lego/legomindstorm/C api2/C api/Lego MindStorm Control Api/Lego MindStorm Control Api/Form1.cs"><param name="Local" value="_form1_8cs.html"><param name="ImageNumber" value="11"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Name" value="C:/Users/marc/Documents/frednet/google TFN-lego/legomindstorm/C api2/C api/Lego MindStorm Control Api/Lego MindStorm Control Api/Form1.Designer.cs"><param name="Local" value="_form1_8_designer_8cs.html"><param name="ImageNumber" value="11"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Name" value="C:/Users/marc/Documents/frednet/google TFN-lego/legomindstorm/C api2/C api/Lego MindStorm Control Api/Lego MindStorm Control Api/Program.cs"><param name="Local" value="_program_8cs.html"><param name="ImageNumber" value="11"></OBJECT>
+  </UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Globals"><param name="Local" value="globals.html"><param name="ImageNumber" value="11"></OBJECT>
 </UL>
 </BODY>
 </HTML>
