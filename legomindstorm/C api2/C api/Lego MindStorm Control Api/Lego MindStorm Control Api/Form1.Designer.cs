@@ -53,8 +53,13 @@
             this.button2 = new System.Windows.Forms.Button();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.fIleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editConfigFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // timer1
@@ -114,6 +119,7 @@
             this.command.Name = "command";
             this.command.Size = new System.Drawing.Size(417, 20);
             this.command.TabIndex = 4;
+            this.command.Enter += new System.EventHandler(this.send_command_Click);
             // 
             // send_command
             // 
@@ -248,7 +254,7 @@
             // 
             this.numericUpDown1.Location = new System.Drawing.Point(502, 133);
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDown1.Size = new System.Drawing.Size(94, 20);
             this.numericUpDown1.TabIndex = 19;
             this.numericUpDown1.Value = new decimal(new int[] {
             10,
@@ -260,11 +266,44 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(633, 135);
+            this.label6.Location = new System.Drawing.Point(611, 137);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(50, 13);
             this.label6.TabIndex = 20;
             this.label6.Text = "x 0.1 sec";
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fIleToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(760, 24);
+            this.menuStrip1.TabIndex = 21;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // fIleToolStripMenuItem
+            // 
+            this.fIleToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.editConfigFileToolStripMenuItem,
+            this.exiToolStripMenuItem});
+            this.fIleToolStripMenuItem.Name = "fIleToolStripMenuItem";
+            this.fIleToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fIleToolStripMenuItem.Text = "File";
+            // 
+            // editConfigFileToolStripMenuItem
+            // 
+            this.editConfigFileToolStripMenuItem.Name = "editConfigFileToolStripMenuItem";
+            this.editConfigFileToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.editConfigFileToolStripMenuItem.Text = "Edit config file";
+            this.editConfigFileToolStripMenuItem.Click += new System.EventHandler(this.editConfigFileToolStripMenuItem_Click);
+            // 
+            // exiToolStripMenuItem
+            // 
+            this.exiToolStripMenuItem.Name = "exiToolStripMenuItem";
+            this.exiToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.exiToolStripMenuItem.Text = "Exit";
+            this.exiToolStripMenuItem.Click += new System.EventHandler(this.Form1_unLoad);
             // 
             // Form1
             // 
@@ -290,13 +329,17 @@
             this.Controls.Add(this.command);
             this.Controls.Add(this.status);
             this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.richTextBox1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
-            this.Text = "Lego Mindstrom Remote Control";
+            this.Text = "Ground Stationg: Lego Mindstorms Control";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -328,6 +371,10 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem fIleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editConfigFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exiToolStripMenuItem;
     }
 }
 

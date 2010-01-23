@@ -25,6 +25,7 @@ using System.Threading;
 using MySql.Data.MySqlClient;
 using System.Xml;
 using AForge.Robotics.Lego;
+using System.Diagnostics;
 /**
  * \namespace Lego_MindStorm_Control_Api
  * This main namespace of Lego MindStorm Control Api
@@ -182,7 +183,9 @@ namespace Lego_MindStorm_Control_Api
 
         private void send_command_Click(object sender, EventArgs e)
         {
-            command.Text = NXT_ROVER_CONTROL.command_translation(command.Text).value; 
+            IrcBot.log += command.Text +"..."+ NXT_ROVER_CONTROL.command_translation(command.Text).value+"\n";
+            
+            
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -270,6 +273,12 @@ namespace Lego_MindStorm_Control_Api
             timer2.Interval = (int)((int)numericUpDown1.Value * (int)100);
         }
 
+        private void editConfigFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form Config_form = new Fconfig();
+            Config_form.Show();
+        }
+
         
 
         
@@ -294,67 +303,80 @@ namespace Lego_MindStorm_Control_Api
           public static MySqlCommand cmd;
           public static void run()
           {
-              mysql.connect();
-              while (true)
+              try
               {
-                  check();
-                  Thread.Sleep(100);
+                  mysql.connect();
+                  while (true)
+                  {
+                      check();
+                      Thread.Sleep(100);
+                  }
               }
+              catch
+              {
+                  IrcBot.log += "ERROR: when connect or using mysql\n";
+              }
+              
               
           }
           public static void check()
           {
-
-              TimeSpan ts = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
-              double unixTime = ts.TotalSeconds;
-             
-              mysql_results res = new mysql_results();
-              nxt_result result = new nxt_result();
-              //check mysql conntection
-              if (mysql.connection.State == ConnectionState.Open || mysql.connection.State == ConnectionState.Connecting)
+              try
               {
-                  res = mysql.QueryCommand("SELECT `ID`,`message`,`when` FROM `log_current_session` WHERE `status`='' AND `when`< '" + unixTime.ToString().Replace(',', '.') + "' AND `when`> '" + (unixTime-100).ToString().Replace(',', '.') + "' AND `type`='cmd' ORDER BY `when` ASC LIMIT 0,1");
-                  if (res.result)
+                  TimeSpan ts = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
+                  double unixTime = ts.TotalSeconds;
+
+                  mysql_results res = new mysql_results();
+                  nxt_result result = new nxt_result();
+                  //check mysql conntection
+                  if (mysql.connection.State == ConnectionState.Open || mysql.connection.State == ConnectionState.Connecting)
                   {
-                      IrcBot.log += DateTime.Now + "checking(" + res.msg + ")...";
-                      result = NXT_ROVER_CONTROL.command_translation(res.msg);
-                      if (result.result)
+                      res = mysql.QueryCommand("SELECT `ID`,`message`,`when` FROM `log_current_session` WHERE `status`='' AND `when`< '" + unixTime.ToString().Replace(',', '.') + "' AND `when`> '" + (unixTime - 100).ToString().Replace(',', '.') + "' AND `type`='cmd' ORDER BY `when` ASC LIMIT 0,1");
+                      if (res.result)
                       {
-                          //true
-                          cmd.CommandText = "UPDATE `log_current_session` SET `status`='" + result.value + "', `when`='" + unixTime.ToString().Replace(',', '.') + "' WHERE `ID`=" + res.ID;
-                          cmd.CommandType = CommandType.Text;
-                          MySqlDataReader reader = cmd.ExecuteReader();
-                          reader.Close();
-                          IrcBot.log += "succed\n";
+                          IrcBot.log += DateTime.Now + "checking(" + res.msg + ")...";
+                          result = NXT_ROVER_CONTROL.command_translation(res.msg);
+                          if (result.result)
+                          {
+                              //true
+                              cmd.CommandText = "UPDATE `log_current_session` SET `status`='" + result.value + "', `when`='" + unixTime.ToString().Replace(',', '.') + "' WHERE `ID`=" + res.ID;
+                              cmd.CommandType = CommandType.Text;
+                              MySqlDataReader reader = cmd.ExecuteReader();
+                              reader.Close();
+                              IrcBot.log += "succed\n";
+                          }
+                          else
+                          {
+                              //false
+                              cmd.CommandText = "UPDATE `log_current_session` SET `status`='" + result.value + "' WHERE `ID`=" + res.ID;
+                              cmd.CommandType = CommandType.Text;
+                              MySqlDataReader reader = cmd.ExecuteReader();
+                              reader.Close();
+                              IrcBot.log += "faild\n";
+
+                          }
                       }
                       else
                       {
-                          //false
-                          cmd.CommandText = "UPDATE `log_current_session` SET `status`='" + result.value + "' WHERE `ID`=" + res.ID;
-                          cmd.CommandType = CommandType.Text;
-                          MySqlDataReader reader = cmd.ExecuteReader();
-                          reader.Close();
-                          IrcBot.log += "faild\n";
-
+                          //IrcBot.log += "noting to do\n";
                       }
                   }
                   else
                   {
-                      //IrcBot.log += "noting to do\n";
+                      //make connecion
+                      IrcBot.log += "Mysql connection faild";
+                      mysql.connect();
                   }
               }
-              else
+              catch
               {
-                  //make connecion
-                  IrcBot.log += "Mysql connection faild";
-                  mysql.connect();
+                  IrcBot.log += "ERROR: using Mysql";
               }
-              
           }
           public static void connect()
           {
 
-
+           
 
 
               connBuilder.Add("Database", "rover");
@@ -377,42 +399,60 @@ namespace Lego_MindStorm_Control_Api
               
           }
         public static void close(){
-              
-              connection.Close();
+            try
+            {
+
+                connection.Close();
+            }
+            catch
+            {
+                IrcBot.log += "ERROR: MYSQL failed closing!!!\n";
+            }
           }
         public static mysql_results pre_program(string id)
         {
-            cmd.CommandText = "SELECT * FROM `pre_program` WHERE `masterID` = " + id;
-            cmd.CommandType = CommandType.Text;
-            MySqlDataReader reader = cmd.ExecuteReader();
-            mysql_todo[] list = new mysql_todo[50];
-            mysql_results res = new mysql_results();
-            TimeSpan ts = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
-            double unixTime = ts.TotalSeconds;
-            int i=0,j=0;
-            res.result = false;
-            while (reader.Read())
+            try
             {
-                if (reader.GetString(2).Length > 2)
+                cmd.CommandText = "SELECT * FROM `pre_program` WHERE `masterID` = " + id;
+                cmd.CommandType = CommandType.Text;
+                MySqlDataReader reader = cmd.ExecuteReader();
+                mysql_todo[] list = new mysql_todo[50];
+                mysql_results res = new mysql_results();
+                TimeSpan ts = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
+                double unixTime = ts.TotalSeconds;
+                int i = 0, j = 0;
+                res.result = false;
+                while (reader.Read())
                 {
-                    list[i] = new mysql_todo();
-                    list[i].sql = "INSERT `log_current_session` SET `type`='cmd', `message`='" + reader.GetString(2) + "',`when`=" + (reader.GetInt32(1) + unixTime).ToString().Replace(',', '.') + ",`who_ID`=" + reader.GetUInt32(5);
-                    res.result = true;
-                    i++;
+                    if (reader.GetString(2).Length > 2)
+                    {
+                        list[i] = new mysql_todo();
+                        list[i].sql = "INSERT `log_current_session` SET `type`='cmd', `message`='" + reader.GetString(2) + "',`when`=" + (reader.GetInt32(1) + unixTime).ToString().Replace(',', '.') + ",`who_ID`=" + reader.GetUInt32(5);
+                        res.result = true;
+                        i++;
+                    }
+
                 }
 
+                reader.Close();
+                for (j = 0; j < i; j++)
+                {
+                    QueryCommand(list[j].sql);
+
+                }
+                return res;
             }
-            
-            reader.Close();
-            for (j = 0; j < i; j++)
+            catch
             {
-                QueryCommand(list[j].sql);
-                
+                IrcBot.log += "ERROR: MYSQL failed pre program!!!\n";
+                mysql_results res = new mysql_results();
+                res.result = false;
+                return res;
             }
-            return res;
         }
         public static mysql_results QueryCommand(string sql)
         {
+            
             cmd.CommandText = sql;
             cmd.CommandType = CommandType.Text;
             cmd.CommandTimeout = 1;
@@ -648,22 +688,28 @@ namespace Lego_MindStorm_Control_Api
          */
         public static void run()
         {
-            
-            //nxt.
-            if (nxt.Connect(config.Rover_port))
+            try
             {
-                IrcBot.log += "Connected successfully\n";
+                //nxt.
+                if (nxt.Connect(config.Rover_port))
+                {
+                    IrcBot.log += "Connected successfully\n";
 
-                CollectInformation();
-                setSensors();
-                
+                    CollectInformation();
+                    setSensors();
+
+                }
+                else
+                {
+
+                    IrcBot.log += "Failed connecting to NXT device\n";
+                    Thread.Sleep(5000);
+                    run();
+                }
             }
-            else
+            catch
             {
-                
-                IrcBot.log += "Failed connecting to NXT device\n";
-                Thread.Sleep(5000);
-                run();
+                IrcBot.log += "Failed connecting to NXT device, error\n";
             }
         }
         /**
@@ -671,65 +717,72 @@ namespace Lego_MindStorm_Control_Api
          */
         public static void CollectInformation()
         {
-            
-            // ------------------------------------------------
-            // get NXT version
-            string firmwareVersion;
-            string protocolVersion;
-
-            if (nxt.GetVersion(out protocolVersion, out firmwareVersion))
+            try
             {
-                IrcBot.log += "firmwareVersion: " + firmwareVersion + "\n";
-                IrcBot.log += "protocolVersion: " + protocolVersion + "\n";
-                
+
+                // ------------------------------------------------
+                // get NXT version
+                string firmwareVersion;
+                string protocolVersion;
+
+                if (nxt.GetVersion(out protocolVersion, out firmwareVersion))
+                {
+                    IrcBot.log += "firmwareVersion: " + firmwareVersion + "\n";
+                    IrcBot.log += "protocolVersion: " + protocolVersion + "\n";
+
+                }
+                else
+                {
+                    IrcBot.log += "Failed getting verion\n";
+                }
+
+                // ------------------------------------------------
+                // get device information
+                string deviceName;
+                byte[] btAddress;
+                int btSignalStrength;
+                int freeUserFlesh;
+
+                if (nxt.GetDeviceInformation(out deviceName, out btAddress, out btSignalStrength, out freeUserFlesh))
+                {
+                    deviceName = deviceName.Replace((char)0x00, ' ');
+                    IrcBot.log += "deviceName: " + deviceName + "\n";
+
+                    IrcBot.log += string.Format("MAC: {0} {1} {2} {3} {4} {5} {6}\n",
+                        btAddress[0].ToString("X2"),
+                        btAddress[1].ToString("X2"),
+                        btAddress[2].ToString("X2"),
+                        btAddress[3].ToString("X2"),
+                        btAddress[4].ToString("X2"),
+                        btAddress[5].ToString("X2"),
+                        btAddress[6].ToString("X2")
+                    );
+
+                    IrcBot.log += "btSignalStrength: " + btSignalStrength.ToString() + "\n";
+                    IrcBot.log += "freeUserFlesh: " + freeUserFlesh.ToString() + "\n";
+                }
+                else
+                {
+                    IrcBot.log += "Failed getting device information\n";
+                }
+
+
+                // ------------------------------------------------
+                // get battery level
+                int batteryLevel;
+
+                if (nxt.GetBatteryPower(out batteryLevel))
+                {
+                    IrcBot.log += "batteryLevel: " + batteryLevel.ToString() + "\n";
+                }
+                else
+                {
+                    IrcBot.log += "Failed getting battery level\n";
+                }
             }
-            else
+            catch
             {
-                IrcBot.log += "Failed getting verion\n";
-            }
-
-            // ------------------------------------------------
-            // get device information
-            string deviceName;
-            byte[] btAddress;
-            int btSignalStrength;
-            int freeUserFlesh;
-
-            if (nxt.GetDeviceInformation(out deviceName, out btAddress, out btSignalStrength, out freeUserFlesh))
-            {
-                deviceName = deviceName.Replace((char)0x00, ' ');
-                IrcBot.log += "deviceName: " + deviceName + "\n";
-                
-                IrcBot.log += string.Format("MAC: {0} {1} {2} {3} {4} {5} {6}\n",
-                    btAddress[0].ToString("X2"),
-                    btAddress[1].ToString("X2"),
-                    btAddress[2].ToString("X2"),
-                    btAddress[3].ToString("X2"),
-                    btAddress[4].ToString("X2"),
-                    btAddress[5].ToString("X2"),
-                    btAddress[6].ToString("X2")
-                );
-
-                IrcBot.log += "btSignalStrength: " + btSignalStrength.ToString() + "\n";
-                IrcBot.log += "freeUserFlesh: " + freeUserFlesh.ToString() + "\n";
-            }
-            else
-            {
-                IrcBot.log += "Failed getting device information\n";
-            }
-
-
-            // ------------------------------------------------
-            // get battery level
-            int batteryLevel;
-
-            if (nxt.GetBatteryPower(out batteryLevel))
-            {
-                IrcBot.log += "batteryLevel: " + batteryLevel.ToString() + "\n";
-            }
-            else
-            {
-                IrcBot.log += "Failed getting battery level\n";
+                IrcBot.log += "A error happende during collection information.\n";
             }
              
         }
@@ -739,69 +792,83 @@ namespace Lego_MindStorm_Control_Api
          */
         public static nxt_result command_translation(string text_command)
         {
-            nxt_result result = new nxt_result();
-            arg_command = text_command.Split(' ');
-            if (arg_command.Length == 4)
+            try
             {
-                if (arg_command[1] == "run" && arg_command[2] == "program")
-                {
-                    return run_program_mysql(arg_command[3]);
-                }
-            }
-            //check if NXT is connect
-            if (!nxt.IsConnected)
-            {
+                
+                nxt_result result = new nxt_result();
                 result.result = false;
-                result.value = "NXT is not connect!";
+                result.value = "Faild to translate";
+                
+                arg_command = text_command.Split(' ');
+                if (arg_command.Length == 4)
+                {
+                    if (arg_command[1] == "run" && arg_command[2] == "program")
+                    {
+                        return run_program_mysql(arg_command[3]);
+                    }
+                }
+                //check if NXT is connect
+                if (!nxt.IsConnected)
+                {
+                    result.result = false;
+                    result.value = "NXT is not connect!";
+                    return result;
+                }
+                //check type
+
+                if (arg_command.Length == 4)
+                {
+                    if (arg_command[1] == "motor" && arg_command[3] == "on")
+                    {
+                        return motor_on(arg_command[2]);
+                    }
+                    if (arg_command[1] == "motor" && arg_command[3] == "off")
+                    {
+                        return motor_off(arg_command[2]);
+                    }
+                }
+                if (arg_command.Length == 5)
+                {
+                    if (arg_command[1] == "motor" && arg_command[2] == "speed")
+                    {
+                        return set_speed(arg_command[3], arg_command[4]);
+                    }
+                    if (arg_command[1] == "motor" && arg_command[2] == "degree")
+                    {
+                        return motor_on(arg_command[3], arg_command[4]);
+                    }
+                }
+                if (arg_command.Length == 4)
+                {
+                    if (arg_command[1] == "sensor" && arg_command[2] == "value")
+                    {
+                        return get_sensor(arg_command[3]);
+                    }
+                }
+                if (arg_command.Length == 5)
+                {
+                    if (arg_command[1] == "run" && arg_command[2] == "rover" && arg_command[3] == "program")
+                    {
+                        return run_program(arg_command[4]);
+                    }
+                }
+
+                if (arg_command.Length == 4)
+                {
+                    if (arg_command[1] == "stop" && arg_command[2] == "rover" && arg_command[2] == "program")
+                    {
+                        return stop_program();
+                    }
+                }
                 return result;
             }
-            //check type
-            
-            if (arg_command.Length == 4)
+            catch
             {
-                if (arg_command[1] == "motor" && arg_command[3] == "on")
-                {
-                    return motor_on(arg_command[2]);
-                }
-                if (arg_command[1] == "motor" && arg_command[3] == "off")
-                {
-                    return motor_off(arg_command[2]);
-                }
+                IrcBot.log += "ERROR: Failed translate command\n";
+                nxt_result failed = new nxt_result();
+                failed.result = false;
+                return failed;
             }
-            if (arg_command.Length == 5)
-            {
-                if (arg_command[1] == "motor" && arg_command[2] == "speed")
-                {
-                    return set_speed(arg_command[3],arg_command[4]);
-                }
-                if (arg_command[1] == "motor" && arg_command[2] == "degree")
-                {
-                    return set_speed(arg_command[3], arg_command[4]);
-                }
-            }
-            if (arg_command.Length == 4)
-            {
-                if (arg_command[1] == "sensor" && arg_command[2] == "value")
-                {
-                    return get_sensor(arg_command[3]);
-                }
-            }
-            if (arg_command.Length == 5)
-            {
-                if (arg_command[1] == "run" && arg_command[2] == "rover" && arg_command[3] == "program")
-                {
-                    return run_program(arg_command[4]);
-                }
-            }
-            
-            if (arg_command.Length == 4)
-            {
-                if (arg_command[1] == "stop" && arg_command[2] == "rover" && arg_command[2] == "program")
-                {
-                    return stop_program();
-                }
-            }
-            return result;
         }
         /**
          * This function will read out a sensor
@@ -918,6 +985,10 @@ namespace Lego_MindStorm_Control_Api
          */
         public static nxt_result motor_on(string motors)
         {
+            return motor_on(motors, "90");
+        }
+        public static nxt_result motor_on(string motors, string degrees)
+        {
             string[] motors_array;
             
             nxt_result motor_result = new nxt_result();
@@ -934,19 +1005,19 @@ namespace Lego_MindStorm_Control_Api
             {
                 if (motor.ToUpper() == "A")
                 {
-                    motor_result = motor_on(NXTBrick.Motor.A);
+                    motor_result = motor_on(NXTBrick.Motor.A,Convert.ToInt32(degrees));
                 }
                 if (motor.ToUpper() == "B")
                 {
-                    motor_result = motor_on(NXTBrick.Motor.B);
+                    motor_result = motor_on(NXTBrick.Motor.B, Convert.ToInt32(degrees));
                 }
                 if (motor.ToUpper() == "C")
                 {
-                    motor_result = motor_on(NXTBrick.Motor.C);
+                    motor_result = motor_on(NXTBrick.Motor.C, Convert.ToInt32(degrees));
                 }
                 if (motor.ToUpper() == "ALL")
                 {
-                    motor_result = motor_on(NXTBrick.Motor.All);
+                    motor_result = motor_on(NXTBrick.Motor.All, Convert.ToInt32(degrees));
                 }
                 if (motor_result.result == false)
                 {
@@ -960,8 +1031,10 @@ namespace Lego_MindStorm_Control_Api
          * @param motor type NXTBrick.Motor
          * @return nxt_result
          */
-        public static nxt_result motor_on(NXTBrick.Motor motor)
+        public static nxt_result motor_on(NXTBrick.Motor motor, int degrees)
         {
+            Debug.WriteLine("Set motor on");
+            Debug.WriteLine(motor);
             nxt_result result = new nxt_result();
             NXTBrick.MotorState motorState = new NXTBrick.MotorState();
             if (motor == NXTBrick.Motor.A)
@@ -993,8 +1066,8 @@ namespace Lego_MindStorm_Control_Api
             motorState.Regulation = NXTBrick.MotorRegulationMode.Speed;
             motorState.RunState = NXTBrick.MotorRunState.Running;
             // tacho limit
-            // TODO edit this: number of dregree
-            motorState.TachoLimit = 90;
+            
+            motorState.TachoLimit = degrees;
             
             // set motor's state
             if (nxt.SetMotorState(motor, motorState) != true)

@@ -21,3 +21,4 @@ C:\Users\marc\Documents\frednet\google TFN-lego\legomindstorm\C api2\C api\Lego 
 C:\Users\marc\Documents\frednet\google TFN-lego\legomindstorm\C api2\C api\Lego MindStorm Control Api\Lego MindStorm Control Api\obj\Debug\Lego MindStorm Control Api.csproj.GenerateResource.Cache
 C:\Users\marc\Documents\frednet\google TFN-lego\legomindstorm\C api2\C api\Lego MindStorm Control Api\Lego MindStorm Control Api\obj\Debug\Lego MindStorm Control Api.exe
 C:\Users\marc\Documents\frednet\google TFN-lego\legomindstorm\C api2\C api\Lego MindStorm Control Api\Lego MindStorm Control Api\obj\Debug\Lego MindStorm Control Api.pdb
+C:\Users\marc\Documents\frednet\google TFN-lego\legomindstorm\C api2\C api\Lego MindStorm Control Api\Lego MindStorm Control Api\obj\Debug\Lego_MindStorm_Control_Api.Fconfig.resources
