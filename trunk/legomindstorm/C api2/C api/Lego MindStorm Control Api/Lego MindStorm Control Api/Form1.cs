@@ -301,6 +301,7 @@ namespace Lego_MindStorm_Control_Api
           
           public static MySqlConnection connection;
           public static MySqlCommand cmd;
+          public static bool in_use = false;
           public static void run()
           {
               try
@@ -336,24 +337,40 @@ namespace Lego_MindStorm_Control_Api
                       {
                           IrcBot.log += DateTime.Now + "checking(" + res.msg + ")...";
                           result = NXT_ROVER_CONTROL.command_translation(res.msg);
+                          
                           if (result.result)
                           {
+                              while (in_use == true)
+            {
+               Thread.Sleep(1);
+            }
+                              ts = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
+                              unixTime = ts.TotalSeconds;
+            in_use = true;
                               //true
                               cmd.CommandText = "UPDATE `log_current_session` SET `status`='" + result.value + "', `when`='" + unixTime.ToString().Replace(',', '.') + "' WHERE `ID`=" + res.ID;
                               cmd.CommandType = CommandType.Text;
                               MySqlDataReader reader = cmd.ExecuteReader();
                               reader.Close();
                               IrcBot.log += "succed\n";
+                              in_use = false;
                           }
                           else
                           {
+                              while (in_use == true)
+            {
+               Thread.Sleep(1);
+            }
+                              ts = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
+                              unixTime = ts.TotalSeconds;
+            in_use = true;
                               //false
-                              cmd.CommandText = "UPDATE `log_current_session` SET `status`='" + result.value + "' WHERE `ID`=" + res.ID;
+            cmd.CommandText = "UPDATE `log_current_session` SET `status`='" + result.value + "', `when`='" + unixTime.ToString().Replace(',', '.') + "' WHERE `ID`=" + res.ID;
                               cmd.CommandType = CommandType.Text;
                               MySqlDataReader reader = cmd.ExecuteReader();
                               reader.Close();
                               IrcBot.log += "faild\n";
-
+                              in_use = false;
                           }
                       }
                       else
@@ -413,6 +430,12 @@ namespace Lego_MindStorm_Control_Api
         {
             try
             {
+                while (in_use == true)
+            {
+               Thread.Sleep(1);
+            }
+
+            in_use = true;
                 cmd.CommandText = "SELECT * FROM `pre_program` WHERE `masterID` = " + id;
                 cmd.CommandType = CommandType.Text;
                 MySqlDataReader reader = cmd.ExecuteReader();
@@ -440,6 +463,7 @@ namespace Lego_MindStorm_Control_Api
                     QueryCommand(list[j].sql);
 
                 }
+                in_use = false;
                 return res;
             }
             catch
@@ -452,39 +476,51 @@ namespace Lego_MindStorm_Control_Api
         }
         public static mysql_results QueryCommand(string sql)
         {
-            
-            cmd.CommandText = sql;
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandTimeout = 1;
-            mysql_results res = new mysql_results();
-            try
+            while (in_use == true)
             {
-                MySqlDataReader reader = cmd.ExecuteReader();
-                
-                res.result = false;
-                while (reader.Read())
-                {
-                    res.ID = reader.GetInt32(0);
-                    res.msg = reader.GetString(1);
-                    res.when = reader.GetDouble(2);
-                    res.result = true;
-
-
-                }
-
-                reader.Close();
+               Thread.Sleep(1);
             }
-            catch
-            {
-                res.ID = 0;
-                res.msg = "";
-                res.when = 0.0;
-                res.result = false;
 
+            in_use = true;
+                cmd.CommandText = sql;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandTimeout = 1;
+
+                mysql_results res = new mysql_results();
+                try
+                {
+
+                    
+                    MySqlDataReader reader = cmd.ExecuteReader();
+
+                    res.result = false;
+                    while (reader.Read())
+                    {
+                        res.ID = reader.GetInt32(0);
+                        res.msg = reader.GetString(1);
+                        res.when = reader.GetDouble(2);
+                        res.result = true;
+
+
+                    }
+
+                    reader.Close();
+                }
+                catch
+                {
+                    
+                    res.ID = 0;
+                    res.msg = "";
+                    res.when = 0.0;
+                    res.result = false;
+                    in_use = false;
+                    return res;
+                }
+                in_use = false;
                 return res;
             }
-            return res;
-        }
+        
+
         
     }
     /**
@@ -833,7 +869,7 @@ namespace Lego_MindStorm_Control_Api
                     {
                         return set_speed(arg_command[3], arg_command[4]);
                     }
-                    if (arg_command[1] == "motor" && arg_command[2] == "degree")
+                    if (arg_command[1] == "motor" && arg_command[2] == "degrees")
                     {
                         return motor_on(arg_command[3], arg_command[4]);
                     }
@@ -867,6 +903,7 @@ namespace Lego_MindStorm_Control_Api
                 IrcBot.log += "ERROR: Failed translate command\n";
                 nxt_result failed = new nxt_result();
                 failed.result = false;
+                failed.value = "failed";
                 return failed;
             }
         }
@@ -942,7 +979,12 @@ namespace Lego_MindStorm_Control_Api
             nxt_result motor_result = new nxt_result();
             motor_result.result = false;
             motor_result.value = "Motor not found.";
+            if (motors.ToLower() == "all")
+            {
+                motors = "AvBvC";
+            }
             motors_array = motors.ToLower().Split('v');
+            
             foreach (string motor in motors_array)
             {
                 if (motor.ToUpper() == "A")
@@ -995,9 +1037,9 @@ namespace Lego_MindStorm_Control_Api
             motor_result.result = false;
             motor_result.value = "Motor not found.";
             motors = motors.ToLower();
-            if (motors == "all")
+            if (motors == "all" && !((speed_motors[0] == speed_motors[1])&&(speed_motors[1] == speed_motors[2])))
             {
-                motors = "avbvc";
+                motors = "AvBvC";
             }
             motors_array = motors.Split('v');
             
@@ -1033,40 +1075,41 @@ namespace Lego_MindStorm_Control_Api
          */
         public static nxt_result motor_on(NXTBrick.Motor motor, int degrees)
         {
-            Debug.WriteLine("Set motor on");
-            Debug.WriteLine(motor);
+            //Debug.WriteLine("Set motor on");
+            //Debug.WriteLine(motor);
             nxt_result result = new nxt_result();
             NXTBrick.MotorState motorState = new NXTBrick.MotorState();
+            
             if (motor == NXTBrick.Motor.A)
             {
                 // prepare motor's state to set
                 motorState.Power = (sbyte)speed_motors[0];
-                motorState.TurnRatio = (sbyte)speed_motors[0];
+                motorState.TurnRatio = 90;
             }
             if (motor == NXTBrick.Motor.B)
             {
                 // prepare motor's state to set
                 motorState.Power = (sbyte)speed_motors[1];
-                motorState.TurnRatio = (sbyte)speed_motors[1];
+                motorState.TurnRatio = 90;
             }
             if (motor == NXTBrick.Motor.C)
             {
                 // prepare motor's state to set
                 motorState.Power = (sbyte)speed_motors[2];
-                motorState.TurnRatio = (sbyte)speed_motors[2];
+                motorState.TurnRatio = 90;
             }
             // TODO If al motor's on handel correct speed
             if (motor == NXTBrick.Motor.All)
             {
                 // prepare motor's state to set
                 motorState.Power = (sbyte)speed_motors[0];
-                motorState.TurnRatio = (sbyte)speed_motors[0];
+                motorState.TurnRatio = 90;
             }
             motorState.Mode = NXTBrick.MotorMode.On;
-            motorState.Regulation = NXTBrick.MotorRegulationMode.Speed;
+            motorState.Regulation = NXTBrick.MotorRegulationMode.Idle;
             motorState.RunState = NXTBrick.MotorRunState.Running;
             // tacho limit
-            
+            // motorState.TachoCount = 0;
             motorState.TachoLimit = degrees;
             
             // set motor's state
