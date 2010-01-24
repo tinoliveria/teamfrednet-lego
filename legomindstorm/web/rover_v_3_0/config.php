@@ -42,19 +42,19 @@ if(!isset($_SESSION['last_time_check'])){
 }
 //timeout
 /**
- * Time before user will be set to Offline
+ * Time before user will be set to Offline(should not lower then $user_control_time) 
  */
-$user_offline_time = 300;
+$user_offline_time = 3000;
 /**
- * Time before user will be set to Offline
+ * Control time
  */
-$user_control_time = 300;
+$user_control_time = 3000;
 /**
  * Array from stream gid's
  * Max 3 streams
  *
  */
-$stream_gid = array("channel3fish","fish2channel");
+$stream_gid = array("marc_overhead","marc_rove");
 /**
  * Template name
  *
@@ -72,5 +72,14 @@ $wiki_prefixed = "Lego_mindstorm_webpages:";
  * Wiki chache time in hours
  */
 $wiki_cache_time = 0.5;
+/**
+ * config
+ * command left
+ */
+$command_to_go_left = array("cmd motor speed A -80","cmd motor speed C 80","cmd motor degrees All 30");//you can use {degrees} to allow use to control the amount of correction
+$command_to_go_right = array("cmd motor speed A 80","cmd motor speed C -80","cmd motor degrees All 30");//you can use {degrees} to allow use to control the amount of correction
+$command_to_go_forward = array("cmd motor speed All 80","cmd motor degrees All {degrees}");//you can use {degrees} to allow use to control the amount of correction
+$command_to_go_back = array("cmd motor speed All -80","cmd motor degrees All {degrees}");//you can use {degrees} to allow use to control the amount of correction
+ 
 include("login.php");
 ?>

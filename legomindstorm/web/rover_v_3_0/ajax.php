@@ -217,7 +217,7 @@ if(isset($_GET['gettime'])){
 	}
 	$sql = "UPDATE `users` SET `start_control`=0, `end_control`=$end_control WHERE `ID`=$who_ID";
 	mysql_query($sql);
-	echo "<script>alert('Your reqeust is add to queqe.');window.location.href='index.php#file_time';</script>";
+	echo "<script>alert('Your reqeust is add to queqe.');window.location.href='index.php#file_mission_control';</script>";
 
 }
 if(isset($_GET['givetime'])){
