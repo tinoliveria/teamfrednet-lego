@@ -64,6 +64,7 @@ function main_player($id){
 		<td><?php create_player_small($count,$waarde); ?></td>
 		<?php
 	}
+	//include("config.php");
 	?>
 
 
@@ -74,7 +75,7 @@ function main_player($id){
 		<div id="mainPlayer"><?php echo main_player($main_stream_gid); ?></div>
 		</td>
 		<td>
-		<table heigth="100%">
+		<table heigth="100%" width="300">
 			<tr>
 				<td valign="top"><strong>sensor data:</strong>
 				<div id="sensors">Please wait</div>
@@ -86,26 +87,29 @@ function main_player($id){
 				<table>
 					<tr>
 						<td rowspan="2"><img
-							onclick="document.getElementById('input_chat').value='cmd run rover program right_3_sec';post_chat();"
-							src="template/<?php echo $template_name; ?>/img/directdrive_right.gif" />
+							onclick="<?php global $command_to_go_left;$x=0; foreach($command_to_go_left as $waarde){ $waarde=str_replace("{degrees}","' + Math.round(distance) + '",$waarde); ?>document.getElementById('input_chat').value='<?php echo $waarde; ?>';post_chat();pausecomp(200);<?php }?>"
+							src="template/<?php echo $template_name; ?>/img/directdrive_left.gif" />
 						</td>
 						<td><img
-							onclick="document.getElementById('input_chat').value='cmd run rover program forward_3_sec';post_chat();"
+							onclick="<?php global $command_to_go_forward; foreach($command_to_go_forward as $waarde){ $waarde=str_replace("{degrees}","'+ Math.round(distance) +'",$waarde); ?>document.getElementById('input_chat').value='<?php echo $waarde; ?>';post_chat();pausecomp(200);<?php }?>"
 							src="template/<?php echo $template_name; ?>/img/directdrive_forward.gif" />
 						</td>
 						<td rowspan="2"><img
-							onclick="document.getElementById('input_chat').value='cmd run rover program left_3_sec';post_chat();"
-							src="template/<?php echo $template_name; ?>/img/directdrive_left.gif" />
+							onclick="<?php global $command_to_go_right; foreach($command_to_go_right as $waarde){ $waarde=str_replace("{degrees}","'+ Math.round(distance) +'",$waarde); ?>document.getElementById('input_chat').value='<?php echo $waarde; ?>';post_chat();pausecomp(200);<?php }?>"
+							src="template/<?php echo $template_name; ?>/img/directdrive_right.gif" />
 						</td>
+						<td rowspan="2">Travel Distance:<div id="travelDistand_value">70</div><br /><input type="button" value="Increase" onclick="distance=distance*1.2;document.getElementById('travelDistand_value').innerHTML=Math.round(distance)"/><br /><input type="button" value="Degrees" onclick="distance=distance/1.2;document.getElementById('travelDistand_value').innerHTML=Math.round(distance)" /></td>
 					</tr>
 					<tr>
 						<td><img
-							onclick="document.getElementById('input_chat').value='cmd run rover program back_3_sec';post_chat();"
+							onclick="<?php global $command_to_go_back; foreach($command_to_go_back as $waarde){ $waarde=str_replace("{degrees}","'+ Math.round(distance) +'",$waarde); ?>document.getElementById('input_chat').value='<?php echo $waarde; ?>';post_chat();pausecomp(200);<?php }?>"
 							src="template/<?php echo $template_name; ?>/img/directdrive_back.gif" />
 				</td>
+				
 				</tr>
 				<tr>
-				<td colspan="3"><input type="button" id="give" onclick="window.location.href='ajax.php?givetime';" value="Give up my control time" /></td>
+				<td colspan="3"><input type="button" id="give" onclick="window.location.href='ajax.php?givetime';" value="Give up my control time" /><br /><input type="button" id="give" onclick="window.location.href='ajax.php?gettime';" value="Claim you control time" /></td>
+				
 				</tr>
 				</table>
 				</div>

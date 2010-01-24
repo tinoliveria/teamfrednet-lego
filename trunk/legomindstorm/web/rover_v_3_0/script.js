@@ -1,3 +1,4 @@
+distance = 70;
 nickname_update = false;
 function post_chat(){
 ajax_donwload_add("ajax.php?message="+escape(document.getElementById("input_chat").value),"logbook");
