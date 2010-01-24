@@ -44,11 +44,11 @@ if(!isset($_SESSION['last_time_check'])){
 /**
  * Time before user will be set to Offline(should not lower then $user_control_time) 
  */
-$user_offline_time = 3000;
+$user_offline_time = 600;
 /**
  * Control time
  */
-$user_control_time = 3000;
+$user_control_time = 300;
 /**
  * Array from stream gid's
  * Max 3 streams
