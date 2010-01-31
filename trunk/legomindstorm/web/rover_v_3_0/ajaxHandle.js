@@ -80,7 +80,7 @@ if(xmlHttp.readyState == 0 || xmlHttp.readyState == 4){
 xmlHttp.send(null);
 
 }else{
-		setTimeout("ajax_donwload('"+url+"', '"+divId+"')",100);
+		setTimeout("ajax_donwload('"+url+"', '"+divId+"')",50);
 		//alert("ajax_donwload('"+url+"', '"+divId+"')");
 }
   }
@@ -130,7 +130,7 @@ xmlHttp.send(null);
 
   	
 }else{
-	setTimeout("ajax_donwload_add('"+url+"', '"+divId+"')",100);
+	setTimeout("ajax_donwload_add('"+url+"', '"+divId+"')",50);
 			//alert("ajax_donwload('"+url+"', '"+divId+"')");
 }
 }

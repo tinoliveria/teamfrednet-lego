@@ -20,15 +20,17 @@ include("content.php");
 <div id="heading"><a href="http://www.teamfrednet.org/"> <img
 	alt="teamFREDNET logo" src="img/teamfred_simple_logo.png"
 	class="head_logo" /> </a> teamFREDNET MindStorm Lunar Rover Portal</div>
-
+<table style="vertical-align:text-top;">
+<tr>
+<td style="vertical-align:top;">
 <div id="left_col"><?php
 build_menu();
 ?></div>
-
+</td><td style="vertical-align:top;">
 <div id="center_col"><?php
 build_content();
 ?></div>
-
+</td><td style="vertical-align:top;">
 <div id="right_col">
 <div class="rankBox">
 <h4 style="padding: 0; margin: 0;">Today top 5</h4>
@@ -55,6 +57,7 @@ build_content();
 <div class="rankBox" id="login"><?php 
 if(isset($_SESSION['nickname'])){
 	echo "Hello " . $_SESSION['nickname'];
+	?><br /><input type="button" value="logout" onclick="logout();"/><?php 
 }else{
 	?> Set Your nick Name:<br />
 nickname:<input type="text" id="nickname"
@@ -68,7 +71,9 @@ nickname:<input type="text" id="nickname"
 <div id="who_online" class="who_is_online"></div>
 </div>
 </div>
-
+</td>
+</tr>
+</table>
 <div id="footer">
 <table class="footTabs">
 	<tr>

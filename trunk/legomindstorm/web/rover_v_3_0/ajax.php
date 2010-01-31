@@ -31,7 +31,7 @@ if(isset($_GET['message'])){
 	$row = mysql_fetch_array( $result );
 	if(!($row['start_control'] > (time()-$user_offline_time) && $row['start_control'] < time()) && $type == "cmd")
 	{
-		echo "Your aren't allow to summit commands.<br />To get control time goto: <a href=\"#file_time\">Claim your time</a><br />\n";
+		echo "Your aren't allow to summit commands.<br />To get control time goto: <a onclick=\"top.frames['Iframe_con'].location.href='ajax.php?gettime';\" href=\"\">Claim your time</a><br />\n";
 		die();
 		//echo "Work around, you are allow to summit commands<br />\n";
 	}
@@ -43,7 +43,7 @@ if(isset($_GET['message'])){
 	}
 if(isset($_GET['update'])){
 	
-	
+	//echo ".";
 
 	
 	//check max every 1 sec in db
@@ -53,27 +53,47 @@ if(isset($_GET['update'])){
 		//update
 		if(isset($_SESSION['last_time_check'])){
 		$last_id = $_SESSION['last_time_check'];
-		}else{
-			$sql = "SELECT * FROM `log_current_session`,`users` WHERE `log_current_session`.`who_ID`=`users`.`ID` AND `log_current_session`.`when` < $now AND (`log_current_session`.`status`!='' OR `log_current_session`.`type`!='cmd') ORDER BY `log_current_session`.`ID` DESC";
+		if($last_id > 10000000){
+		$sql = "SELECT * FROM `log_current_session` ORDER BY `log_current_session`.`ID`  DESC LIMIT 0,1";
 			$result = mysql_query($sql);
 		$row = mysql_fetch_array( $result );
-		$last_id = $row['ID'];
 		
+		$last_id = $row[0];
+		$_SESSION['last_time_check'] = $last_id;
 		}
-		$now = time()+microtime();
-		$sql = "SELECT * FROM `log_current_session`,`users` WHERE `log_current_session`.`who_ID`=`users`.`ID` AND `log_current_session`.`when`>=$last_id AND `log_current_session`.`when` < $now AND (`log_current_session`.`status`!='' OR `log_current_session`.`type`!='cmd') ORDER BY `log_current_session`.`when` DESC";
+		}else{
+			$sql = "SELECT * FROM `log_current_session` ORDER BY `log_current_session`.`ID`  DESC LIMIT 0,1";
+			$result = mysql_query($sql);
+		$row = mysql_fetch_array( $result );
+		
+		$last_id = $row[0];
+		$_SESSION['last_time_check'] = $last_id;
+		}
+		//$last_id = 5000;//remove this
+		$now = time()+microtime()-0.5;
+		//fixe this(link with user
+		$sql = "SELECT * FROM `log_current_session`,`users` WHERE `log_current_session`.`who_ID`=`users`.`ID` AND `log_current_session`.`ID` > $last_id AND `when` < $now ORDER BY `log_current_session`.`ID` DESC";
 		//echo $sql;
+		//echo $sql;
+		//echo mysql_error();
 		//die();
 		$result = mysql_query($sql);
 		while($row = mysql_fetch_array( $result )){
+			if((($row['status'] == "") && ($row['when']> $now-10) && ($row['type'] == "cmd"))) {
+				break;
+			}
 			//print_r($row);
 			//$database[$database['count']] =  date("H:i:s ") . $row['nickname'] . ": " . $row['message'] . " <strong>Result: " . $row['status']."</strong><br />\n";
 			//$database['count']++;
-			echo date("H:i:s ") . $row['nickname'] . ": " . $row['message'];
+			echo date("H:i:s ",$row['when']) . $row['nickname'] . ": " . $row['message'];
 			if($row['type'] == 'cmd'){
 				echo  " <strong>Result: " . $row['status']."</strong>";
 			}
-			$_SESSION['last_time_check'] =  $row['when']+1;
+			
+			if($_SESSION['last_time_check'] < $row[0]){
+			$_SESSION['last_time_check'] =  $row[0];
+			}
+			
 			echo "<br />\n";
 		}
 		
@@ -149,7 +169,13 @@ while($row = mysql_fetch_array( $result )){
 			$seconds = ($row['start_control']-time()+$user_control_time);
 		$mins = floor ($seconds / 60);
         $secs = $seconds % 60;
-       
+       	if(strlen($secs) == 1){
+       		$secs = "0" . $secs;
+       	}
+		if(strlen($mins) == 1){
+       		$mins = "0" . $mins;
+       	}
+		
         
 			echo "This user is in control(remaing: $mins:$secs)";
 		}
@@ -181,7 +207,18 @@ if(isset($_GET['nickname'])){
 	$_SESSION['nickname'] = $user_info['name'];
 	?>
 Hello
-	<?php echo $user_info['name']; ?>
+	<?php echo $user_info['name']; ?><br />
+	<input type="button" value="logout" onclick="logout();"/>
+	<?php
+}
+if(isset($_GET['logout'])){
+	$sql = "UPDATE `users` SET `last`=".(time()-$user_offline_time)." WHERE `ID`='{$_SESSION['user_ID']}'";
+	mysql_query($sql);
+	unset($_SESSION['user_ID']);
+	unset($_SESSION['nickname']);
+	?>
+Your are now log out.
+	
 	<?php
 }
 if(isset($_GET['rank'])){
@@ -210,14 +247,23 @@ if(isset($_GET['gettime'])){
 	
 	//who
 	if(isset($_SESSION['user_ID'])){
+		if($_SESSION['user_ID'] == 0){
+			$who_ID  = 0 ;
+		$_SESSION['user_ID'] = $who_ID;
+		echo "<script>alert('As guest you aren\'t allowed to claim your control. Please give up a nickname');</script>";
+		die();
+		}else{
 		$who_ID = $_SESSION['user_ID'];
+		}
 	}else{
 		$who_ID  = 0 ;
 		$_SESSION['user_ID'] = $who_ID;
+		echo "<script>alert('As guest you aren\'t allowed to claim your control. Please give up a nickname');</script>";
+		die();
 	}
 	$sql = "UPDATE `users` SET `start_control`=0, `end_control`=$end_control WHERE `ID`=$who_ID";
 	mysql_query($sql);
-	echo "<script>alert('Your reqeust is add to queqe.');window.location.href='index.php#file_mission_control';</script>";
+	echo "<script>alert('Your reqeust is add to queqe.');</script>";
 
 }
 if(isset($_GET['givetime'])){
@@ -308,22 +354,7 @@ if(isset($_GET['score'])){
 	}
 	shmop_close($shm_id);
 }
-// TODO this!
-if(isset($_GET['logout'])){
-	if(logout()){
-		$sql = "INSERT `users` SET `nickname`='{$_GET['nickname']}', `last`=".time()."";
-		mysql_query($sql);
-		$_SESSION['user_ID'] = mysql_insert_id();
-		?>
-Hello
-		<?php echo $user_info['name']; ?>
-,
-<a onclick="logout">Logout</a>
-		<?php
-	}else{
-		echo "Your password/nickname is not good!!!<br />\n";
-	}
-}
+
 if(isset($_GET['clip'])){
 	function main_player($id){
 
@@ -427,5 +458,77 @@ if(isset($_GET['pre_program_commands'])){
 		//save
 		$result = mysql_query($sql);
 	}
+}
+
+//rover program
+if(isset($_GET['rover_program'])){
+	if($_GET['rover_program'] == "new"){
+		$sql = "SELECT * FROM `rover_program` WHERE 1 ORDER BY `ID` DESC";
+		$result = mysql_query($sql);
+		$row = mysql_fetch_array( $result );
+		$id = $row['ID']+1;
+		$sql = "INSERT `rover_program` SET `ID`=$id";
+		mysql_query($sql);
+		$_SESSION['id_rover_program'] = $id;
+	}elseif($_GET['rover_program'] == $_GET['rover_program']*1 && $_GET['rover_program'] != ""){
+
+		$id = $_GET['rover_program'];
+		$_SESSION['id_rover_program'] = $id;
+	}else{
+		if(isset($_SESSION['id_rover_program'])){
+			if($_SESSION['id_rover_program'] != ""){
+				$id = $_SESSION['id_rover_program'];
+			}else{
+				die();
+			}
+		}else{
+			die();
+		}
+
+	}
+	$sql = "SELECT * FROM `rover_program` WHERE `ID`=$id";
+	$result = mysql_query($sql);
+	$row = mysql_fetch_array( $result );
+	echo "Your Program ID: $id<br />\n";
+	?>
+<form action="ajax.php?rover_program_commands=<?php echo $id; ?>"
+	target="hiddenframe" method="post">
+<table width="400" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td width="400"><textarea name="code" cols="70" rows="25"><?php echo $row['code']; ?></textarea></td>
+		</tr>
+		<tr><td><input type="submit" name="button" id="button" value="save" /></td></tr>
+</table>
+</form>
+
+	<?php
+
+
+}
+if(isset($_GET['rover_program_commands'])){
+	if(!isset($_SESSION['user_ID'])){
+		$_SESSION['user_ID'] = 0;
+	}
+	$id = $_GET['rover_program_commands'];
+	
+		//check
+		$sql = "SELECT * FROM `rover_program` WHERE `ID`=$id";
+		$result = mysql_query($sql);
+		$row = mysql_fetch_array( $result );
+		if(count($row)>0){
+			//update
+			$sql = "UPDATE `rover_program` SET `code`='".$_POST['code']."' WHERE `ID`=$id";
+		}else{
+			//new
+			$sql = "INSERT `rover_program` SET `ID`=$id, `code`='".$_POST['code']."'";
+		}
+		//save
+		$result = mysql_query($sql);
+		//save to file
+		$myFile = $nbc_path . "$id.nbc";
+$fh = fopen($myFile, 'w') or die("can't open file");
+fwrite($fh, $_POST['code']);
+fclose($fh);
+	
 }
 ?>

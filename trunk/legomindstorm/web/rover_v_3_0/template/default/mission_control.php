@@ -26,7 +26,7 @@ function create_player_small($id,$clip_id){
 function main_player($id){
 	?>
 
-<object id="Player" width="400" height="400" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"><param name="movie" value="http://static.livestream.com/grid/PlayerV2.swf?channel=<?php echo $id; ?>&layout=playerEmbedDefault&backgroundColor=0x000000&backgroundAlpha=1&backgroundGradientStrength=0&chromeColor=0x000000&headerBarGlossEnabled=true&controlBarGlossEnabled=true&chatInputGlossEnabled=false&uiWhite=true&uiAlpha=0.5&uiSelectedAlpha=1&dropShadowEnabled=true&dropShadowHorizontalDistance=10&dropShadowVerticalDistance=10&paddingLeft=10&paddingRight=10&paddingTop=10&paddingBottom=10&cornerRadius=3&backToDirectoryURL=null&bannerURL=null&bannerText=null&bannerWidth=320&bannerHeight=50&showViewers=true&embedEnabled=true&chatEnabled=true&onDemandEnabled=true&programGuideEnabled=false&fullScreenEnabled=true&reportAbuseEnabled=false&gridEnabled=false&initialIsOn=true&initialIsMute=false&initialVolume=10&contentId=null&initThumbUrl=null&playeraspectwidth=4&playeraspectheight=3&mogulusLogoEnabled=true"/><param name="allowFullScreen" value="true"/><param name="bgcolor" value="#ffffff"/><param name="wmode" value="window"/> <embed name="Player" src="http://static.livestream.com/grid/PlayerV2.swf?channel=<?php echo $id; ?>&layout=playerEmbedDefault&backgroundColor=0xffffff&backgroundAlpha=1&backgroundGradientStrength=0&chromeColor=0x000000&headerBarGlossEnabled=true&controlBarGlossEnabled=true&chatInputGlossEnabled=false&uiWhite=true&uiAlpha=0.5&uiSelectedAlpha=1&dropShadowEnabled=true&dropShadowHorizontalDistance=10&dropShadowVerticalDistance=10&paddingLeft=10&paddingRight=10&paddingTop=10&paddingBottom=10&cornerRadius=3&backToDirectoryURL=null&bannerURL=null&bannerText=null&bannerWidth=320&bannerHeight=50&showViewers=true&embedEnabled=true&chatEnabled=true&onDemandEnabled=true&programGuideEnabled=false&fullScreenEnabled=true&reportAbuseEnabled=false&gridEnabled=false&initialIsOn=true&initialIsMute=false&initialVolume=10&contentId=null&initThumbUrl=null&playeraspectwidth=4&playeraspectheight=3&mogulusLogoEnabled=true" allowFullScreen="true" type="application/x-shockwave-flash" bgcolor="#ffffff" width="400" height="400" wmode="window" ></embed></object>
+<object id="Player_<?php echo $id; ?>" width="400" height="400" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"><param name="movie" value="http://static.livestream.com/grid/PlayerV2.swf?channel=<?php echo $id; ?>&layout=playerEmbedDefault&backgroundColor=0x000000&backgroundAlpha=1&backgroundGradientStrength=0&chromeColor=0x000000&headerBarGlossEnabled=true&controlBarGlossEnabled=true&chatInputGlossEnabled=false&uiWhite=true&uiAlpha=0.5&uiSelectedAlpha=1&dropShadowEnabled=true&dropShadowHorizontalDistance=10&dropShadowVerticalDistance=10&paddingLeft=10&paddingRight=10&paddingTop=10&paddingBottom=10&cornerRadius=3&backToDirectoryURL=null&bannerURL=null&bannerText=null&bannerWidth=320&bannerHeight=50&showViewers=true&embedEnabled=true&chatEnabled=true&onDemandEnabled=true&programGuideEnabled=false&fullScreenEnabled=true&reportAbuseEnabled=false&gridEnabled=false&initialIsOn=true&initialIsMute=false&initialVolume=10&contentId=null&initThumbUrl=null&playeraspectwidth=4&playeraspectheight=3&mogulusLogoEnabled=true"/><param name="allowFullScreen" value="true"/><param name="bgcolor" value="#ffffff"/><param name="wmode" value="window"/> <embed name="Player_<?php echo $id; ?>" src="http://static.livestream.com/grid/PlayerV2.swf?channel=<?php echo $id; ?>&layout=playerEmbedDefault&backgroundColor=0xffffff&backgroundAlpha=1&backgroundGradientStrength=0&chromeColor=0x000000&headerBarGlossEnabled=true&controlBarGlossEnabled=true&chatInputGlossEnabled=false&uiWhite=true&uiAlpha=0.5&uiSelectedAlpha=1&dropShadowEnabled=true&dropShadowHorizontalDistance=10&dropShadowVerticalDistance=10&paddingLeft=10&paddingRight=10&paddingTop=10&paddingBottom=10&cornerRadius=3&backToDirectoryURL=null&bannerURL=null&bannerText=null&bannerWidth=320&bannerHeight=50&showViewers=true&embedEnabled=true&chatEnabled=true&onDemandEnabled=true&programGuideEnabled=false&fullScreenEnabled=true&reportAbuseEnabled=false&gridEnabled=false&initialIsOn=true&initialIsMute=false&initialVolume=10&contentId=null&initThumbUrl=null&playeraspectwidth=4&playeraspectheight=3&mogulusLogoEnabled=true" allowFullScreen="true" type="application/x-shockwave-flash" bgcolor="#ffffff" width="400" height="400" wmode="window" ></embed></object>
 <?php 
 /*
 <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="400"
@@ -49,7 +49,8 @@ function main_player($id){
 	*/
 }
 ?>
-<table style="width: 85%">
+<table style="width: 750px">
+<!-- 
 	<tr>
 
 	<?php
@@ -61,21 +62,28 @@ function main_player($id){
 		}
 
 		?>
-		<td><?php create_player_small($count,$waarde); ?></td>
+		<td><?php //create_player_small($count,$waarde); ?></td>
 		<?php
 	}
 	//include("config.php");
 	?>
 
 
-	</tr>
+	</tr> -->
 
 	<tr>
-		<td colspan="2">
-		<div id="mainPlayer"><?php echo main_player($main_stream_gid); ?></div>
+		<td colspan="1">
+		<div id="mainPlayer" style="width: 420px;
+	overflow: auto;
+	height: 410px;"><?php
+		foreach($stream_gid as $id){
+		echo main_player($id). "<br />";
+		} ?>
+		
+		</div>
 		</td>
 		<td>
-		<table heigth="100%" width="300">
+		<table height="100%" width="300">
 			<tr>
 				<td valign="top"><strong>sensor data:</strong>
 				<div id="sensors">Please wait</div>
@@ -98,7 +106,7 @@ function main_player($id){
 							onclick="<?php global $command_to_go_right; foreach($command_to_go_right as $waarde){ $waarde=str_replace("{degrees}","'+ Math.round(distance) +'",$waarde); ?>document.getElementById('input_chat').value='<?php echo $waarde; ?>';post_chat();pausecomp(200);<?php }?>"
 							src="template/<?php echo $template_name; ?>/img/directdrive_right.gif" />
 						</td>
-						<td rowspan="2">Travel Distance:<div id="travelDistand_value">70</div><br /><input type="button" value="Increase" onclick="distance=distance*1.2;document.getElementById('travelDistand_value').innerHTML=Math.round(distance)"/><br /><input type="button" value="Degrees" onclick="distance=distance/1.2;document.getElementById('travelDistand_value').innerHTML=Math.round(distance)" /></td>
+						
 					</tr>
 					<tr>
 						<td><img
@@ -107,26 +115,48 @@ function main_player($id){
 				</td>
 				
 				</tr>
-				<tr>
-				<td colspan="3"><input type="button" id="give" onclick="window.location.href='ajax.php?givetime';" value="Give up my control time" /><br /><input type="button" id="give" onclick="window.location.href='ajax.php?gettime';" value="Claim you control time" /></td>
-				
-				</tr>
 				</table>
 				</div>
+				</td>
+				</tr>
+				
+				<tr>
+				<td colspan="1">
+				<input type="button" id="give" onclick="top.frames['Iframe_con'].location.href='ajax.php?givetime';" value="Give up my control time" /><br />
+				<input type="button" id="give" onclick="top.frames['Iframe_con'].location.href='ajax.php?gettime';" value="Claim you control time" /><br />
+				<input type="text" id="programID" size="1" /><input type="button" value="run pre program" onclick="document.getElementById('input_chat').value='cmd run program ' + document.getElementById('programID').value ;post_chat();" />
+				
+				<br />
+				<input type="text" id="programID2" size="1" /><input type="button" value="download program to slot " onclick="document.getElementById('input_chat').value='cmd download rover program ' + document.getElementById('programID2').value + ' ' + document.getElementById('slot').value ;post_chat();" />
+				<select id="slot">
+				<option selected value="user_program_1">1</option>
+				<?php 
+				for($i = 2;$i <  10; $i++){
+				?>
+<option value="user_program_<?php echo $i; ?>"><?php echo $i; ?></option>
+<?php }
+?>
+</select>
+				<input type="button" value="run rover program" onclick="document.getElementById('input_chat').value='cmd run rover program ' + document.getElementById('slot').value ;post_chat();" />
+				
+				</td>
+				
+				
 				</td>
 			</tr>
 		</table>
 		</td>
 	</tr>
+	<!-- 
 	<tr>
 		<td colspan="3">Start time: <input type="button" value="start"
 			id="timing" onclick="start_point();" />
 		<div id="score"></div>
 		</td>
 	</tr>
-
+ -->
 	<tr>
-		<td colspan="3" bgcolor="#CCCCCC" style="border: thin;">
+		<td colspan="3" bgcolor="#CCCCCC" style="border: thin; width: 500px;">
 		<div style="overflow: auto; height: 200px; color: #FFFFFF;"
 			id="logbook"></div>
 		</td>
@@ -139,3 +169,4 @@ function main_player($id){
 	to enter commands</a></td>
 	</tr>
 </table>
+<iframe width="0" src="" id="Iframe_con" frameborder="0" heigth="0" name="Iframe_con"></iframe>

@@ -11,6 +11,7 @@ var chat_update_enable = false;
 function chat_update(){
 
 ajax_donwload_add("ajax.php?update","logbook");
+/*
 if(img1on = true){
 var temp = document['img1'].src;
 if(temp.length < 100){
@@ -29,7 +30,7 @@ if(temp.length < 100){
 }
 document['img2'].src = temp.substring(0,n) + '?' + (new Date()).getTime();
 
-/*
+
 
 temp = document['img3'].src;
 if(temp.length < 100){
@@ -41,11 +42,15 @@ document['img3'].src = temp.substring(0,n) + '?' + (new Date()).getTime();
 
 */
 setTimeout("chat_update();",500);//500 ms
-}
+
 }
 function set_nickname(){
 ajax_donwload("ajax.php?nickname="+document.getElementById("nickname").value,"login");
 document.getElementById('login').innerHTML = "<img src=\"template/default/img/ajax-loader.gif\" alt=\"Loading\" />";
+}
+function logout(){
+	ajax_donwload("ajax.php?logout","login");
+	document.getElementById('login').innerHTML = "<img src=\"template/default/img/ajax-loader.gif\" alt=\"Loading\" />";
 }
 function clipToMain(id){
 ajax_donwload("ajax.php?clip="+id,"mainPlayer");
@@ -80,6 +85,18 @@ ajax_donwload("ajax.php?pre_program","pre_program");
 function pre_program_id(){
 ajax_donwload("ajax.php?pre_program="+document.getElementById("pre_program_id").value,"pre_program");
 }
+function new_rover_program(){
+	ajax_donwload("ajax.php?rover_program=new","rover_program");
+	}
+	var rover_program_enable = false;
+	function rover_program(){
+	if(rover_program_enable == true){
+	ajax_donwload("ajax.php?rover_program","rover_program");
+	}
+	}
+	function rover_program_id(){
+	ajax_donwload("ajax.php?rover_program="+document.getElementById("rover_program_id").value,"rover_program");
+	}
 function watch_page(){
 //sensor
 if(namespace == "file_mission_control" && sensor_enable != true){
@@ -104,6 +121,14 @@ pre_program();
 }
 if(namespace != "file_pre_program" && pre_program_enable == true){
 pre_program_enable = false;
+}
+//rover program
+if(namespace == "file_rover_program" && rover_program_enable != true){
+rover_program_enable = true;
+rover_program();
+}
+if(namespace != "file_rover_program" && rover_program_enable == true){
+rover_program_enable = false;
 }
 setTimeout("watch_page();",1850);//2 seconds
 }
