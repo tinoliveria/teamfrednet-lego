@@ -22,4 +22,7 @@
   <distance>4</distance>
   <port>COM12</port>
 </rover>
+  <nbc>
+    <path>c:\wamp\www\rover\programs\</path>
+  </nbc>
 </settings>

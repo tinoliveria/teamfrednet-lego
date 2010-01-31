@@ -92,12 +92,13 @@
             <remarks>The command also keeps NXT brick alive preventing it from sleep.</remarks>
             
         </member>
-        <member name="M:AForge.Robotics.Lego.NXTBrick.RunProgram(System.String,System.Int64)">
+        <member name="M:AForge.Robotics.Lego.NXTBrick.download_program(System.String,System.Byte[])">
             <summary>
             Open write handeler.
             </summary>
             
             <param name="name">Filename max[15.3].</param>
+            <param name="data">Date in byte[]</param>
             
             <returns>Returns <b>true</b> if device is alive or <b>false</b> otherwise.</returns>
             
@@ -156,7 +157,7 @@
              <returns>Returns <b>true</b> if command was executed successfully or <b>false</b> otherwise.</returns>
             
         </member>
-        <member name="M:AForge.Robotics.Lego.NXTBrick.GetBatteryPower(System.Int32@)">
+        <member name="M:AForge.Robotics.Lego.NXTBrick.GetBatteryPower(System.Double@)">
             <summary>
             Get battery power of NXT brick.
             </summary>
@@ -690,6 +691,26 @@
         <member name="F:AForge.Robotics.Lego.Internals.NXTDirectCommand.OpenWrite">
             <summary>
             open file write handler.
+            </summary>
+        </member>
+        <member name="F:AForge.Robotics.Lego.Internals.NXTDirectCommand.ReadCommand">
+            <summary>
+            write data to handler
+            </summary>
+        </member>
+        <member name="F:AForge.Robotics.Lego.Internals.NXTDirectCommand.WriteCommand">
+            <summary>
+            write data to handler
+            </summary>
+        </member>
+        <member name="F:AForge.Robotics.Lego.Internals.NXTDirectCommand.CloseHandler">
+            <summary>
+            close handler
+            </summary>
+        </member>
+        <member name="F:AForge.Robotics.Lego.Internals.NXTDirectCommand.DeleteCommand">
+            <summary>
+            Delete handler
             </summary>
         </member>
         <member name="F:AForge.Robotics.Lego.Internals.NXTDirectCommand.StopProgram">

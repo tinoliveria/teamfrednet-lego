@@ -1,0 +1,60 @@
+//////////////////////////////////
+// Chords by Hari Wiguna, 2006
+// Illustrates pre-compiled Expression Evaluator (sin/cos)
+// and bitmap graphics (DrawLine)
+//////////////////////////////////
+
+// === Data Segment ===
+dseg segment
+  jMax byte 7 // 0 thru 7 = 8 nodes
+  iMax byte   // Upper limit for i loop
+  i byte 0    // Outer loop variable
+  j byte 0    // inner loop variable
+  gX dword[]  // X coordinate array
+  gY dword[]  // Y coordinate array
+  dlArgs TDrawLine  // DrawLine parameters
+dseg ends
+
+// === Code ===
+thread main
+
+sub iMax, jMax, 1 // iMax is always one less than jMax
+
+arrinit gX, 0, jMax
+replace gX, gX, 0 , 50+sin(PI*2*0/7)*30
+replace gX, gX, 1 , 50+sin(PI*2*1/7)*30
+replace gX, gX, 2 , 50+sin(PI*2*2/7)*30
+replace gX, gX, 3 , 50+sin(PI*2*3/7)*30
+replace gX, gX, 4 , 50+sin(PI*2*4/7)*30
+replace gX, gX, 5 , 50+sin(PI*2*5/7)*30
+replace gX, gX, 6 , 50+sin(PI*2*6/7)*30
+
+arrinit gY, 0, jMax
+replace gY, gY, 0 , 30+cos(PI*2*0/7)*30
+replace gY, gY, 1 , 30+cos(PI*2*1/7)*30
+replace gY, gY, 2 , 30+cos(PI*2*2/7)*30
+replace gY, gY, 3 , 30+cos(PI*2*3/7)*30
+replace gY, gY, 4 , 30+cos(PI*2*4/7)*30
+replace gY, gY, 5 , 30+cos(PI*2*5/7)*30
+replace gY, gY, 6 , 30+cos(PI*2*6/7)*30
+
+iLoop:
+  index dlArgs.StartLoc.X, gX, i
+  index dlArgs.StartLoc.Y, gY, i
+  add j,i, 1
+
+  jLoop:
+    index dlArgs.EndLoc.X, gX, j
+    index dlArgs.EndLoc.Y, gY, j
+    syscall DrawLine, dlArgs // Draws a line between nodes i and j
+
+    add j,j, 1
+  brcmp NEQ, jLoop, j, jMax  // jump to jLoop if j <> jMax
+
+  add i,i, 1
+brcmp NEQ, iLoop, i, iMax  // jump to iLoop if i <> iMax
+
+wait 4000
+endt
+
+

@@ -378,7 +378,8 @@ namespace AForge.Robotics.Lego
 
         // communication interfaced used for communication with NXT brick
         private INXTCommunicationInterface communicationInterface;
-
+        //process of download/uploading
+        public float process = 0;
         /// <summary>
         /// Check if connection to NXT brick is established.
         /// </summary>
@@ -476,34 +477,164 @@ namespace AForge.Robotics.Lego
         /// </summary>
         /// 
         /// <param name="name">Filename max[15.3].</param>
+        /// <param name="data">Date in byte[]</param>
         /// 
         /// <returns>Returns <b>true</b> if device is alive or <b>false</b> otherwise.</returns>
         /// 
-        public bool RunProgram(string name, long size)
+        public bool download_program(string name, byte[] data)
         {
-            byte[] command = new byte[name.Length + 3];
+            byte[] command = new byte[26];
             char[] name_chat = name.ToCharArray();
             int i;
+            byte[] replay = new byte[4];
+            byte handle= 0x00;
+            int size_remaning=data.Length;
+            byte[] buffer = new byte[32];
+            int parse_postion=0;
             // prepare command
             command[0] = (byte)NXTCommandType.SystemCommand;
             command[1] = (byte)NXTDirectCommand.OpenWrite;
             //loop to send filename
-            for (i = 2; (i < 21) && (i - 2 < name.Length); i++)
+            for (i = 2; i < 21; i++)
             {
-                command[i] = (byte)name_chat[i - 2];
+                if (i - 2 < name.Length)
+                {
+
+                    command[i] = (byte)name_chat[i - 2];
+                }
+                else
+                {
+                    command[i] = (byte)(0x00);
+                }
             }
             command[i] = 0x00;
             //send size
-            command[i+1] = (byte)size;
-            command[i + 2] = (byte)(size << 8);
-            command[i + 3] = (byte)(size << 16);
-            command[i + 4] = (byte)(size << 24);
-            //debug: show command
-           
+            command[i + 1] = (byte)((data.Length >> 0) & 0xFF);
+            command[i + 2] = (byte)((data.Length >> 8) & 0xFF);
+            command[i + 3] = (byte)((data.Length >> 16) & 0xFF);
+            command[i + 4] = (byte)((data.Length >> 24) & 0xFF);
+                       
             // execute command
-            return SendCommand(command, new byte[3]);
+            if (SendCommand(command, replay))
+            {
+                process = (float)((float)(parse_postion) / (float)(parse_postion + size_remaning)) * 100f;
+                handle = replay[3];
+                while (size_remaning > 0)
+                {
+                    buffer = new byte[32];
+                    if (size_remaning > 31)//32 byte size
+                    {
+                        for (int j=0; j < 32; j++)//max 64 bytes, but keep it save: limit it to 32 bytes
+                        {
+                            buffer[j] = data[parse_postion];
+                            parse_postion++;
+                        }
+                        if (!write_command(handle, buffer,32))
+                        {
+                             return false;
+                        }
+                        size_remaning -= 32;
+
+                    }
+                    else
+                    {
+                        if (size_remaning < 1)
+                        {
+                            //nothing
+                        }
+                        else//31-1 byte size
+                        {
+                            buffer = new byte[size_remaning];
+                            for (int j=0; j < size_remaning; j++)//max 64 bytes, but keep it save: limit it to 32 bytes
+                            {
+                                buffer[j] = data[parse_postion];
+                                parse_postion++;
+                            }
+                            if (!write_command(handle, buffer, size_remaning))
+                            {
+                                return false;
+                            }
+                            size_remaning = 0;
+                        }
+                    }
+                }
+                //close handler
+                return close_handler(handle);
+                
+            }
+            else
+            {
+                return false;
+            }
         }
-        
+        public bool close_handler(byte handle)
+        {
+            byte[] command = new byte[3];
+            byte[] result = new byte[4];
+            command[0] = (byte)NXTCommandType.SystemCommand;
+            command[1] = (byte)NXTDirectCommand.CloseHandler;
+            command[2] = handle;
+            if (SendCommand(command, result))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool delete_command(string name)
+        {
+            byte[] command = new byte[22];
+            int i=0;
+            byte[] result = new byte[23];
+            char[] name_chat = name.ToCharArray();
+            command[0] = (byte)NXTCommandType.SystemCommand;
+            command[1] = (byte)NXTDirectCommand.DeleteCommand;
+            //loop to send filename
+            for (i = 2; i < 21; i++)
+            {
+                if (i - 2 < name.Length)
+                {
+
+                    command[i] = (byte)name_chat[i - 2];
+                }
+                else
+                {
+                    command[i] = (byte)(0x00);
+                }
+            }
+            command[i] = 0x00;
+            if (SendCommand(command, result))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool write_command(byte handle, byte[] data, int length)
+        {
+            byte[] command = new byte[length + 3];
+            byte[] result = new byte[6];
+            command[0] = (byte)NXTCommandType.SystemCommand;
+            command[1] = (byte)NXTDirectCommand.WriteCommand;
+            command[2] = handle;
+            for (int i = 0; i < length; i++)
+            {
+                command[3+i] = data[i];
+            }
+            if (SendCommand(command, result))
+            {
+                return true;
+            }
+            else
+            {
+                                    return false;
+                
+            }
+        }
         /// <summary>
         /// Runs program.
         /// </summary>
@@ -651,7 +782,7 @@ namespace AForge.Robotics.Lego
         /// 
         /// <returns>Returns <b>true</b> if command was executed successfully or <b>false</b> otherwise.</returns>
         /// 
-        public bool GetBatteryPower( out int power )
+        public bool GetBatteryPower( out double power )
         {
             byte[] reply = new byte[5];
 
@@ -659,6 +790,8 @@ namespace AForge.Robotics.Lego
                 (byte) NXTDirectCommand.GetBatteryLevel }, reply ) )
             {
                 power = reply[3] | ( reply[4] << 8 );
+                power *= 0.001;
+                power = Math.Round(power, 2);
                 return true;
             }
 
@@ -916,13 +1049,17 @@ namespace AForge.Robotics.Lego
                     if ( communicationInterface.ReadMessage( reply, out bytesRead ) )
                     {
                         // check that reply corresponds to command
-                        if ( reply[1] != command[1] )
+                        if (reply[1] != command[1])
+                        {
                             Debug.WriteLine("Reply does not correspond to command");
+                            return false;
+                        }
 
                         // check for errors
                         if ( reply[2] != 0 )
                         {
                             Debug.WriteLine("Error occured in NXT brick. Error code: " + reply[2].ToString());
+                            return false;
                         }
 
                         result = true;
@@ -932,5 +1069,6 @@ namespace AForge.Robotics.Lego
 
             return result;
         }
+       
     }
 }
