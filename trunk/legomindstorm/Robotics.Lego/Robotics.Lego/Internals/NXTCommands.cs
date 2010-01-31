@@ -83,6 +83,26 @@ namespace AForge.Robotics.Lego.Internals
         /// open file write handler.
         /// </summary>
         OpenWrite = 0x81,
+        
+        /// <summary>
+        /// write data to handler
+        /// </summary>
+        ReadCommand = 0x82,
+
+        /// <summary>
+        /// write data to handler
+        /// </summary>
+        WriteCommand = 0x83,
+
+        /// <summary>
+        /// close handler
+        /// </summary>
+        CloseHandler = 0x84,
+
+        /// <summary>
+        /// Delete handler
+        /// </summary>
+        DeleteCommand = 0x85,
 
         /// <summary>
         /// Stop any progam.

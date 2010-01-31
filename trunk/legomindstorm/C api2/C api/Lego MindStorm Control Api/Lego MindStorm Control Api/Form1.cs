@@ -160,7 +160,10 @@ namespace Lego_MindStorm_Control_Api
                 temp += "Sensor 4: " + cmd[3].value + "\n";
             }
             temp += "Speed{A,B,C}: {" + NXT_ROVER_CONTROL.speed_motors[0] + "," + NXT_ROVER_CONTROL.speed_motors[1] + "," + NXT_ROVER_CONTROL.speed_motors[2] + "}" + "\n";
-                
+            if (battery.Checked)
+            {
+                temp += NXT_ROVER_CONTROL.battery();
+            }
                 
                 
                 
@@ -260,6 +263,7 @@ namespace Lego_MindStorm_Control_Api
         {
             config.Rover_port = comport.Text;
             button1.Enabled = false;
+            IrcBot.log = "Please wait while connecting...\n";
             rover.Start();
         }
 
@@ -277,6 +281,21 @@ namespace Lego_MindStorm_Control_Api
         {
             Form Config_form = new Fconfig();
             Config_form.Show();
+        }
+
+        private void downloadFileToNXTToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog fdlg = new OpenFileDialog();
+            fdlg.Title = "Select file to download";
+            //fdlg.InitialDirectory = @"c:\";
+            fdlg.Filter = "All files (*.*)|*.*|All files (*.*)|*.*";
+            fdlg.FilterIndex = 2;
+            fdlg.RestoreDirectory = true;
+            if (fdlg.ShowDialog() == DialogResult.OK)
+            {
+                MessageBox.Show("Uploading started");
+                NXT_ROVER_CONTROL.download_program_nbc("d" + (string)(DateTime.Now.Millisecond.ToString()), "tst2a.nbc");
+            }
         }
 
         
@@ -458,12 +477,13 @@ namespace Lego_MindStorm_Control_Api
                 }
 
                 reader.Close();
+                in_use = false;
                 for (j = 0; j < i; j++)
                 {
                     QueryCommand(list[j].sql);
 
                 }
-                in_use = false;
+                
                 return res;
             }
             catch
@@ -551,6 +571,7 @@ namespace Lego_MindStorm_Control_Api
         public static int Rover_touch;
         public static int Rover_sound;
         public static string Rover_port;
+        public static string nbc_path;
         public static NXTBrick.SensorType[] sensorType = new NXTBrick.SensorType[4];
         public static NXTBrick.SensorMode[] sensorMode = new NXTBrick.SensorMode[4];
         /**
@@ -580,6 +601,9 @@ namespace Lego_MindStorm_Control_Api
       {
           IRC_on_off = false;
       }
+      userNodes = doc.SelectNodes("/settings/nbc");
+      userNode = userNodes[0];
+      nbc_path = userNode.SelectSingleNode("path").InnerText;
       userNodes = doc.SelectNodes("/settings/mysql");
       userNode = userNodes[0];
       Mysql_database = userNode.SelectSingleNode("database").InnerText;
@@ -748,6 +772,28 @@ namespace Lego_MindStorm_Control_Api
                 IrcBot.log += "Failed connecting to NXT device, error\n";
             }
         }
+
+        public static string battery()
+        {
+            try
+            {
+                // get battery level
+                double batteryLevel;
+
+                if (nxt.GetBatteryPower(out batteryLevel))
+                {
+                    return "batteryLevel: " + batteryLevel.ToString() + " V\n";
+                }
+                else
+                {
+                    return "Failed getting battery level\n";
+                }
+            }
+            catch
+            {
+                return "Error: Faild getting battery voltage";
+            }
+        }
         /**
          * This function will get some genarel information
          */
@@ -805,11 +851,11 @@ namespace Lego_MindStorm_Control_Api
 
                 // ------------------------------------------------
                 // get battery level
-                int batteryLevel;
+                double batteryLevel;
 
                 if (nxt.GetBatteryPower(out batteryLevel))
                 {
-                    IrcBot.log += "batteryLevel: " + batteryLevel.ToString() + "\n";
+                    IrcBot.log += "batteryLevel: " + batteryLevel.ToString() + " V\n";
                 }
                 else
                 {
@@ -822,6 +868,7 @@ namespace Lego_MindStorm_Control_Api
             }
              
         }
+        public static bool command_translation_inprogress = false;
         /**
          * This function will translate a text command to the proper function
          * @return nxt_result
@@ -830,7 +877,11 @@ namespace Lego_MindStorm_Control_Api
         {
             try
             {
-                
+                while (command_translation_inprogress == true)
+                {
+                    Thread.Sleep(10);
+                }
+                command_translation_inprogress = true;
                 nxt_result result = new nxt_result();
                 result.result = false;
                 result.value = "Faild to translate";
@@ -840,6 +891,7 @@ namespace Lego_MindStorm_Control_Api
                 {
                     if (arg_command[1] == "run" && arg_command[2] == "program")
                     {
+                        command_translation_inprogress = false;
                         return run_program_mysql(arg_command[3]);
                     }
                 }
@@ -848,6 +900,7 @@ namespace Lego_MindStorm_Control_Api
                 {
                     result.result = false;
                     result.value = "NXT is not connect!";
+                    command_translation_inprogress = false;
                     return result;
                 }
                 //check type
@@ -856,10 +909,12 @@ namespace Lego_MindStorm_Control_Api
                 {
                     if (arg_command[1] == "motor" && arg_command[3] == "on")
                     {
+                        command_translation_inprogress = false;
                         return motor_on(arg_command[2]);
                     }
                     if (arg_command[1] == "motor" && arg_command[3] == "off")
                     {
+                        command_translation_inprogress = false;
                         return motor_off(arg_command[2]);
                     }
                 }
@@ -867,10 +922,12 @@ namespace Lego_MindStorm_Control_Api
                 {
                     if (arg_command[1] == "motor" && arg_command[2] == "speed")
                     {
+                        command_translation_inprogress = false;
                         return set_speed(arg_command[3], arg_command[4]);
                     }
                     if (arg_command[1] == "motor" && arg_command[2] == "degrees")
                     {
+                        command_translation_inprogress = false;
                         return motor_on(arg_command[3], arg_command[4]);
                     }
                 }
@@ -878,6 +935,7 @@ namespace Lego_MindStorm_Control_Api
                 {
                     if (arg_command[1] == "sensor" && arg_command[2] == "value")
                     {
+                        command_translation_inprogress = false;
                         return get_sensor(arg_command[3]);
                     }
                 }
@@ -885,7 +943,16 @@ namespace Lego_MindStorm_Control_Api
                 {
                     if (arg_command[1] == "run" && arg_command[2] == "rover" && arg_command[3] == "program")
                     {
+                        command_translation_inprogress = false;
                         return run_program(arg_command[4]);
+                    }
+                }
+                if (arg_command.Length == 6)
+                {
+                    if (arg_command[1] == "download" && arg_command[2] == "rover" && arg_command[3] == "program")
+                    {
+                        command_translation_inprogress = false;
+                        return download_program_nbc(arg_command[5], config.nbc_path + arg_command[4] + ".nbc");
                     }
                 }
 
@@ -893,6 +960,7 @@ namespace Lego_MindStorm_Control_Api
                 {
                     if (arg_command[1] == "stop" && arg_command[2] == "rover" && arg_command[2] == "program")
                     {
+                        command_translation_inprogress = false;
                         return stop_program();
                     }
                 }
@@ -904,6 +972,7 @@ namespace Lego_MindStorm_Control_Api
                 nxt_result failed = new nxt_result();
                 failed.result = false;
                 failed.value = "failed";
+                command_translation_inprogress = false;
                 return failed;
             }
         }
@@ -990,25 +1059,25 @@ namespace Lego_MindStorm_Control_Api
                 if (motor.ToUpper() == "A")
                 {
                     motor_result.result = true;
-                    motor_result.value = "done!";
+                    motor_result.value = "succed";
                     speed_motors[0] = speed;
                 }
                 if (motor.ToUpper() == "B")
                 {
                     motor_result.result = true;
-                    motor_result.value = "done!";
+                    motor_result.value = "succed";
                     speed_motors[1] = speed;
                 }
                 if (motor.ToUpper() == "C")
                 {
                     motor_result.result = true;
-                    motor_result.value = "done!";
+                    motor_result.value = "succed";
                     speed_motors[2] = speed;
                 }
                 if (motor.ToUpper() == "ALL")
                 {
                     motor_result.result = true;
-                    motor_result.value = "done!";
+                    motor_result.value = "succed";
                     speed_motors[0] = speed;
                     speed_motors[1] = speed;
                     speed_motors[2] = speed;
@@ -1037,7 +1106,8 @@ namespace Lego_MindStorm_Control_Api
             motor_result.result = false;
             motor_result.value = "Motor not found.";
             motors = motors.ToLower();
-            if (motors == "all" && !((speed_motors[0] == speed_motors[1])&&(speed_motors[1] == speed_motors[2])))
+            int number = 1;
+            if (motors == "all")
             {
                 motors = "AvBvC";
             }
@@ -1047,19 +1117,23 @@ namespace Lego_MindStorm_Control_Api
             {
                 if (motor.ToUpper() == "A")
                 {
-                    motor_result = motor_on(NXTBrick.Motor.A,Convert.ToInt32(degrees));
+                    motor_result = motor_on(NXTBrick.Motor.A, Convert.ToInt32(degrees), (motors_array.Length)-number);
+                    number++;
                 }
                 if (motor.ToUpper() == "B")
                 {
-                    motor_result = motor_on(NXTBrick.Motor.B, Convert.ToInt32(degrees));
+                    motor_result = motor_on(NXTBrick.Motor.B, Convert.ToInt32(degrees), (motors_array.Length) - number);
+                    number++;
                 }
                 if (motor.ToUpper() == "C")
                 {
-                    motor_result = motor_on(NXTBrick.Motor.C, Convert.ToInt32(degrees));
+                    motor_result = motor_on(NXTBrick.Motor.C, Convert.ToInt32(degrees), (motors_array.Length) - number);
+                    number++;
                 }
                 if (motor.ToUpper() == "ALL")
                 {
-                    motor_result = motor_on(NXTBrick.Motor.All, Convert.ToInt32(degrees));
+                    motor_result = motor_on(NXTBrick.Motor.All, Convert.ToInt32(degrees), (motors_array.Length) - number);
+                    number++;
                 }
                 if (motor_result.result == false)
                 {
@@ -1073,7 +1147,7 @@ namespace Lego_MindStorm_Control_Api
          * @param motor type NXTBrick.Motor
          * @return nxt_result
          */
-        public static nxt_result motor_on(NXTBrick.Motor motor, int degrees)
+        public static nxt_result motor_on(NXTBrick.Motor motor, int degrees, int number)
         {
             //Debug.WriteLine("Set motor on");
             //Debug.WriteLine(motor);
@@ -1084,33 +1158,43 @@ namespace Lego_MindStorm_Control_Api
             {
                 // prepare motor's state to set
                 motorState.Power = (sbyte)speed_motors[0];
-                motorState.TurnRatio = 90;
+                motorState.TurnRatio = 50;
             }
             if (motor == NXTBrick.Motor.B)
             {
                 // prepare motor's state to set
                 motorState.Power = (sbyte)speed_motors[1];
-                motorState.TurnRatio = 90;
+                motorState.TurnRatio = 50;
             }
             if (motor == NXTBrick.Motor.C)
             {
                 // prepare motor's state to set
                 motorState.Power = (sbyte)speed_motors[2];
-                motorState.TurnRatio = 90;
+                motorState.TurnRatio = 50;
             }
             // TODO If al motor's on handel correct speed
             if (motor == NXTBrick.Motor.All)
             {
                 // prepare motor's state to set
                 motorState.Power = (sbyte)speed_motors[0];
-                motorState.TurnRatio = 90;
+                motorState.TurnRatio = 50;
             }
-            motorState.Mode = NXTBrick.MotorMode.On;
-            motorState.Regulation = NXTBrick.MotorRegulationMode.Idle;
+            motorState.Mode = NXTBrick.MotorMode.On | NXTBrick.MotorMode.Regulated;
+            
+                motorState.Regulation = NXTBrick.MotorRegulationMode.Sync;
+            
             motorState.RunState = NXTBrick.MotorRunState.Running;
+            motorState.RotationCount = 0;
             // tacho limit
-            // motorState.TachoCount = 0;
-            motorState.TachoLimit = degrees;
+            motorState.TachoCount = 0;
+            if (motorState.Power < 0)
+            {
+                motorState.TachoLimit = -degrees;
+            }
+            else
+            {
+                motorState.TachoLimit = degrees;
+            }
             
             // set motor's state
             if (nxt.SetMotorState(motor, motorState) != true)
@@ -1298,6 +1382,101 @@ namespace Lego_MindStorm_Control_Api
             if (nxt.RunProgram(name + ".RXE"))
             {
                 
+                result.result = true;
+                result.value = "succed";
+            }
+            else
+            {
+                result.result = false;
+                result.value = "Failed";
+            }
+            return result;
+
+        }
+        /**
+         * This will compile and download a rover program
+         * @param name Name of program without .RXE
+         * @param path Localtion of the file on the computer(NBC)
+         * @return nxt_result
+         */
+        public static nxt_result download_program_nbc(string name, string path)
+        {
+            nxt_result result = new nxt_result();
+            string output_data = "";
+            try{
+            Process proc = new Process();
+            proc.StartInfo.FileName = "nbc.exe";
+            proc.StartInfo.Arguments = path + " -O=result.rxe";
+            //proc.StartInfo.RedirectStandardOutput = true;
+            //proc.StartInfo.RedirectStandardError = true;
+            //    proc.StartInfo.UseShellExecute = true;
+                proc.Start();
+            //System.IO.StreamReader myOutput = proc.StandardOutput;
+            proc.WaitForExit(10000);
+
+            //output_data = myOutput.ReadToEnd();
+           // IrcBot.log += output_data;
+            //remove old one
+            delete_rover_program(name);
+            return download_program(name, "result.rxe");
+            }
+            catch
+            {
+                result.result = false;
+                result.value = "Failed";
+                return result;
+            }
+
+        }
+        /**
+         * This will download a rover program
+         * @param name Name of program without .RXE
+         * @param path Localtion of the file on the computer
+         * @return nxt_result
+         */
+        public static nxt_result download_program(string name, string path)
+        {
+            nxt_result result = new nxt_result();
+            try
+            {
+                FileStream textFile = new FileStream(path, FileMode.Open);
+                byte[] buffer = new byte[textFile.Length];
+                textFile.Read(buffer, 0, buffer.Length);
+                textFile.Close();
+
+                if (nxt.download_program(name + ".rxe", buffer))
+                {
+
+                    result.result = true;
+                    result.value = "succed";
+                }
+                else
+                {
+                    result.result = false;
+                    result.value = "Failed";
+                }
+                return result;
+            }
+            catch
+            {
+                result.result = false;
+                result.value = "Failed";
+                return result;
+            }
+        }
+        /**
+         * This will delete a rover program
+         * @param name Name of program without .RXE
+         * @return nxt_result
+         */
+        public static nxt_result delete_rover_program(string name)
+        {
+            nxt_result result = new nxt_result();
+            
+            
+            if (nxt.delete_command(name + ".rxe"))
+            {
+
                 result.result = true;
                 result.value = "succed";
             }

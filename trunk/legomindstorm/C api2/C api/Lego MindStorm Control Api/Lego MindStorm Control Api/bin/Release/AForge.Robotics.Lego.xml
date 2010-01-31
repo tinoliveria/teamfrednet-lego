@@ -157,7 +157,7 @@
              <returns>Returns <b>true</b> if command was executed successfully or <b>false</b> otherwise.</returns>
             
         </member>
-        <member name="M:AForge.Robotics.Lego.NXTBrick.GetBatteryPower(System.Double@)">
+        <member name="M:AForge.Robotics.Lego.NXTBrick.GetBatteryPower(System.Int32@)">
             <summary>
             Get battery power of NXT brick.
             </summary>
@@ -706,11 +706,6 @@
         <member name="F:AForge.Robotics.Lego.Internals.NXTDirectCommand.CloseHandler">
             <summary>
             close handler
-            </summary>
-        </member>
-        <member name="F:AForge.Robotics.Lego.Internals.NXTDirectCommand.DeleteCommand">
-            <summary>
-            Delete handler
             </summary>
         </member>
         <member name="F:AForge.Robotics.Lego.Internals.NXTDirectCommand.StopProgram">

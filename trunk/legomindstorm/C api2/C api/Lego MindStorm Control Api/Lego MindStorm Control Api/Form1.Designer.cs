@@ -57,6 +57,8 @@
             this.fIleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editConfigFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.downloadFileToNXTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.battery = new System.Windows.Forms.CheckBox();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -134,7 +136,7 @@
             // sensor1type
             // 
             this.sensor1type.FormattingEnabled = true;
-            this.sensor1type.Location = new System.Drawing.Point(562, 159);
+            this.sensor1type.Location = new System.Drawing.Point(562, 174);
             this.sensor1type.Name = "sensor1type";
             this.sensor1type.Size = new System.Drawing.Size(121, 21);
             this.sensor1type.TabIndex = 6;
@@ -143,7 +145,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(499, 162);
+            this.label1.Location = new System.Drawing.Point(499, 177);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(52, 13);
             this.label1.TabIndex = 7;
@@ -152,7 +154,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(499, 192);
+            this.label2.Location = new System.Drawing.Point(499, 207);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(52, 13);
             this.label2.TabIndex = 9;
@@ -161,7 +163,7 @@
             // sensor2type
             // 
             this.sensor2type.FormattingEnabled = true;
-            this.sensor2type.Location = new System.Drawing.Point(562, 189);
+            this.sensor2type.Location = new System.Drawing.Point(562, 204);
             this.sensor2type.Name = "sensor2type";
             this.sensor2type.Size = new System.Drawing.Size(121, 21);
             this.sensor2type.TabIndex = 8;
@@ -170,7 +172,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(499, 224);
+            this.label3.Location = new System.Drawing.Point(499, 239);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(52, 13);
             this.label3.TabIndex = 11;
@@ -179,7 +181,7 @@
             // sensor3type
             // 
             this.sensor3type.FormattingEnabled = true;
-            this.sensor3type.Location = new System.Drawing.Point(562, 221);
+            this.sensor3type.Location = new System.Drawing.Point(562, 236);
             this.sensor3type.Name = "sensor3type";
             this.sensor3type.Size = new System.Drawing.Size(121, 21);
             this.sensor3type.TabIndex = 10;
@@ -188,7 +190,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(499, 257);
+            this.label4.Location = new System.Drawing.Point(499, 272);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(52, 13);
             this.label4.TabIndex = 13;
@@ -197,7 +199,7 @@
             // sensor4type
             // 
             this.sensor4type.FormattingEnabled = true;
-            this.sensor4type.Location = new System.Drawing.Point(562, 254);
+            this.sensor4type.Location = new System.Drawing.Point(562, 269);
             this.sensor4type.Name = "sensor4type";
             this.sensor4type.Size = new System.Drawing.Size(121, 21);
             this.sensor4type.TabIndex = 12;
@@ -206,7 +208,7 @@
             // values
             // 
             this.values.AutoSize = true;
-            this.values.Location = new System.Drawing.Point(502, 117);
+            this.values.Location = new System.Drawing.Point(502, 110);
             this.values.Name = "values";
             this.values.Size = new System.Drawing.Size(159, 17);
             this.values.TabIndex = 14;
@@ -216,7 +218,7 @@
             // 
             // comport
             // 
-            this.comport.Location = new System.Drawing.Point(562, 333);
+            this.comport.Location = new System.Drawing.Point(562, 301);
             this.comport.Name = "comport";
             this.comport.Size = new System.Drawing.Size(121, 20);
             this.comport.TabIndex = 15;
@@ -224,7 +226,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(499, 340);
+            this.label5.Location = new System.Drawing.Point(499, 308);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(46, 13);
             this.label5.TabIndex = 16;
@@ -232,7 +234,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(602, 368);
+            this.button1.Location = new System.Drawing.Point(602, 336);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(81, 22);
             this.button1.TabIndex = 17;
@@ -242,7 +244,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(518, 368);
+            this.button2.Location = new System.Drawing.Point(518, 336);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(78, 21);
             this.button2.TabIndex = 18;
@@ -252,7 +254,7 @@
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(502, 133);
+            this.numericUpDown1.Location = new System.Drawing.Point(502, 148);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(94, 20);
             this.numericUpDown1.TabIndex = 19;
@@ -266,7 +268,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(611, 137);
+            this.label6.Location = new System.Drawing.Point(611, 152);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(50, 13);
             this.label6.TabIndex = 20;
@@ -286,7 +288,8 @@
             // 
             this.fIleToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.editConfigFileToolStripMenuItem,
-            this.exiToolStripMenuItem});
+            this.exiToolStripMenuItem,
+            this.downloadFileToNXTToolStripMenuItem});
             this.fIleToolStripMenuItem.Name = "fIleToolStripMenuItem";
             this.fIleToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fIleToolStripMenuItem.Text = "File";
@@ -294,22 +297,40 @@
             // editConfigFileToolStripMenuItem
             // 
             this.editConfigFileToolStripMenuItem.Name = "editConfigFileToolStripMenuItem";
-            this.editConfigFileToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.editConfigFileToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.editConfigFileToolStripMenuItem.Text = "Edit config file";
             this.editConfigFileToolStripMenuItem.Click += new System.EventHandler(this.editConfigFileToolStripMenuItem_Click);
             // 
             // exiToolStripMenuItem
             // 
             this.exiToolStripMenuItem.Name = "exiToolStripMenuItem";
-            this.exiToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.exiToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.exiToolStripMenuItem.Text = "Exit";
             this.exiToolStripMenuItem.Click += new System.EventHandler(this.Form1_unLoad);
+            // 
+            // downloadFileToNXTToolStripMenuItem
+            // 
+            this.downloadFileToNXTToolStripMenuItem.Name = "downloadFileToNXTToolStripMenuItem";
+            this.downloadFileToNXTToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.downloadFileToNXTToolStripMenuItem.Text = "Download file to NXT";
+            this.downloadFileToNXTToolStripMenuItem.Click += new System.EventHandler(this.downloadFileToNXTToolStripMenuItem_Click);
+            // 
+            // battery
+            // 
+            this.battery.AutoSize = true;
+            this.battery.Location = new System.Drawing.Point(502, 125);
+            this.battery.Name = "battery";
+            this.battery.Size = new System.Drawing.Size(126, 17);
+            this.battery.TabIndex = 22;
+            this.battery.Text = "Show battery voltage";
+            this.battery.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(760, 432);
+            this.Controls.Add(this.battery);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.button2);
@@ -375,6 +396,8 @@
         private System.Windows.Forms.ToolStripMenuItem fIleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editConfigFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exiToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem downloadFileToNXTToolStripMenuItem;
+        private System.Windows.Forms.CheckBox battery;
     }
 }
 
