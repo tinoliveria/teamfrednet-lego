@@ -329,7 +329,7 @@ namespace Lego_MindStorm_Control_Api
                   while (true)
                   {
                       check();
-                      Thread.Sleep(100);
+                      Thread.Sleep(500);
                   }
               }
               catch
@@ -1179,9 +1179,9 @@ namespace Lego_MindStorm_Control_Api
                 motorState.Power = (sbyte)speed_motors[0];
                 motorState.TurnRatio = 50;
             }
-            motorState.Mode = NXTBrick.MotorMode.On | NXTBrick.MotorMode.Regulated;
+            motorState.Mode = NXTBrick.MotorMode.On;
             
-                motorState.Regulation = NXTBrick.MotorRegulationMode.Sync;
+                motorState.Regulation = NXTBrick.MotorRegulationMode.Idle;
             
             motorState.RunState = NXTBrick.MotorRunState.Running;
             motorState.RotationCount = 0;
@@ -1404,6 +1404,15 @@ namespace Lego_MindStorm_Control_Api
             nxt_result result = new nxt_result();
             string output_data = "";
             try{
+                output_data = compile("\""+path + "\" -O=result.rxe");
+                IrcBot.log += output_data;
+                if (output_data.Length > 1)
+                {
+                    result.result = false;
+                    result.value = output_data.Replace("\n", "<br />").Replace("\\", "&#47;");
+                    return result;
+                }
+                /*
             Process proc = new Process();
             proc.StartInfo.FileName = "nbc.exe";
             proc.StartInfo.Arguments = path + " -O=result.rxe";
@@ -1415,7 +1424,8 @@ namespace Lego_MindStorm_Control_Api
             proc.WaitForExit(10000);
 
             //output_data = myOutput.ReadToEnd();
-           // IrcBot.log += output_data;
+            
+                 */
             //remove old one
             delete_rover_program(name);
             return download_program(name, "result.rxe");
@@ -1426,6 +1436,24 @@ namespace Lego_MindStorm_Control_Api
                 result.value = "Failed";
                 return result;
             }
+
+        }
+        static string compile(string f)
+        {
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.FileName = "nbc.exe";
+            startInfo.Arguments = f;
+            //startInfo.CreateNoWindow = false;
+            startInfo.UseShellExecute = false;
+            //startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            startInfo.RedirectStandardOutput = true;
+            startInfo.RedirectStandardError = true;
+            Process proc = new Process();
+            proc.StartInfo = startInfo;
+            proc.Start();
+            proc.WaitForExit();
+            return proc.StandardOutput.ReadToEnd() + proc.StandardError.ReadToEnd();
+            
 
         }
         /**
