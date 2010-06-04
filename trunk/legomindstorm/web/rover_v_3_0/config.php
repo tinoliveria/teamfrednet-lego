@@ -55,7 +55,13 @@ $user_control_time = 300;
  * Max 3 streams
  *
  */
-$stream_gid = array("marc_overhead","marc_rove");
+$stream_gid = array("marc_overhead");
+/**
+ * Array from stream type's(livestream,ustream,justin)
+ * Max 3 streams
+ *
+ */
+$stream_type = array("livestream");
 /**
  * Template name
  *
