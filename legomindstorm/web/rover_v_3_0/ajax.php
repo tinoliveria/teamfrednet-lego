@@ -82,6 +82,9 @@ if(isset($_GET['update'])){
 			if((($row['status'] == "") && ($row['when']> $now-10) && ($row['type'] == "cmd"))) {
 				break;
 			}
+		if((($row['status'] == "") && ($row['when']< $now-10) && ($row['type'] == "cmd"))) {
+				$row['status'] = "Timed-out!";
+			}
 			//print_r($row);
 			//$database[$database['count']] =  date("H:i:s ") . $row['nickname'] . ": " . $row['message'] . " <strong>Result: " . $row['status']."</strong><br />\n";
 			//$database['count']++;
