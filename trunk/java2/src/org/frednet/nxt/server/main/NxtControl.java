@@ -566,7 +566,7 @@ public class NxtControl {
      */
     public boolean Move(String motor){
     	//TODO Let it work with input
-    	return Move(string2motor(motor),(byte)80,90);
+    	return Move(string2motor(motor),power,90);
     }
     /**
      * Translate string to motors
@@ -596,13 +596,11 @@ public class NxtControl {
      * Translate function, degree fixed to 90;
      * @see NxtControl#Move(Motor motor, byte power, int degrees)
      * @param motor
-     * @param power
+     * @param degrees
      * @return
      */
-    public boolean Move(String motor, String power){
-    	//TODO Let it work with input
-    	
-    	return Move(string2motor(motor),(byte)Byte.parseByte(power),90);
+    public boolean Move(String motor, String degrees){
+    	return Move(string2motor(motor),power,(int)Long.parseLong(degrees));
     }
     /**
      * This function will turn on the power on selected motor
@@ -611,7 +609,7 @@ public class NxtControl {
      * @param degrees number of degrees to move(0 forever)
      * @return result of command: true or false
      */
-    public boolean Move(Motor[] motors, byte power, int degrees)
+    public boolean Move(Motor[] motors, byte[] power, int degrees)
     {
         byte[] command = new byte[12];
 
@@ -619,7 +617,7 @@ public class NxtControl {
         command[0] = (byte)NXTCommandType.DirectCommand.NXTCommandType;
         command[1] = (byte)NXTDirectCommand.SetOutputState.NXTDirectCommand;
         //command[2] is set below
-        command[3] = (byte)power;
+        //command[3]is set below;
         command[4] = (byte)MotorMode.On.MotorMode;
         command[5] = (byte)MotorRegulationMode.Idle.MotorRegulationMode;
         command[6] = (byte)50;
@@ -630,7 +628,61 @@ public class NxtControl {
         command[11] = (byte)(degrees >> 24);
         // execute command
         for(Motor motor : motors){
-        	command[2] = (byte)motor.Motor;	
+        	command[2] = (byte)motor.Motor;
+        	if(motor == Motor.A){
+        		command[3] = power[0];
+        	}
+        	if(motor == Motor.B){
+        		command[3] = power[1];
+        	}
+        	if(motor == Motor.C){
+        		command[3] = power[2];
+        	}
+        	if(motor == Motor.All){
+        		command[3] = power[0];
+        	}
+        	if(motor != null){
+        		if(SendCommand(command,12) == null){
+        			return false;
+        		}
+        	}
+        }
+        return true;
+    }
+    /**
+     * Translate string to motor
+     * @param motors
+     * @return
+     */
+    public boolean MotorOff(String motors){
+    	return MotorOff(string2motor(motors));
+    }
+    /**
+     * Will turn the motor down
+     * @param motors
+     * @return
+     */
+    public boolean MotorOff(Motor[] motors)
+    {
+        byte[] command = new byte[12];
+
+        // prepare command
+        command[0] = (byte)NXTCommandType.DirectCommand.NXTCommandType;
+        command[1] = (byte)NXTDirectCommand.SetOutputState.NXTDirectCommand;
+        //command[2] is set below
+        command[3] = (byte)0;
+        command[4] = (byte)MotorMode.None.MotorMode;
+        command[5] = (byte)MotorRegulationMode.Idle.MotorRegulationMode;
+        command[6] = (byte)0;
+        command[7] = (byte)MotorRunState.Running.MotorRunState;
+        command[8] = (byte)0;
+        command[9] = (byte)0;
+        command[10] = (byte)0;
+        command[11] = (byte)0;
+        // execute command
+        for(Motor motor : motors){
+        	command[2] = (byte)motor.Motor;
+        	
         	if(motor != null){
         		if(SendCommand(command,12) == null){
         			return false;
@@ -691,6 +743,31 @@ public class NxtControl {
 
         return reply;
     }
+    byte[] power = {90,90,90};
+    /**
+     * This function will set the motor speed<br />
+     * <strong>Note:</strong> When setting All speed you will set A and A will be use if you call All.  
+     * @param motors
+     * @param speed
+     * @return
+     */
+    public boolean set_speed(String motors,String speed){
+    	for(Motor motor : string2motor(motors)){
+    		if(motor == Motor.A){
+        		 power[0] = Byte.parseByte(speed);
+        	}
+        	if(motor == Motor.B){
+        		power[1] = Byte.parseByte(speed);
+        	}
+        	if(motor == Motor.C){
+        		power[2] = Byte.parseByte(speed);
+        	}
+        	if(motor == Motor.All){
+        		power[0] = Byte.parseByte(speed);
+        	}
+    	}
+    	return true;
+    }
     /**
      * This function will translate a string in a function
      * @param command Command string
@@ -707,6 +784,15 @@ public class NxtControl {
     			if((command_parts[3]).equals("on")){
     			return Move(command_parts[2]);
     			}
+    			if((command_parts[3]).equals("off")){
+        			return MotorOff(command_parts[2]);
+        			}
+    			if((command_parts[2]).equals("degrees")){
+        			return Move(command_parts[3],command_parts[4]);
+        		}
+    			if((command_parts[2]).equals("speed")){
+        			return set_speed(command_parts[3],command_parts[4]);
+        		}
     			
     		}
     		return true;
