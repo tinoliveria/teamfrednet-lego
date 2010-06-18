@@ -547,7 +547,7 @@ public class NxtControl {
     	command[0] = (byte)NXTCommandType.DirectCommand.NXTCommandType;
     	command[1] = (byte)NXTDirectCommand.Program.NXTDirectCommand;
     	for(int i = 0;i < name.Length && i < 15; i++){
-    		//command[i+2] = name.substring();
+    		command[i+2] = name.
     	}
     	
     	return false;
