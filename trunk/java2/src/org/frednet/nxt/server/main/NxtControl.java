@@ -513,6 +513,8 @@ public class NxtControl {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				Disconnect( );
+				return false;
 			}
 
             Disconnect( );
