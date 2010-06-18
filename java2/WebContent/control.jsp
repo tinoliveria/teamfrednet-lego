@@ -25,5 +25,16 @@ command:
 </tr>
 </table>
 </form>
+<p>Motor A is left and Motor C is right</p>
+<p>_motor_id_ port where the motor is connect to(A,B,C,All) or multi-id(AvC,BvC,CvA)<br /> 
+_speed_ value in the range -100 to 100 (degree/s) <b>Note</b>: When setting <i>All</i> speed you will set <i>A</i> and <i>A</i> will be use if you call <i>All</i>. <br /> 
+_degrees_ value in the range 0-100000 degrees(0 = forever)
+</p> 
+<pre> 
+cmd motor _motor_id_ on
+cmd motor _motor_id_ off
+cmd motor speed _motor_id_ _speed_
+cmd motor degrees _motor_id_ _degrees_ 
+</pre> 
 </body>
 </html>
