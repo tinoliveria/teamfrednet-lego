@@ -537,6 +537,22 @@ public class NxtControl {
         
     }
     /**
+     * This will run a NXT program(.RXE) on the NXT
+     * Work in progress - marc
+     * @param name file name max 15 chars
+     * @return Return result, true or false
+     */
+    public boolean RunProgram(String name){
+    	byte[] command = new byte[18];
+    	command[0] = (byte)NXTCommandType.DirectCommand.NXTCommandType;
+    	command[1] = (byte)NXTDirectCommand.Program.NXTDirectCommand;
+    	for(int i = 0;i < name.Length && i < 15; i++){
+    		//command[i+2] = name.substring();
+    	}
+    	
+    	return false;
+    }
+    /**
      * Plays a tune on Nxt
      * @param frequency Frequency in Hz
      * @param duration Duration in ms
