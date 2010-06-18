@@ -7,7 +7,7 @@
 <title>Teamfred.net NXT server</title>
 </head>
 <body>
-<iframe src="/lego/Comport" height="600" width="600"></iframe>
+<iframe src="Comport" height="600" width="600"></iframe>
 <iframe src="stream.jsp"  height="600" width="600"></iframe>
 </body>
 </html>

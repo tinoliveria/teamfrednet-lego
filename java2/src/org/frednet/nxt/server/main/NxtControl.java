@@ -543,13 +543,23 @@ public class NxtControl {
      * @return Return result, true or false
      */
     public boolean RunProgram(String name){
-    	byte[] command = new byte[18];
+    	int len = name.length();
+    	if(len > 15)len=15;
+    	byte[] command = new byte[len+7];
+    	int i;
     	command[0] = (byte)NXTCommandType.DirectCommand.NXTCommandType;
     	command[1] = (byte)NXTDirectCommand.Program.NXTDirectCommand;
-    	for(int i = 0;i < name.Length && i < 15; i++){
-    		command[i+2] = name.
+    	for(i = 0;i < name.length() && i < 15; i++){
+    		command[i+2] = (byte)(name.charAt(i));
     	}
-    	
+    	command[i+2] = (byte)'.';
+    	command[i+3] = (byte)'R';
+    	command[i+4] = (byte)'X';
+    	command[i+5] = (byte)'E';
+    	command[i+6] = (byte)0;
+    	if(SendCommand(command,(len+7)) == null){
+        	return false;
+        }
     	return false;
     }
     /**
@@ -797,6 +807,9 @@ public class NxtControl {
     	if((command_parts[0]).equals("cmd")){
     		if((command_parts[1]).equals("tune")){
     			return PlayTone(Short.parseShort(command_parts[2]),Short.parseShort(command_parts[3]));
+    		}
+    		if((command_parts[1]).equals("run") && (command_parts[2]).equals("rover") && (command_parts[3]).equals("program")){
+    			return RunProgram(command_parts[4]);
     		}
     		if((command_parts[1]).equals("motor")){
     			if((command_parts[3]).equals("on")){

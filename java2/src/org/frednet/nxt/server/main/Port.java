@@ -126,6 +126,7 @@ while((len == -1) && count < 100){
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
+	count++;
 }
 if(len != -1){
 in.read();
