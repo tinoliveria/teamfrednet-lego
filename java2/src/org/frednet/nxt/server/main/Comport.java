@@ -24,9 +24,16 @@ public class Comport extends HttpServlet {
         super();
         Nxt = new NxtControl();
 		try {
-			//TODO: choose comport for NXT.
-			Nxt.Connect("COM20");
-			Nxt.PlayTone((short)1000,(short)1000);
+			//Auto detect
+			for(int i = 1; i < 50; i++){
+				if(Nxt.Connect("COM" + i.ToString())){
+					if(Nxt.PlayTone((short)1000,(short)1000)){
+						break;
+					}
+				}
+				
+			}
+			
 		} catch (Exception e) {
 		
 			e.printStackTrace();
