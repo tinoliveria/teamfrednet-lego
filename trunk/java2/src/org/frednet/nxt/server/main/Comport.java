@@ -26,11 +26,15 @@ public class Comport extends HttpServlet {
 		try {
 			//Auto detect
 			for(int i = 1; i < 50; i++){
-				if(Nxt.Connect("COM" + i.ToString())){
-					if(Nxt.PlayTone((short)1000,(short)1000)){
+				System.out.print("Test Connection on port " + "COM" + String.valueOf(i) + "\n");
+				if(Nxt.Connect("COM" + String.valueOf(i))){
+					boolean result = Nxt.PlayTone((short)1000,(short)1000); 
+					if(result){
+						System.out.print("Connection on port " + "COM" + String.valueOf(i) + "\n");
 						break;
 					}
 				}
+				Nxt = new NxtControl();
 				
 			}
 			
