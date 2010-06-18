@@ -65,7 +65,7 @@ public class Comport extends HttpServlet {
 			Nxt.CommandReader(cmd);
 		}
 		request.setAttribute("server.port",Nxt.communicationInterface.serialPort.getName().toString() );
-		request.getRequestDispatcher("/control.jsp").forward(request,response);
+		request.getRequestDispatcher("control.jsp").forward(request,response);
 		
 	}
 
