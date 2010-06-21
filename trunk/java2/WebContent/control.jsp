@@ -7,7 +7,8 @@
 <title>Controls</title>
 </head>
 <body>
-Comport: <%= request.getAttribute("server.port") %>
+Comport: <%= request.getAttribute("server.port") %><br />
+Nxt voltage: <%= request.getAttribute("NXT.voltage") %> V
 <form action="" method="post">
 <table>
 <tr>
