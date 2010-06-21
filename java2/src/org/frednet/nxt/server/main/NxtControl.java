@@ -385,6 +385,7 @@ public class NxtControl {
         /// Get input values.
         /// </summary>
         PlaySound((byte)0x02),
+        StopSound((byte)0x0C),
 
         /// <summary>
         /// Reset input scaled value.
@@ -571,6 +572,20 @@ public class NxtControl {
     	return false;
     }
     /**
+     * This function will stop the sound play back
+     * @return Return result, true or false
+     */
+    public boolean StopSound(){
+    	byte[] command = new byte[2];
+    	command[0] = (byte)NXTCommandType.DirectCommand.NXTCommandType;
+        command[1] = (byte)NXTDirectCommand.StopSound.NXTDirectCommand;
+        byte[] result = SendCommand(command,2); 
+        if(result == null){
+        	return false;
+        }
+        return false;
+    }
+    /**
      * This function will convert a unsigned Byte to Int
      * @param b input Byte
      * @return output int
@@ -614,19 +629,20 @@ public class NxtControl {
     public boolean PlaySound(String name){
     	int len = name.length();
     	if(len > 15)len=15;
-    	byte[] command = new byte[len+7];
+    	byte[] command = new byte[len+8];
     	int i;
     	command[0] = (byte)NXTCommandType.DirectCommand.NXTCommandType;
     	command[1] = (byte)NXTDirectCommand.PlaySound.NXTDirectCommand;
+    	command[2] = 0;//false for loop
     	for(i = 0;i < name.length() && i < 15; i++){
-    		command[i+2] = (byte)(name.charAt(i));
+    		command[i+3] = (byte)(name.charAt(i));
     	}
-    	command[i+2] = (byte)'.';
-    	command[i+3] = (byte)'R';
-    	command[i+4] = (byte)'S';
-    	command[i+5] = (byte)'O';
-    	command[i+6] = (byte)0;
-    	if(SendCommand(command,(len+7)) == null){
+    	command[i+3] = (byte)'.';
+    	command[i+4] = (byte)'R';
+    	command[i+5] = (byte)'S';
+    	command[i+6] = (byte)'O';
+    	command[i+7] = (byte)0;
+    	if(SendCommand(command,(len+8)) == null){
         	return false;
         }
     	return false;
@@ -882,6 +898,9 @@ public class NxtControl {
     		}
     		if((command_parts[1]).equals("play") && (command_parts[2]).equals("sound")){
     			return PlaySound(command_parts[3]);
+    		}
+    		if((command_parts[1]).equals("stop") && (command_parts[2]).equals("sound")){
+    			return StopSound();
     		}
     		if((command_parts[1]).equals("stop") && (command_parts[2]).equals("rover") && (command_parts[3]).equals("program")){
     			return StopProgram();

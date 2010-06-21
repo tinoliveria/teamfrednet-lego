@@ -60,7 +60,7 @@ public class Comport extends HttpServlet {
 		
 		
 		
-		
+		request.setAttribute("NXT.voltage",Double.toString(Nxt.BatteryVoltage));
 		request.setAttribute("server.port",Nxt.communicationInterface.serialPort.getName().toString() );
 		request.getRequestDispatcher("/control.jsp").forward(request,response);
 	}
@@ -75,6 +75,7 @@ public class Comport extends HttpServlet {
 		if(cmd!=null){
 			Nxt.CommandReader(cmd);
 		}
+		request.setAttribute("NXT.voltage",Double.toString(Nxt.BatteryVoltage));
 		request.setAttribute("server.port",Nxt.communicationInterface.serialPort.getName().toString() );
 		request.getRequestDispatcher("control.jsp").forward(request,response);
 		
