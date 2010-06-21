@@ -566,11 +566,18 @@ public class NxtControl {
         if(result == null){
         	return false;
         }
-        //read voltage
-        //TODO: fix for not existing of unsigned byte in java
-        BatteryVoltage =(result[3] + result[4] * 256);
+        //read voltage(input in mV convert to V)
+        BatteryVoltage =((double)(unsignedByteToInt(result[3]) + unsignedByteToInt(result[4]) * 256)/1000.0);
     	return false;
     }
+    /**
+     * This function will convert a unsigned Byte to Int
+     * @param b input Byte
+     * @return output int
+     */
+    public static int unsignedByteToInt(byte b) {
+        return (int) b & 0xFF;
+        }
     /**
      * This will run a NXT program(.RXE) on the NXT
      * Work in progress - marc
@@ -878,6 +885,9 @@ public class NxtControl {
     		}
     		if((command_parts[1]).equals("stop") && (command_parts[2]).equals("rover") && (command_parts[3]).equals("program")){
     			return StopProgram();
+    		}
+    		if((command_parts[1]).equals("update") && (command_parts[2]).equals("battery") && (command_parts[3]).equals("level")){
+    			return GetBatteryLevel();
     		}
     		if((command_parts[1]).equals("motor")){
     			if((command_parts[3]).equals("on")){
