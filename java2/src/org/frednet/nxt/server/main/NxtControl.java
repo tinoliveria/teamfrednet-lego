@@ -537,6 +537,19 @@ public class NxtControl {
         
     }
     /**
+     * Will stop any program running on NXT
+     * @return Return result, true or false
+     */
+    public boolean StopProgram(){
+    	byte[] command = new byte[2];
+    	command[0] = (byte)NXTCommandType.DirectCommand.NXTCommandType;
+        command[1] = (byte)NXTDirectCommand.StopProgram.NXTDirectCommand;
+        if(SendCommand(command,2) == null){
+        	return false;
+        }
+    	return false;
+    }
+    /**
      * This will run a NXT program(.RXE) on the NXT
      * Work in progress - marc
      * @param name file name max 15 chars
