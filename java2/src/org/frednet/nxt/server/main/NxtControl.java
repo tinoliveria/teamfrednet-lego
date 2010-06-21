@@ -3,6 +3,7 @@ package org.frednet.nxt.server.main;
 import java.lang.ref.Reference;
 
 public class NxtControl {
+	public double BatteryVoltage = 0.0;
 	/// <summary>
     /// Enumeration of NXT brick sensor ports.
     /// </summary>
@@ -554,6 +555,23 @@ public class NxtControl {
     	return false;
     }
     /**
+     * Get voltage of battery and save it to double NxtControl.BatteryVoltage.
+     * @return Return result, true or false
+     */
+    public boolean GetBatteryLevel(){
+    	byte[] command = new byte[2];
+    	command[0] = (byte)NXTCommandType.DirectCommand.NXTCommandType;
+        command[1] = (byte)NXTDirectCommand.GetBatteryLevel.NXTDirectCommand;
+        byte[] result = SendCommand(command,2); 
+        if(result == null){
+        	return false;
+        }
+        //read voltage
+        //TODO: fix for not existing of unsigned byte in java
+        BatteryVoltage =(result[3] + result[4] * 256);
+    	return false;
+    }
+    /**
      * This will run a NXT program(.RXE) on the NXT
      * Work in progress - marc
      * @param name file name max 15 chars
@@ -579,6 +597,8 @@ public class NxtControl {
         }
     	return false;
     }
+   
+    
     /**
      * This will play a NXT sound(.RSO) on the NXT
      * @param name file name max 15 chars
