@@ -4,6 +4,7 @@ import java.lang.ref.Reference;
 
 public class NxtControl {
 	public double BatteryVoltage = 0.0;
+	public String[] MsgBoxs = new String[10];
 	/// <summary>
     /// Enumeration of NXT brick sensor ports.
     /// </summary>
@@ -311,9 +312,11 @@ public class NxtControl {
         /// Keep NXT brick alive.
         /// </summary>
         KeepAlive((byte)0x0D),
+        ReadMsg((byte)0x13),
+        WriteMsg((byte)0x09),
         
         /// <summary>
-        /// Start a progam.
+        /// Start a program.
         /// </summary>
         Program((byte)0x00),
 
@@ -718,6 +721,34 @@ public class NxtControl {
     	}
     	return motors;
     }
+    
+    
+    /**
+     * This function will read a message from NXT mailbox and remove it.
+     * Result will be saved in string MsgBoxs[MessageBoxNumber]
+     * @param MessageBoxNumber message box number(1-10)
+     * @return result of command: true or false
+     */
+    public boolean ReadMessage(String MessageBoxNumber){
+    	byte[] command = new byte[5];
+    	command[0] = NXTCommandType.DirectCommand.NXTCommandType;
+    	command[1] = NXTDirectCommand.ReadMsg.NXTDirectCommand;
+    	command[2] = (byte) (Byte.parseByte(MessageBoxNumber) + (byte)9);
+    	command[3] = (byte) (Byte.parseByte(MessageBoxNumber) - 1);
+    	command[4] = 1;//Remove
+    	// execute command
+    	byte[] result = SendCommand(command,5); 
+        if(result == null){
+        	return false;
+        }
+        //result[4] size
+        String Msg="";
+        for(int i = 0; i < (result[4]-1); i++){
+        	Msg += (char)result[i+5];
+        }
+        MsgBoxs[Byte.parseByte(MessageBoxNumber)] = Msg;
+    	return true;
+    }
     /**
      * Translate function, degree fixed to 90;
      * @see NxtControl#Move(Motor motor, byte power, int degrees)
@@ -908,6 +939,9 @@ public class NxtControl {
     		}
     		if((command_parts[1]).equals("run") && (command_parts[2]).equals("rover") && (command_parts[3]).equals("program")){
     			return RunProgram(command_parts[4]);
+    		}
+    		if((command_parts[1]).equals("read") && (command_parts[2]).equals("message") && (command_parts[3]).equals("box")){
+    			return ReadMessage(command_parts[4]);
     		}
     		if((command_parts[1]).equals("play") && (command_parts[2]).equals("sound")){
     			return PlaySound(command_parts[3]);
