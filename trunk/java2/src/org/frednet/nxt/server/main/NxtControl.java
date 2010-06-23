@@ -579,11 +579,24 @@ public class NxtControl {
     	byte[] command = new byte[2];
     	command[0] = (byte)NXTCommandType.DirectCommand.NXTCommandType;
         command[1] = (byte)NXTDirectCommand.StopSound.NXTDirectCommand;
+        if(SendCommand(command,2) == null){
+        	return false;
+        }
+        return true;
+    }
+    /**
+     * This function will prevent from loosing the connection and turning off
+     * @return Return result, true or false
+     */
+    public boolean KeepAlive(){
+    	byte[] command = new byte[2];
+    	command[0] = (byte)NXTCommandType.DirectCommand.NXTCommandType;
+        command[1] = (byte)NXTDirectCommand.KeepAlive.NXTDirectCommand;
         byte[] result = SendCommand(command,2); 
         if(result == null){
         	return false;
         }
-        return false;
+        return true;
     }
     /**
      * This function will convert a unsigned Byte to Int
@@ -901,6 +914,9 @@ public class NxtControl {
     		}
     		if((command_parts[1]).equals("stop") && (command_parts[2]).equals("sound")){
     			return StopSound();
+    		}
+    		if((command_parts[1]).equals("keep") && (command_parts[2]).equals("alive")){
+    			return KeepAlive();
     		}
     		if((command_parts[1]).equals("stop") && (command_parts[2]).equals("rover") && (command_parts[3]).equals("program")){
     			return StopProgram();
