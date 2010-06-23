@@ -2,6 +2,9 @@ package org.frednet.nxt.server.main;
 
 import java.lang.ref.Reference;
 
+/**
+ * Main control class
+ */
 public class NxtControl {
 	public double BatteryVoltage = 0.0;
 	public String[] MsgBoxs = new String[10];
