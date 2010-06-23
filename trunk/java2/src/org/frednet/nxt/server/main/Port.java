@@ -10,7 +10,13 @@ import gnu.io.UnsupportedCommOperationException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
+/**
+ * interface class for comport.
+ * 
+ * Using rxtx
+ * @author Marc Brakels
+ *
+ */
 public class Port {
 	public Port() {
 		super();
