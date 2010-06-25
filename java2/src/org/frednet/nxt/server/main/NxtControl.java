@@ -725,6 +725,34 @@ public class NxtControl {
     	return motors;
     }
     
+    /**
+     * Will send a message to NXT
+     * TODO: Function test
+     * @param MessageBoxNumber	box number(1-10)
+     * @param Msg string max 58
+     * @return Return result, true or false
+     */
+    public boolean WriteMessage(String MessageBoxNumber, String Msg){
+    	//save it to server side msg box
+    	MsgBoxs[Byte.parseByte(MessageBoxNumber)-1] = Msg;
+    	//send it to rover
+    	int len = Msg.length();
+    	if(len > 59)len=59;
+    	byte[] command = new byte[len+5];
+    	int i;
+    	command[0] = (byte)NXTCommandType.DirectCommand.NXTCommandType;
+    	command[1] = (byte)NXTDirectCommand.WriteMsg.NXTDirectCommand;
+    	command[2] = (byte) (Byte.parseByte(MessageBoxNumber)-1);//inbox
+    	command[3] = (byte) (Byte.parseByte(MessageBoxNumber)-1);//inbox
+    	for(i = 0;i < Msg.length() && i < 59; i++){
+    		command[i+4] = (byte)(Msg.charAt(i));
+    	}
+    	command[i+4] = (byte)0;
+    	if(SendCommand(command,(len+5)) == null){
+        	return false;
+        }
+    	return true;
+    }
     
     /**
      * This function will read a message from NXT mailbox and remove it.
@@ -749,7 +777,7 @@ public class NxtControl {
         for(int i = 0; i < (result[4]-1); i++){
         	Msg += (char)result[i+5];
         }
-        MsgBoxs[Byte.parseByte(MessageBoxNumber)] = Msg;
+        MsgBoxs[Byte.parseByte(MessageBoxNumber)-1] = Msg;
     	return true;
     }
     /**
@@ -761,6 +789,40 @@ public class NxtControl {
      */
     public boolean Move(String motor, String degrees){
     	return Move(string2motor(motor),power,(int)Long.parseLong(degrees));
+    }
+    /**
+     * Translate function, Will reset the motor position
+     * @see NxtControl#Reset(Motor[] motors)
+     * @param motor motor string, layout A, AvC, cva
+     * @return result of command: true or false
+     */
+    public boolean ResetMotor(String motor){
+    	return ResetMotor(string2motor(motor));
+    }
+    /**
+     * this will reset motor position
+     * TODO: test it
+     * @param motor motor array
+     * @return result of command: true or false
+     */
+    public boolean ResetMotor(Motor[] motors){
+    	byte[] command = new byte[4];
+
+        // prepare command
+        command[0] = (byte)NXTCommandType.DirectCommand.NXTCommandType;
+        command[1] = (byte)NXTDirectCommand.ResetMotorPosition.NXTDirectCommand;
+        //command[2] is set below
+        command[3] = 0;
+    	for(Motor motor : motors){
+        	command[2] = (byte)motor.Motor;
+        	
+        	if(motor != null){
+        		if(SendCommand(command,4) == null){
+        			return false;
+        		}
+        	}
+        }
+    	return true;
     }
     /**
      * This function will turn on the power on selected motor
@@ -946,6 +1008,9 @@ public class NxtControl {
     		if((command_parts[1]).equals("read") && (command_parts[2]).equals("message") && (command_parts[3]).equals("box")){
     			return ReadMessage(command_parts[4]);
     		}
+    		if((command_parts[1]).equals("write") && (command_parts[2]).equals("message") && (command_parts[3]).equals("box")){
+    			return WriteMessage(command_parts[4],command_parts[5]);
+    		}
     		if((command_parts[1]).equals("play") && (command_parts[2]).equals("sound")){
     			return PlaySound(command_parts[3]);
     		}
@@ -967,6 +1032,9 @@ public class NxtControl {
     			}
     			if((command_parts[3]).equals("off")){
         			return MotorOff(command_parts[2]);
+        		}
+    			if((command_parts[2]).equals("reset")){
+        			return ResetMotor(command_parts[3]);
         			}
     			if((command_parts[2]).equals("degrees")){
         			return Move(command_parts[3],command_parts[4]);
