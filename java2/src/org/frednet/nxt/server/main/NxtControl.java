@@ -727,7 +727,7 @@ public class NxtControl {
     
     /**
      * Will send a message to NXT
-     * TODO: Function test
+     * TODO: Function test, not sure if it is working? -- marc(26/juni/2010)
      * @param MessageBoxNumber	box number(1-10)
      * @param Msg string max 58
      * @return Return result, true or false
@@ -743,10 +743,11 @@ public class NxtControl {
     	command[0] = (byte)NXTCommandType.DirectCommand.NXTCommandType;
     	command[1] = (byte)NXTDirectCommand.WriteMsg.NXTDirectCommand;
     	command[2] = (byte) (Byte.parseByte(MessageBoxNumber)-1);//inbox
-    	command[3] = (byte) (Byte.parseByte(MessageBoxNumber)-1);//inbox
+    	command[3] = (byte) (Msg.length()+1);//size
     	for(i = 0;i < Msg.length() && i < 59; i++){
     		command[i+4] = (byte)(Msg.charAt(i));
     	}
+    	
     	command[i+4] = (byte)0;
     	if(SendCommand(command,(len+5)) == null){
         	return false;
@@ -756,6 +757,7 @@ public class NxtControl {
     
     /**
      * This function will read a message from NXT mailbox and remove it.
+     * NXT should be connect with bluethoot 1 connection on NXT
      * Result will be saved in string MsgBoxs[MessageBoxNumber]
      * @param MessageBoxNumber message box number(1-10)
      * @return result of command: true or false
