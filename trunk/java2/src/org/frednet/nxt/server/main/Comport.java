@@ -1,6 +1,6 @@
 package org.frednet.nxt.server.main;
 import org.frednet.nxt.server.main.Port;
-
+import org.frednet.nxt.server.main.config;
 
 import java.io.IOException;
 import javax.servlet.ServletConfig;
@@ -24,8 +24,9 @@ public class Comport extends HttpServlet {
         super();
         Nxt = new NxtControl();
 		try {
+			
 			//Auto detect
-			for(int i = 1; i < 50; i++){
+			for(int i = config.NXTportRange[0]; i <= config.NXTportRange[1]; i++){
 				System.out.print("Test Connection on port " + "COM" + String.valueOf(i) + "\n");
 				if(Nxt.Connect("COM" + String.valueOf(i))){
 					boolean result = Nxt.PlayTone((short)1000,(short)1000); 
