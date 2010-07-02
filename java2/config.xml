@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-	<nxt-config>
+	
 	<item>
 	<name>ComportRange</name>
-	<value>1-50</value>
+	<value>20-50</value>
 	</item>
 	<item>
 	<name>KeepAliveInterval</name>
-	<value>5</value><!-- KeepAliveInterval in Seconds(0 mean disable) -->
+	<value>60</value><!-- KeepAliveInterval in Seconds(0 mean disable) -->
 	</item>
 	<item>
 	<name>BatteryUpdateInterval</name>
-	<value>1</value><!-- BatteryUpdateInterval in Seconds(0 mean disable) -->
+	<value>60</value><!-- BatteryUpdateInterval in Seconds(0 mean disable) -->
+	<!-- Is curretly the same as Keep Alive  -->
 	</item>
-	</nxt-config>
-	<video-config>
+	
 	<item>
 	<name>VLCPath</name>
 	<value></value>
@@ -23,7 +23,5 @@
 	<name>VideoBroadcastingService</name>
 	<value>justin.tv</value><!-- Support justin.tv and VLC with auto broadcasting and livestream and ustream support for embedding -->
 	</item>
-	</video-config>
-	<web-config>
-	</web-config>
+	
 </config>

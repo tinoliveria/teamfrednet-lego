@@ -3,6 +3,8 @@ import org.frednet.nxt.server.main.Port;
 import org.frednet.nxt.server.main.config;
 
 import java.io.IOException;
+import java.util.Timer;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,7 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class Comport extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private NxtControl Nxt = null;   
+    private NxtControl Nxt = null;  
+    private config Config = null;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -23,6 +26,8 @@ public class Comport extends HttpServlet {
     	
         super();
         Nxt = new NxtControl();
+        //get config
+        Config = new config();
 		try {
 			
 			//Auto detect
@@ -38,6 +43,10 @@ public class Comport extends HttpServlet {
 				Nxt = new NxtControl();
 				
 			}
+			//interval for keepAlive and Battary
+			Timer s = new Timer();
+			s.scheduleAtFixedRate(Nxt, 0,config.KeepAliveInterval*1000);
+			
 			
 		} catch (Exception e) {
 		
