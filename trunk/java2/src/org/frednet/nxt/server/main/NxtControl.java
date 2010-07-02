@@ -1,11 +1,12 @@
 package org.frednet.nxt.server.main;
 
 import java.lang.ref.Reference;
+import java.util.TimerTask;
 
 /**
  * Main control class
  */
-public class NxtControl {
+public class NxtControl extends TimerTask {
 	public double BatteryVoltage = 0.0;
 	public String[] MsgBoxs = new String[10];
 	/// <summary>
@@ -476,7 +477,10 @@ public class NxtControl {
             
         }
     
-
+   public void run(){
+	  this.GetBatteryLevel(); 
+	   this.KeepAlive();
+   }
     /// <summary>
     /// Initializes a new instance of the <see cref="NXTBrick"/> class.
     /// </summary>

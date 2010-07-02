@@ -12,9 +12,9 @@ import org.xml.sax.SAXParseException;
 public class config {
 
 	/**
-	 * @param args
+	 * Load the config
 	 */
-	public static void main(String[] args) {
+	public config(){
 		try {
 			// just demo data
 			NXTportRange[0] = 1;
@@ -23,13 +23,41 @@ public class config {
 			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory
 					.newInstance();
 			DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-			Document doc = docBuilder.parse(new File("config.xml"));
+			Document doc = docBuilder.parse(new File("C:\\Users\\marc\\workspace\\frednet.nxt.java\\config.xml"));
 
 			// normalize text representation
 			doc.getDocumentElement().normalize();
-			NodeList nxtconfig = doc.getElementsByTagName("nxt-config/item");
+			NodeList nxtconfig = doc.getElementsByTagName("item");
+			for(int s=0; s<nxtconfig.getLength() ; s++){
+
+
+                Node itemNode = nxtconfig.item(s);
+                if(itemNode.getNodeType() == Node.ELEMENT_NODE){
+
+
+                    Element ItemElement = (Element)itemNode;
+                    String r = ItemElement.getElementsByTagName("name").item(0).getChildNodes().item(0).getNodeValue().trim(); 
+                    if(r.equals("ComportRange".trim())){
+                    	String result = ItemElement.getElementsByTagName("value").item(0).getChildNodes().item(0).getNodeValue().trim();
+                    	String[] result_s = result.split("-");
+                    	NXTportRange[0] = Short.parseShort(result_s[0]);
+                    	NXTportRange[1] = Short.parseShort(result_s[1]);
+                    }
+                    if(r.equals("KeepAliveInterval".trim())){
+                    	String result = ItemElement.getElementsByTagName("value").item(0).getChildNodes().item(0).getNodeValue().trim();
+                    	KeepAliveInterval = Long.parseLong(result);
+                    	
+                    }
+                    
+                    
+
+
+                }//end of if clause
+
+
+            }//end of for loop with s var
 			int totalItem = nxtconfig.getLength();
-            System.out.println("Total no of people : " + totalItem);
+            System.out.println("Total no of options : " + totalItem);
 			
 		} catch (SAXParseException err) {
 			System.out.println("** Parsing error" + ", line "
@@ -46,5 +74,6 @@ public class config {
 	}
 
 	public static int NXTportRange[] = { 1, 50 };
+	public static long KeepAliveInterval = 300;
 
 }
