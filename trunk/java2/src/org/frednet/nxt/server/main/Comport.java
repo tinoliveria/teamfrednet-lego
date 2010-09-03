@@ -71,7 +71,12 @@ public class Comport extends HttpServlet {
 		
 		
 		request.setAttribute("NXT.voltage",Double.toString(Nxt.BatteryVoltage));
+		//TODO: error on not connected
+		try{
 		request.setAttribute("server.port",Nxt.communicationInterface.serialPort.getName().toString() );
+		}catch(Exception e){
+			request.setAttribute("server.port","Not connected" );
+		}
 		request.getRequestDispatcher("/control.jsp").forward(request,response);
 	}
 
