@@ -23,7 +23,7 @@ public class config {
 			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory
 					.newInstance();
 			DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-			Document doc = docBuilder.parse(new File("C:\\Users\\marc\\workspace\\frednet.nxt.java\\config.xml"));
+			Document doc = docBuilder.parse(new File("../../workspace/frednet.nxt.java/config.xml"));
 
 			// normalize text representation
 			doc.getDocumentElement().normalize();
