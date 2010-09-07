@@ -75,7 +75,7 @@ public class Comport extends HttpServlet {
 		try{
 		request.setAttribute("server.port",Nxt.communicationInterface.serialPort.getName().toString() );
 		}catch(Exception e){
-			request.setAttribute("server.port","Not connected" );
+			request.setAttribute("server.port","<strong><span style=\"color: red;\">Warning: Not connected</span></strong>" );
 		}
 		request.getRequestDispatcher("/control.jsp").forward(request,response);
 	}
@@ -94,7 +94,7 @@ public class Comport extends HttpServlet {
 		try{
 			request.setAttribute("server.port",Nxt.communicationInterface.serialPort.getName().toString() );
 			}catch(Exception e){
-				request.setAttribute("server.port","Not connected" );
+				request.setAttribute("server.port","<strong><span style=\"color: red;\">Warning: Not connected</span></strong>" );
 			}
 		request.getRequestDispatcher("control.jsp").forward(request,response);
 		
