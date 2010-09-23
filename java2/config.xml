@@ -7,7 +7,7 @@
 	</item>
 	<item>
 	<name>KeepAliveInterval</name>
-	<value>60</value><!-- KeepAliveInterval in Seconds(0 mean disable) -->
+	<value>10</value><!-- KeepAliveInterval in Seconds(0 mean disable) -->
 	</item>
 	<item>
 	<name>BatteryUpdateInterval</name>

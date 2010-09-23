@@ -1,6 +1,6 @@
 package org.frednet.nxt.server.main;
 
-import java.lang.ref.Reference;
+import java.util.Timer;
 import java.util.TimerTask;
 
 /**
@@ -9,9 +9,10 @@ import java.util.TimerTask;
 public class NxtControl extends TimerTask {
 	public double BatteryVoltage = 0.0;
 	public String[] MsgBoxs = new String[10];
-	/// <summary>
-    /// Enumeration of NXT brick sensor ports.
-    /// </summary>
+	
+	/**
+     * Enumeration of NXT brick sensor ports.
+     */
 	public enum Sensor
     {
 		/// <summary>
@@ -468,38 +469,79 @@ public class NxtControl extends TimerTask {
     /// Check if connection to NXT brick is established.
     /// </summary>
     /// 
-    public Boolean IsConnected;
     
-   public Boolean getIsConnected()
-        {
-            
-                return ( communicationInterface != null );
-            
-        }
     
+   
    public void run(){
 	  this.GetBatteryLevel(); 
 	   this.KeepAlive();
    }
-    /// <summary>
-    /// Initializes a new instance of the <see cref="NXTBrick"/> class.
-    /// </summary>
-    /// 
+   /*
+    * 
+    */
     public NxtControl( )
     {
+    	    	connect();
     }
 
-    /// <summary>
-    /// Destroys the instance of the <see cref="NXTBrick"/> class.
-    /// </summary>
-    /// 
-    ////TODO: check this
+    /**
+     * Destroys the instance of the class.
+     */
     public void destroy() {
     	Disconnect( );
       }
-        
-	
-
+    /**
+     * Will start looking for connection    
+     */
+    public void connect( )
+    {
+    	keepAliveConnection();
+    }
+    /**
+     * Will keep connection open en reconnect if needed.
+     */
+    private void keepAliveConnection(){
+    	//check
+    	if(!isConneted()){
+    		//loop once through all ports
+    		for(int i=config.NXTportRange[0]; i < config.NXTportRange[1];i++){
+    			if(connect("COM" + String.valueOf(i)))
+    				break;
+    			
+    		}
+    	}
+    	//schedule repeat function
+    	
+    	Timer timer = new Timer();
+    	timer.schedule(new TimerTask() {  public void run() {keepAliveConnection();} },config.KeepAliveInterval*1000);
+    	
+    	
+    }
+    /**
+     * will check the connection status
+     * @return result of connection status
+     */
+    public boolean isConneted(){
+    	try{
+    
+    	if(communicationInterface == null){
+    		System.out.println("Not connected");
+    		return false;
+    		
+    	}
+    	
+    	if(KeepAlive())
+    		return true;
+    	
+    	System.out.println("Not connected");
+    	return false;
+    	}catch(Exception e){
+    		
+    		System.out.println("Not connected, Error");
+    		return false;
+    		
+    	}
+    }
     /// <summary>
     /// Connect to NXT brick.
     /// </summary>
@@ -513,7 +555,7 @@ public class NxtControl extends TimerTask {
     /// If it is required to force reconnection, then <see cref="Disconnect"/> method should be called before.
     /// </remarks>
     /// 
-    public Boolean Connect( String portName )
+    public boolean connect( String portName )
     {
         
             if ( communicationInterface != null )
