@@ -1,5 +1,4 @@
 package org.frednet.nxt.server.main;
-import org.frednet.nxt.server.main.Port;
 import org.frednet.nxt.server.main.config;
 
 import java.io.IOException;
@@ -15,14 +14,14 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class Comport
  */
-public class Comport extends HttpServlet {
+public class MainControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private NxtControl Nxt = null;  
     private config Config = null;
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Comport() {
+    public MainControl() {
     	
         super();
         Nxt = new NxtControl();
