@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:bpmn="http://stp.eclipse.org/bpmn" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmi:id="_BCfXEMddEd-24utfQY6GMg" type="Bpmn" name="time.bpmn_diagram" measurementUnit="Pixel">
-  <styles xmi:type="notation:PageStyle" xmi:id="_BCfXEcddEd-24utfQY6GMg"/>
-  <styles xmi:type="notation:GuideStyle" xmi:id="_BCfXEsddEd-24utfQY6GMg"/>
-  <styles xmi:type="notation:DescriptionStyle" xmi:id="_BCfXE8ddEd-24utfQY6GMg"/>
-  <element xmi:type="bpmn:BpmnDiagram" href="time.bpmn#_BBxlYsddEd-24utfQY6GMg"/>
-</notation:Diagram>
