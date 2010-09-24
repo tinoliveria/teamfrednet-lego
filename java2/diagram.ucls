@@ -1,4 +1,4 @@
-<class-diagram version="0.9.86" automaticImage="PNG" icons="true" always-add-relationships="false" 
+<class-diagram version="0.9.86" automaticImage="JPEG" icons="true" always-add-relationships="false" 
   generalizations="true" realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
   <class corner="BOTTOM_RIGHT" language="java" name="org.frednet.nxt.server.main.NxtControl" project="frednet.nxt.java" 
     file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false">    
@@ -105,83 +105,10 @@
     </display>  
   </enumeration>  
   <nesting>    
-    <source project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl" 
-      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>    
-    <target project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl.MotorState" 
-      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>  
-  </nesting>  
-  <nesting>    
-    <bendpoint x="1550" y="46"/>    
-    <source project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl" 
-      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>    
-    <target project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl.SensorMode" 
-      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>  
-  </nesting>  
-  <nesting>    
-    <source project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl" 
-      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>    
-    <target project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl.NXTCommandType" 
-      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>  
-  </nesting>  
-  <association>    
-    <source project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl.MotorState" 
-      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false" navigable="false">      
-      <attribute name="RunState"/>      
-      <multiplicity minimum="0" maximum="1"/>    
-    </source>    
-    <target project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl.MotorRunState" 
-      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <nesting>    
-    <source project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl" 
-      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>    
-    <target project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl.Sensor" 
-      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>  
-  </nesting>  
-  <nesting>    
-    <source project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl" 
-      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>    
-    <target project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl.NXTDirectCommand" 
-      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>  
-  </nesting>  
-  <association>    
-    <source project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl.Holder" 
-      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false" navigable="false">      
-      <attribute name="SensorType"/>      
-      <multiplicity minimum="0" maximum="1"/>    
-    </source>    
-    <target project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl.SensorType" 
-      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <nesting>    
     <bendpoint x="1571" y="46"/>    
     <source project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl" 
       file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>    
     <target project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl.MotorRunState" 
-      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>  
-  </nesting>  
-  <association>    
-    <source project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl.MotorState" 
-      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false" navigable="false">      
-      <attribute name="Regulation"/>      
-      <multiplicity minimum="0" maximum="1"/>    
-    </source>    
-    <target project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl.MotorRegulationMode" 
-      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <nesting>    
-    <source project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl" 
-      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>    
-    <target project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl.Motor" 
-      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>  
-  </nesting>  
-  <nesting>    
-    <source project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl" 
-      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>    
-    <target project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl.NXTSystemCommand" 
       file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>  
   </nesting>  
   <association>    
@@ -197,9 +124,36 @@
   <nesting>    
     <source project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl" 
       file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>    
-    <target project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl.Holder" 
+    <target project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl.NXTSystemCommand" 
       file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>  
   </nesting>  
+  <association>    
+    <source project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl.MotorState" 
+      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false" navigable="false">      
+      <attribute name="RunState"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl.MotorRunState" 
+      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting>    
+    <bendpoint x="1776" y="46"/>    
+    <source project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl" 
+      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>    
+    <target project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl.MotorMode" 
+      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>  
+  </nesting>  
+  <association>    
+    <source project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl.MotorState" 
+      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false" navigable="false">      
+      <attribute name="Regulation"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl.MotorRegulationMode" 
+      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
   <nesting>    
     <bendpoint x="1031" y="46"/>    
     <source project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl" 
@@ -207,6 +161,16 @@
     <target project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl.SensorType" 
       file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>  
   </nesting>  
+  <association>    
+    <source project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl.Holder" 
+      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false" navigable="false">      
+      <attribute name="SensorType"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl.SensorType" 
+      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
   <nesting>    
     <bendpoint x="1755" y="46"/>    
     <source project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl" 
@@ -215,10 +179,21 @@
       file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>  
   </nesting>  
   <nesting>    
-    <bendpoint x="1776" y="46"/>    
     <source project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl" 
       file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>    
-    <target project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl.MotorMode" 
+    <target project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl.MotorState" 
+      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>  
+  </nesting>  
+  <nesting>    
+    <source project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl" 
+      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>    
+    <target project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl.NXTCommandType" 
+      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>  
+  </nesting>  
+  <nesting>    
+    <source project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl" 
+      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>    
+    <target project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl.Motor" 
       file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>  
   </nesting>  
   <association>    
@@ -231,6 +206,31 @@
       file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
+  <nesting>    
+    <source project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl" 
+      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>    
+    <target project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl.Holder" 
+      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>  
+  </nesting>  
+  <nesting>    
+    <source project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl" 
+      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>    
+    <target project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl.Sensor" 
+      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>  
+  </nesting>  
+  <nesting>    
+    <source project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl" 
+      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>    
+    <target project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl.NXTDirectCommand" 
+      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>  
+  </nesting>  
+  <nesting>    
+    <bendpoint x="1550" y="46"/>    
+    <source project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl" 
+      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>    
+    <target project="frednet.nxt.java" name="org.frednet.nxt.server.main.NxtControl.SensorMode" 
+      file="/frednet.nxt.java/src/org/frednet/nxt/server/main/NxtControl.java" binary="false"/>  
+  </nesting>  
   <classifier-display autosize="true" package="true" initial-value="false" signature="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true"/>    
     <operations public="true" package="true" protected="true" private="true"/>  
